@@ -137,6 +137,94 @@ body.quizmode { background: var(--page, #FFF4E6); transition: background .4s eas
 .optin { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; cursor: pointer; }
 .optin input { width: 20px; height: 20px; margin-top: 1px; accent-color: #FDE047; flex: none; }
 .saved-link { background: none; border: 0; color: var(--ink); text-decoration: underline; font-weight: 600; padding: 8px 0; justify-self: center; }
+/* stop anything from pushing the card wider than the phone */
+.card, .step, .step > *, .fill, .tiles, .timerow, .promise { min-width: 0; }
+.fill .in, .topic-row .in { min-width: 0; }
+/* part progress: 5 segments */
+.parts { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 16px; }
+.parts i { height: 5px; border-radius: 99px; background: var(--line2); }
+.parts i.on { background: var(--ink); }
+.parts i.now { background: linear-gradient(90deg, var(--ink) 50%, var(--line2) 50%); }
+.card.rays .parts i { background: rgba(255,255,255,.3); } .card.rays .parts i.on, .card.rays .parts i.now { background: var(--paper); }
+/* intro roadmap (stacked wallet tabs) */
+.intro-top { display: flex; align-items: center; justify-content: space-between; }
+.intro-top .mascot { width: 72px; height: 72px; }
+.kick { font: 600 12px/1 ui-monospace, monospace; letter-spacing: .1em; text-transform: uppercase; background: var(--ink); color: var(--paper); padding: 7px 10px; border-radius: 99px; }
+.wallet { position: relative; padding-top: 4px; }
+.wtab { position: relative; display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 10px; background: var(--t); border-radius: 18px 18px 0 0; padding: 14px 16px 26px; margin-bottom: -14px; box-shadow: 0 -1px 0 rgba(255,255,255,.6) inset, 0 -6px 14px -10px rgba(30,27,46,.25); }
+.wtab .wn { grid-row: span 2; width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,.7); display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+.wtab b { font-size: 15px; }
+.wtab small { color: #5E5869; font-size: 12.5px; }
+.wpocket { position: relative; z-index: 9; background: var(--paper); border: 2px dashed var(--line2); border-radius: 18px; padding: 16px; display: grid; gap: 4px; box-shadow: 0 -10px 20px -12px rgba(30,27,46,.25); }
+.wpocket small { color: #5E5869; }
+/* bigger "what for" tiles */
+.tiles.big { grid-template-columns: 1fr; }
+.tile small { display: block; font-weight: 500; color: #5E5869; font-size: 13px; }
+.tiles.big .tile { grid-template-columns: auto 1fr; align-items: center; column-gap: 12px; }
+.tiles.big .tile .ico { grid-row: span 2; font-size: 30px; }
+.tiles.big .tile[aria-pressed="true"]::after { display: none; }
+/* topics + subtopic chips */
+.topic-list { display: grid; gap: 10px; }
+.topic-card { background: var(--tint, var(--soft)); border-radius: 20px; padding: 12px; display: grid; gap: 8px; }
+.subs { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.subchip { display: inline-flex; align-items: center; gap: 2px; background: var(--paper); border-radius: 99px; padding: 5px 6px 5px 12px; font-size: 13.5px; font-weight: 600; box-shadow: 0 1px 0 rgba(30,27,46,.08); }
+.subchip button { border: 0; background: transparent; color: #8A8396; font-size: 15px; line-height: 1; padding: 0 4px; }
+.subin { flex: 1 1 140px; min-width: 0; border: 0; background: transparent; outline: 0; padding: 6px 4px; font-size: 14px; color: var(--ink); }
+.subin::placeholder { color: #8A8396; }
+/* schedule step, centered */
+.card.centered .step { text-align: center; }
+.card.centered .timerow .top, .card.centered .chips { justify-content: center; }
+/* first-post card deck */
+.deck { min-height: 100vh; padding: 24px 16px 60px; }
+.deck-wrap { max-width: 520px; margin: 0 auto; display: grid; gap: 14px; color: #1E1B2E; font-family: "DM Sans", var(--font); --ink: #1E1B2E; --paper: #FFFDF8; --line2: #E8E1D6; --soft: #F5F1EA; }
+.deck-top { display: flex; justify-content: space-between; }
+.deck-wrap h2 { font-size: clamp(28px, 7vw, 36px); line-height: 1.08; }
+.pcard { background: #fff; border-radius: 24px; padding: 22px; display: grid; gap: 12px; box-shadow: 0 18px 40px -20px rgba(30,27,46,.35); }
+.pc-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ppill { border-radius: 99px; padding: 7px 12px; font-weight: 700; font-size: 14px; }
+.p-educational { background: #E6F0FA; color: #1F4F7A; } .p-virality { background: #FFE9DD; color: #C2410C; }
+.p-community { background: #FFE8F5; color: #9D2D6A; } .p-bts { background: #EFE9FC; color: #5B3FC4; }
+.pdate { color: #6B6577; font-size: 14px; }
+.pc-title { font-size: 22px; font-weight: 800; line-height: 1.25; outline: 0; border-radius: 8px; overflow-wrap: anywhere; }
+.pc-desc { color: #6B6577; font-size: 16px; line-height: 1.5; outline: 0; border-radius: 8px; }
+.pc-title:focus, .pc-desc:focus { box-shadow: 0 0 0 2px #E8E1D6; }
+.pc-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.pc-tags span { border: 1.5px solid #E8E1D6; border-radius: 12px; padding: 5px 10px; font-size: 13.5px; color: #5E5869; }
+.pc-foot { border-top: 2px dashed #ECE6DC; padding-top: 14px; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-weight: 600; }
+.pc-who { color: #3B3646; font-size: 14px; }
+.pc-pct { display: inline-flex; align-items: center; gap: 6px; color: #6B6577; }
+.ring { width: 24px; height: 24px; }
+.pc-steps { display: grid; gap: 8px; }
+.tstep { background: #F7F4EE; border-radius: 16px; padding: 12px 14px; }
+.tstep label { display: flex; gap: 10px; align-items: center; cursor: pointer; }
+.tstep input { width: 20px; height: 20px; accent-color: #2F8A5B; flex: none; }
+.tstep .tbody { margin: 8px 0 0 30px; font-size: 14px; display: grid; gap: 6px; }
+.tstep .tbody p { margin: 0; }
+.tstep.done { background: #E3F4E6; }
+.tstep.done .tbody { display: none; }
+.tstep details summary { cursor: pointer; font-weight: 600; font-size: 13px; }
+.deck .btn { border-radius: 999px; padding: 14px 22px; font-weight: 700; }
+.deck .btn.primary { background: #1E1B2E; color: #FFFDF8; flex: 1; }
+.deck-nav { display: flex; align-items: center; justify-content: space-between; }
+.deck-nav .btn { background: #fff; color: #1E1B2E; width: 48px; height: 48px; padding: 0; }
+.deck-nav .btn:disabled { opacity: .35; }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(30,27,46,.2); }
+.dots i.on { background: #1E1B2E; width: 22px; border-radius: 99px; }
+.note.center { text-align: center; font-weight: 600; }
+@media (max-width: 520px) {
+  .quiz { padding: 14px 12px 40px; }
+  .card { padding: 20px 16px 18px; }
+  .fill { padding: 12px; }
+  .fill span { width: 100%; }
+  .tiles { grid-template-columns: 1fr 1fr; }
+  .dates { grid-template-columns: 1fr; }
+  .step h2 { font-size: 27px; }
+  .timerow .day { width: 34px; height: 34px; font-size: 12px; }
+  .chips { gap: 5px; }
+  .nav .btn { padding: 13px 16px; }
+  .pcard { padding: 18px; }
+}
 /* intro hero */
 .hero-card { text-align: left; }
 .hero-card .mascot { width: 128px; height: 128px; }
@@ -249,6 +337,7 @@ body.quizmode { background: var(--page, #FFF4E6); transition: background .4s eas
   <div id="stepBox"></div>
 </main>
 
+<div class="deck" id="deck" hidden></div>
 <div class="book" id="book" hidden></div>
 <div class="scrim" id="scrim" hidden></div>
 <aside class="drawer" id="drawer" hidden tabindex="-1" aria-label="Post details"></aside>
@@ -1000,7 +1089,8 @@ const $ = id => document.getElementById(id);
 
 const tomorrow = addDays(new Date(), 1);
 let A = {
-  iam: "", platforms: [], topics: [""], takes: {}, oldMe: "", newMe: "", working: "",
+  forWhat: "", iam: "", biz: "", bizHelp: "", page: "", pageFor: "",
+  platforms: [], topics: [""], subs: [[]], takes: {}, oldMe: "", newMe: "", working: "",
   time: { ideas: { h: 1, days: [6] }, plan: { h: 1, days: [6] }, film: { h: 2, days: [5] }, edit: { h: 2, days: [5, 6] } },
   promise: { carousel: 1, lowEffort: 2, talking: 1, story: 1 },
   start: iso(tomorrow), end: iso(addDays(tomorrow, 6)),
@@ -1019,6 +1109,8 @@ function migrate(a) {
   if (a.ctaText && a.cta === "dm" && !a.dmWord) a.dmWord = a.ctaText;
   if (a.ctaText && a.cta === "link" && !a.linkFor) a.linkFor = a.ctaText;
   a.dmWord = a.dmWord || ""; a.linkFor = a.linkFor || ""; a.updates = !!a.updates;
+  a.forWhat = a.forWhat || "personal"; ["biz", "bizHelp", "page", "pageFor"].forEach(k => a[k] = a[k] || "");
+  if (!a.subs) a.subs = a.topics.map(() => []);
   return a;
 }
 let BOOK = null;
@@ -1026,19 +1118,29 @@ let stepI = 0;
 let takeTopic = 0;
 
 /* ---------- quiz steps ---------- */
-const STEPS = ["intro", "about", "topics", "takes", "story", "time", "promise", "dates", "cta", "email"];
+const PARTS = [
+  { name: "Establish you", ico: "🙋", tab: "#FFC6EA", desc: "who you're posting as" },
+  { name: "What you create", ico: "🎨", tab: "#D9CCF7", desc: "topics + subtopics" },
+  { name: "Your voice", ico: "🗣️", tab: "#BFE3CB", desc: "your takes + your story" },
+  { name: "Your schedule", ico: "🗓️", tab: "#FDE7A6", desc: "when you can create" },
+  { name: "Your cadence", ico: "🔁", tab: "#B9D6F2", desc: "how often + what they do next" }
+];
+const STEPS = ["intro", "for", "about", "topics", "takes", "story", "time", "promise", "dates", "cta", "email"];
+const PART_OF = { for: 1, about: 1, topics: 2, takes: 3, story: 3, time: 4, promise: 5, dates: 5, cta: 5, email: 6 };
+const skipStep = s => s === "story" && A.forWhat === "faceless";
 
 /* page color, accent, mascot color + shape for each step */
 const THEMES = {
-  intro:   { page: "#FFC9A8", accent: "#F26B4F", m: "#F26B4F", shape: "flower" },
-  about:   { page: "#D9CCF7", accent: "#7B5CE0", m: "#7B5CE0", shape: "blob", tint: "#EFE9FC" },
-  topics:  { page: "#FFC6EA", accent: "#C14C8A", m: "#3E9C8F", shape: "squircle", tint: "#FFE8F5" },
+  intro:   { page: "#FFE3D3", accent: "#F26B4F", m: "#F26B4F", shape: "flower" },
+  for:     { page: "#FFC6EA", accent: "#C14C8A", m: "#7B5CE0", shape: "blob", tint: "#FFE8F5" },
+  about:   { page: "#FFC6EA", accent: "#C14C8A", m: "#F26B4F", shape: "flower", tint: "#FFE8F5" },
+  topics:  { page: "#D9CCF7", accent: "#7B5CE0", m: "#3E9C8F", shape: "squircle", tint: "#EFE9FC" },
   takes:   { page: "#BFE3CB", accent: "#2F8A5B", m: "#F4A23A", shape: "flower", tint: "#E6F4EA" },
-  story:   { page: "#B9D6F2", accent: "#355A7A", m: "#355A7A", shape: "cloud", tint: "#E6F0FA" },
+  story:   { page: "#BFE3CB", accent: "#2F8A5B", m: "#355A7A", shape: "cloud", tint: "#E6F4EA" },
   time:    { page: "#FDE7A6", accent: "#B7791F", m: "#F26B4F", shape: "blob", tint: "#FFF4D6" },
-  promise: { page: "#FFD3C2", accent: "#D9534F", m: "#7B5CE0", shape: "squircle" },
-  dates:   { page: "#D9CCF7", accent: "#7B5CE0", m: "#3E9C8F", shape: "flower", tint: "#EFE9FC" },
-  cta:     { page: "#FFC6EA", accent: "#C14C8A", m: "#F4A23A", shape: "cloud" },
+  promise: { page: "#B9D6F2", accent: "#355A7A", m: "#7B5CE0", shape: "squircle", tint: "#E6F0FA" },
+  dates:   { page: "#B9D6F2", accent: "#355A7A", m: "#3E9C8F", shape: "flower", tint: "#E6F0FA" },
+  cta:     { page: "#B9D6F2", accent: "#355A7A", m: "#F4A23A", shape: "cloud", tint: "#E6F0FA" },
   email:   { page: "#FFC6EA", accent: "#3E9C8F", m: "#FDE047", shape: "flower" }
 };
 function mascot(color, shape, cls = "mascot") {
@@ -1054,25 +1156,39 @@ function mascot(color, shape, cls = "mascot") {
     <path d="M42 64c4 5 12 5 16 0" stroke="#1E1B2E" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`;
 }
 
-// quiet = redraw the same step in place (no slide-in animation, no jump to top); focus = selector to focus after
-function render(opts = {}) {
-  const s = STEPS[stepI];
-  const keepY = window.scrollY;
-  const quizSteps = STEPS.length - 1;
-  const th = THEMES[s];
+// who the hooks speak as ("I'm a ___"); faceless pages don't get "I'm" hooks
+function whoAmI() {
+  if (A.forWhat === "business") return A.biz.trim() ? `the owner of ${A.biz.trim()}` : "";
+  if (A.forWhat === "faceless") return "";
+  return A.iam.trim().replace(/^(i'?m|i am)\s+/i, "");
+}
+
+function setTheme(key) {
+  const th = THEMES[key];
   document.body.classList.add("quizmode");
   document.body.style.setProperty("--page", th.page);
   const q = $("quiz");
   q.style.setProperty("--accent2", th.accent);
   q.style.setProperty("--tint", th.tint || "#F5F1EA");
+  return th;
+}
+
+// quiet = redraw the same step in place (no slide-in animation, no jump to top); focus = selector to focus after
+function render(opts = {}) {
+  const s = STEPS[stepI];
+  const keepY = window.scrollY;
+  const th = setTheme(s);
+  $("quiz").hidden = false; $("book").hidden = true; $("deck").hidden = true;
   const box = $("stepBox");
-  const dashes = s === "intro" ? "" : `<div class="dashes">${Array.from({ length: quizSteps }, (_, i) => `<i class="${i < stepI ? "on" : ""}"></i>`).join("")}</div>`;
-  const label = s === "intro" ? "" : `<div class="top-row"><span class="qlabel">${s === "email" ? "Last step" : `Question ${String(stepI).padStart(2, "0")}`}</span>${mascot(th.m, th.shape)}</div>`;
-  box.innerHTML = `<div class="stack ${opts.quiet ? "quiet" : ""}"><div class="card ${s === "email" ? "rays" : ""} ${s === "intro" ? "hero-card" : ""}">${dashes}${label}<div class="step">${VIEWS[s]()}</div></div></div>`;
+  const part = PART_OF[s];
+  const head = s === "intro" ? "" : `
+    <div class="parts">${PARTS.map((p, i) => `<i class="${i + 1 < part ? "on" : i + 1 === part ? "now" : ""}"></i>`).join("")}</div>
+    <div class="top-row"><span class="qlabel">${part > 5 ? "Last step" : `Part ${part} of 5 · ${PARTS[part - 1].name}`}</span>${mascot(th.m, th.shape)}</div>`;
+  box.innerHTML = `<div class="stack ${opts.quiet ? "quiet" : ""}"><div class="card ${s === "email" ? "rays" : ""} ${s === "intro" ? "hero-card" : ""} ${s === "time" ? "centered" : ""}">${head}<div class="step">${VIEWS[s]()}</div></div></div>`;
   box.querySelectorAll("h1, h2").forEach(h => h.classList.add("display"));
   if (WIRE[s]) WIRE[s]();
   if (opts.focus) { const f = box.querySelector(opts.focus); if (f) f.focus({ preventScroll: true }); }
-  else if (!opts.quiet) { const first = box.querySelector("input, textarea"); if (first && s !== "intro" && window.innerWidth > 760) first.focus(); }
+  else if (!opts.quiet) { const first = box.querySelector("input.in, textarea"); if (first && s !== "intro" && window.innerWidth > 760) first.focus(); }
   window.scrollTo(0, opts.quiet ? keepY : 0);
 }
 // Tab on an empty box fills in the example (the grey text), so people can accept it and move on
@@ -1085,37 +1201,60 @@ document.addEventListener("keydown", e => {
 });
 const nav = (nextLabel = "Next", canBack = true) =>
   `<p class="err" id="err"></p><div class="nav">${canBack ? `<button class="btn" data-go="back">← Back</button>` : ""}<button class="btn primary" data-go="next">${nextLabel}</button></div>`;
+const TABHINT = `<p class="tabhint">Like the example? Press <kbd>Tab</kbd> to use it.</p>`;
+const SUB_EX = { 0: "ootd", 1: "fashion hacks", 2: "fashion finds" };
 
 const VIEWS = {
   intro: () => {
     const saved = store.get();
     return `
-    <div class="blobs">${mascot("#F26B4F", "flower", "mascot")}${mascot("#7B5CE0", "blob", "mascot")}${mascot("#3E9C8F", "squircle", "mascot")}${mascot("#F4A23A", "cloud", "mascot")}</div>
+    <div class="intro-top">${mascot("#F26B4F", "flower")}<span class="kick">free · ~5 min</span></div>
     <h1>Plan your first posts in 5 minutes</h1>
-    <p class="lede">I read so many tips on how to start posting. This is the one that actually gets you making something. Answer a few questions and get your own batchbook:</p>
-    <ul class="perks">
-      <li>A calendar of what to post and when</li>
-      <li>Every post planned: hook, main point, format, how to make it, CTA</li>
-      <li>When to film, edit and plan, based on your real schedule</li>
-    </ul>
+    <p class="lede">I read so many tips on how to start posting. This is the one that actually gets you making something. 5 quick parts:</p>
+    <div class="wallet">${PARTS.map((p, i) => `<div class="wtab" style="--t:${p.tab};z-index:${i + 1}"><span class="wn">${i + 1}</span><b>${p.ico} ${p.name}</b><small>${p.desc}</small></div>`).join("")}
+      <div class="wpocket"><b>✨ Then: your first post, ready to make today</b><small>Plus your full calendar with every post planned and when to film, edit and post.</small></div>
+    </div>
     <div class="nav"><button class="btn primary" data-go="next">Let's get started</button></div>
     ${saved?.book ? `<button class="saved-link" id="openSaved">Open my saved batchbook →</button>` : ""}`;
   },
-  about: () => `
-    <h2>First, who are you?</h2>
-    <div class="fill"><span>I'm</span><input class="in ex" id="iam" placeholder="a remote worker in my 20s" value="${esc(A.iam)}"></div>
-    <p class="hint">Keep it short: what you do + something about you. It goes into your hooks.</p>
-    <p class="tabhint">Like the example? Press <kbd>Tab</kbd> to use it.</p>
-    <div class="field"><span class="lbl">Where will you post?</span>
-      <div class="tiles" id="plat">${[["TikTok", "🎵", "#FFE8F5"], ["Instagram", "📸", "#FFF4D6"], ["YouTube Shorts", "▶️", "#E6F0FA"]].map(([p, ico, t]) => `<button class="tile" style="--t:${t}" aria-pressed="${A.platforms.includes(p)}" data-v="${p}"><span class="ico">${ico}</span>${p}</button>`).join("")}</div></div>
+  for: () => `
+    <h2>What are you making content for?</h2>
+    <div class="tiles big" id="forTiles">${[["personal", "🙋", "Personal brand", "Your face, your life, your opinions", "#FFE8F5"],
+      ["business", "🏪", "Business", "A brand, shop, service or product", "#FFF4D6"],
+      ["faceless", "🎭", "Faceless page", "No face. Just the content", "#EFE9FC"]].map(([v, ico, l, d, t]) =>
+      `<button class="tile" style="--t:${t}" aria-pressed="${A.forWhat === v}" data-v="${v}"><span class="ico">${ico}</span>${l}<small>${d}</small></button>`).join("")}</div>
     ${nav()}`,
+  about: () => {
+    const f = A.forWhat;
+    const body = f === "business" ? `
+      <h2>Tell me about your business</h2>
+      <div class="fill"><span>My business is</span><input class="in ex" id="biz" placeholder="a small bakery in Cebu" value="${esc(A.biz)}"></div>
+      <div class="fill"><span>and we help</span><input class="in ex" id="bizHelp" placeholder="people celebrate with cakes that taste like home" value="${esc(A.bizHelp)}"></div>`
+      : f === "faceless" ? `
+      <h2>Tell me about your page</h2>
+      <div class="fill"><span>My page is about</span><input class="in ex" id="page" placeholder="cozy productivity" value="${esc(A.page)}"></div>
+      <div class="fill"><span>for</span><input class="in ex" id="pageFor" placeholder="students who want to get their life together" value="${esc(A.pageFor)}"></div>`
+      : `
+      <h2>Tell me about you</h2>
+      <div class="fill"><span>I'm</span><input class="in ex" id="iam" placeholder="a remote worker in my 20s" value="${esc(A.iam)}"></div>
+      <p class="hint">What you do + something about you. It goes into your hooks.</p>`;
+    return `${body}${TABHINT}
+    <div class="field"><span class="lbl">Where will you post?</span>
+      <div class="tiles" id="plat">${[["TikTok", "🎵", "#FFE8F5"], ["Instagram", "📸", "#FFF4D6"], ["YouTube Shorts", "▶️", "#E6F0FA"], ["Facebook", "👍", "#E6F4EA"]].map(([p, ico, t]) => `<button class="tile" style="--t:${t}" aria-pressed="${A.platforms.includes(p)}" data-v="${p}"><span class="ico">${ico}</span>${p}</button>`).join("")}</div></div>
+    ${nav()}`;
+  },
   topics: () => `
-    <h2>What topics are you obsessed with?</h2>
-    <p class="lede">The stuff you'd talk about for hours. Add as many as you want (up to 5).</p>
-    <div class="field" id="topicList">${A.topics.map((t, i) => `
-      <div class="topic-row"><input class="in ex" data-i="${i}" placeholder="${["gym", "planning my week", "remote work", "skincare", "saving money"][i] || "another topic"}" value="${esc(t)}">${A.topics.length > 1 ? `<button class="x" data-del="${i}" aria-label="Remove">×</button>` : ""}</div>`).join("")}
+    <h2>What do you want to post about?</h2>
+    <p class="lede">Your main topics, up to 5. Subtopics are optional, but they stop your posts from all sounding the same.</p>
+    <div id="topicList" class="topic-list">${A.topics.map((t, i) => `
+      <div class="topic-card">
+        <div class="topic-row"><input class="in ex" data-i="${i}" placeholder="${["fashion", "gym", "planning my week", "skincare", "saving money"][i] || "another topic"}" value="${esc(t)}">${A.topics.length > 1 ? `<button class="x" data-del="${i}" aria-label="Remove topic">×</button>` : ""}</div>
+        <div class="subs">${(A.subs[i] || []).map((s, j) => `<span class="subchip">${esc(s)}<button data-subdel="${i}|${j}" aria-label="Remove">×</button></span>`).join("")}
+          <input class="subin" data-sub="${i}" placeholder="${(A.subs[i] || []).length ? "+ another" : `+ subtopic, e.g. ${i === 0 ? "ootd" : "tips"}`}" enterkeyhint="done"></div>
+      </div>`).join("")}
       ${A.topics.length < 5 ? `<button class="add" id="addTopic">+ Add another topic</button>` : ""}
     </div>
+    <p class="hint">Type a subtopic and press Enter to add it.</p>
     ${nav()}`,
   takes: () => {
     const topics = A.topics.filter(Boolean);
@@ -1123,39 +1262,40 @@ const VIEWS = {
     const k = A.takes[t] || {};
     return `
     <h2>What's your take on <em>${esc(t)}</em>?</h2>
-    <p class="lede">Fill in at least one. These become your hooks, so say it like you'd say it to a friend.</p>
+    <p class="lede">This is your voice. Fill in at least one, the way you'd say it to a friend.</p>
     <div class="fill"><span>I totally believe that</span><input class="in ex" data-k="believe" placeholder="you don't need motivation to start" value="${esc(k.believe)}"></div>
     <div class="fill"><span>I disagree with people who think</span><input class="in ex" data-k="disagree" placeholder="you need a perfect routine to be productive" value="${esc(k.disagree)}"></div>
     <div class="fill"><span>I don't see a lot of people talking about</span><input class="in ex" data-k="untalked" placeholder="how lonely working from home gets" value="${esc(k.untalked)}"></div>
-    <p class="tabhint">Press <kbd>Tab</kbd> to use an example as-is.</p>
+    ${TABHINT}
     ${topics.length > 1 ? `<p class="hint">Topic ${takeTopic + 1} of ${topics.length}</p>` : ""}
     ${nav()}`;
   },
   story: () => `
-    <h2>Your story</h2>
+    <h2>${A.forWhat === "business" ? "Your story (or your brand's)" : "Your story"}</h2>
     <p class="lede">Story posts are what people remember. Skip anything you're not ready to share.</p>
     <div class="fill"><span>Old me:</span><input class="in ex" id="oldMe" placeholder="saying yes to everything so no one would be disappointed" value="${esc(A.oldMe)}"></div>
     <div class="fill"><span>Me now:</span><input class="in ex" id="newMe" placeholder="protecting my time for what matters" value="${esc(A.newMe)}"></div>
     <div class="fill"><span>Something I'm working on right now:</span><input class="in ex" id="working" placeholder="getting fit before 2027" value="${esc(A.working)}"></div>
     <p class="hint">Name the actual behavior, not a label. "rewriting texts so no one would be mad at me" beats "insecure".</p>
-    ${nav("Next")}`,
+    ${nav()}`,
   time: () => `
-    <h2>How much time do you have?</h2>
-    <p class="lede">Be honest. Your calendar will tell you when to do each one.</p>
-    ${[["ideas", "find content ideas"], ["plan", "plan content"], ["film", "film content"], ["edit", "edit content"]].map(([k, l]) => `
+    <h2>When can you create?</h2>
+    <p class="lede">Be honest. These become time blocks in your calendar.</p>
+    ${[["ideas", "💡", "find ideas"], ["plan", "🗓️", "plan"], ["film", "🎬", "film"], ["edit", "✂️", "edit"]].map(([k, ico, l]) => `
       <div class="timerow" data-t="${k}">
-        <div class="top"><span>I have</span><input class="hrs" type="number" inputmode="decimal" min="0" max="12" step="0.5" value="${A.time[k].h}" data-h="${k}" aria-label="hours"><span>hrs to ${l} every</span></div>
-        <div class="chips">${DAYS.map((d, i) => `<button class="chip day" aria-pressed="${A.time[k].days.includes(i)}" data-d="${i}">${d}</button>`).join("")}</div>
+        <div class="top">${ico} <span>I have</span><input class="hrs" type="number" inputmode="decimal" min="0" max="12" step="0.5" value="${A.time[k].h}" data-h="${k}" aria-label="hours to ${l}"><span>hrs to <b>${l}</b> every</span></div>
+        <div class="chips">${DAYS.map((d, i) => `<button class="chip day" aria-pressed="${A.time[k].days.includes(i)}" data-d="${i}" aria-label="${d}">${d.slice(0, 2)}</button>`).join("")}</div>
       </div>`).join("")}
     ${nav()}`,
   promise: () => `
     <h2>Your posting promise</h2>
     <p class="lede">How many of each will you post every week?</p>
-    ${Object.entries(TYPES).map(([k, t]) => `
+    ${Object.entries(TYPES).filter(([k]) => !(A.forWhat === "faceless" && k === "talking")).map(([k, t]) => `
       <div class="promise c-${k}"><span class="dot" style="background:var(--c-dot)"></span>
-        <div class="txt">I will post <b>${A.promise[k]}</b> ${t.short.toLowerCase()}<small>${t.sub}</small></div>
-        <div class="stepper"><button data-p="${k}" data-d="-1" aria-label="Less">−</button><b>${A.promise[k]}</b><button data-p="${k}" data-d="1" aria-label="More">+</button></div>
+        <div class="txt"><b class="n">${A.promise[k]}</b> ${t.short.toLowerCase()}<small>${k === "story" && A.forWhat === "faceless" ? "Voiceover or text-on-screen stories" : t.sub}</small></div>
+        <div class="stepper"><button data-p="${k}" data-d="-1" aria-label="Less">−</button><button data-p="${k}" data-d="1" aria-label="More">+</button></div>
       </div>`).join("")}
+    ${A.forWhat === "faceless" ? `<p class="hint">Faceless page, so no talking-to-camera posts.</p>` : ""}
     <div id="promiseNote"></div>
     ${nav()}`,
   dates: () => `
@@ -1167,37 +1307,56 @@ const VIEWS = {
     <p class="hint">Up to 31 days. Start with 1–2 weeks if you're new.</p>
     ${nav()}`,
   cta: () => `
-    <h2>What should viewers do after watching?</h2>
-    <p class="lede">Pick as many as you want. Not every post gets one: viral and low-effort posts go out with no CTA so they don't feel like an ad.</p>
+    <h2>What should viewers do next?</h2>
+    <p class="lede">Pick as many as you want. Viral and low-effort posts go out with no CTA so they don't feel like an ad.</p>
     <div class="tiles" id="ctaChips">${CTAS.map(c => `<button class="tile" style="--t:${c.t}" aria-pressed="${A.ctas.includes(c.id)}" data-v="${c.id}"><span class="ico">${c.ico}</span>${c.label}</button>`).join("")}</div>
     <div class="field" id="dmField" ${A.ctas.includes("dm") ? "" : "hidden"}><label for="dmWord">What word should they DM you?</label><input class="in ex" id="dmWord" placeholder="START" value="${esc(A.dmWord)}"></div>
     <div class="field" id="linkField" ${A.ctas.includes("link") ? "" : "hidden"}><label for="linkFor">What's the link in your bio for?</label><input class="in ex" id="linkFor" placeholder="my free planner" value="${esc(A.linkFor)}"></div>
     ${nav()}`,
   email: () => `
-    <h2>Your batchbook is ready ✨</h2>
-    <p class="lede">Where should I send it?</p>
+    <h2>Your first post is ready ✨</h2>
+    <p class="lede">Where should I send your batchbook?</p>
     <div class="field"><label for="name">First name</label><input class="in" id="name" autocomplete="given-name" value="${esc(A.name)}"></div>
     <div class="field"><label for="email">Email</label><input class="in" id="email" type="email" autocomplete="email" value="${esc(A.email)}"></div>
     <label class="optin"><input type="checkbox" id="updates" ${A.updates ? "checked" : ""}><span>Let me know when I drop more free templates and tools 🤍 <span class="hint">No spam, unsubscribe anytime.</span></span></label>
-    ${nav("Make my batchbook")}`
+    ${nav("Show me my first post")}`
 };
 
 const WIRE = {
   intro: () => { const b = $("openSaved"); if (b) b.onclick = () => { const s = store.get(); A = migrate(s.answers); BOOK = s.book; showBook(); }; },
+  for: () => {
+    $("forTiles").onclick = e => { const b = e.target.closest("[data-v]"); if (!b) return; A.forWhat = b.dataset.v;
+      $("forTiles").querySelectorAll(".tile").forEach(x => x.setAttribute("aria-pressed", x === b));
+      if (A.forWhat === "faceless") A.promise.talking = 0; };
+  },
   about: () => {
-    $("iam").oninput = e => A.iam = e.target.value;
+    ["iam", "biz", "bizHelp", "page", "pageFor"].forEach(id => { const el = $(id); if (el) el.oninput = e => A[id] = e.target.value; });
     $("plat").onclick = e => { const b = e.target.closest("[data-v]"); if (!b) return; const v = b.dataset.v;
       A.platforms = A.platforms.includes(v) ? A.platforms.filter(x => x !== v) : [...A.platforms, v];
       b.setAttribute("aria-pressed", A.platforms.includes(v)); };
   },
   topics: () => {
-    $("topicList").oninput = e => { if (e.target.dataset.i != null) A.topics[+e.target.dataset.i] = e.target.value; };
-    const addOne = () => { if (A.topics.length >= 5) return; A.topics.push(""); render({ quiet: true, focus: `[data-i="${A.topics.length - 1}"]` }); };
-    $("topicList").onclick = e => {
-      if (e.target.id === "addTopic") addOne();
-      if (e.target.dataset.del != null) { A.topics.splice(+e.target.dataset.del, 1); render({ quiet: true }); }
+    const list = $("topicList");
+    const addTopic = () => { if (A.topics.length >= 5) return; A.topics.push(""); A.subs.push([]); render({ quiet: true, focus: `[data-i="${A.topics.length - 1}"]` }); };
+    const addSub = inp => {
+      const i = +inp.dataset.sub, v = inp.value.trim().replace(/,$/, "");
+      if (!v) return;
+      A.subs[i] = [...(A.subs[i] || []), v];
+      render({ quiet: true, focus: `[data-sub="${i}"]` });
     };
-    $("topicList").onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); addOne(); } };
+    list.oninput = e => { if (e.target.dataset.i != null) A.topics[+e.target.dataset.i] = e.target.value; };
+    list.onclick = e => {
+      if (e.target.id === "addTopic") addTopic();
+      if (e.target.dataset.del != null) { const i = +e.target.dataset.del; A.topics.splice(i, 1); A.subs.splice(i, 1); render({ quiet: true }); }
+      if (e.target.dataset.subdel) { const [i, j] = e.target.dataset.subdel.split("|").map(Number); A.subs[i].splice(j, 1); render({ quiet: true, focus: `[data-sub="${i}"]` }); }
+    };
+    list.onkeydown = e => {
+      if (e.target.dataset.sub != null && (e.key === "Enter" || e.key === ",")) { e.preventDefault(); addSub(e.target); }
+      else if (e.target.dataset.sub != null && e.key === "Backspace" && !e.target.value) { const i = +e.target.dataset.sub; if ((A.subs[i] || []).length) { A.subs[i].pop(); render({ quiet: true, focus: `[data-sub="${i}"]` }); } }
+      else if (e.target.dataset.i != null && e.key === "Enter") { e.preventDefault(); list.querySelector(`[data-sub="${e.target.dataset.i}"]`)?.focus(); }
+    };
+    // a subtopic typed but not "entered" still counts when they leave the box
+    list.addEventListener("focusout", e => { if (e.target.dataset?.sub != null && e.target.value.trim()) { const i = +e.target.dataset.sub; A.subs[i] = [...(A.subs[i] || []), e.target.value.trim()]; e.target.value = ""; setTimeout(() => render({ quiet: true }), 0); } });
   },
   takes: () => {
     const t = A.topics.filter(Boolean)[takeTopic];
@@ -1221,14 +1380,12 @@ const WIRE = {
       const have = { film: A.time.film.h * A.time.film.days.length * 60, edit: A.time.edit.h * A.time.edit.days.length * 60 };
       const over = ["film", "edit"].filter(k => need[k] > have[k]);
       $("promiseNote").innerHTML = total === 0 ? `<div class="note warn">Pick at least 1 post a week.</div>`
-        : over.length ? `<div class="note warn">That's <b>${total} posts a week</b>. Heads up: it needs about ${Math.ceil(need.film / 60 * 2) / 2} hrs of filming and ${Math.ceil(need.edit / 60 * 2) / 2} hrs of editing a week, which is more than the time you gave. Fewer posts you actually make beats more posts you skip.</div>`
-        : `<div class="note ok">That's <b>${total} post${total > 1 ? "s" : ""} a week</b> ✨ and it fits your time.</div>`;
+        : over.length ? `<div class="note warn">That's <b>${total} posts a week</b>. It needs about ${Math.ceil(need.film / 60 * 2) / 2} hrs of filming and ${Math.ceil(need.edit / 60 * 2) / 2} hrs of editing, more than the time you gave. Fewer posts you actually make beats more posts you skip.</div>`
+        : `<div class="note ok">That's <b>${total} post${total > 1 ? "s" : ""} a week</b> ✨ and it fits your schedule.</div>`;
     };
-    // update the numbers in place instead of redrawing the whole card
     document.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
       const k = b.dataset.p; A.promise[k] = Math.max(0, Math.min(14, A.promise[k] + +b.dataset.d));
-      const row = b.closest(".promise");
-      row.querySelectorAll("b").forEach(x => x.textContent = A.promise[k]);
+      b.closest(".promise").querySelector(".n").textContent = A.promise[k];
       note();
     });
     note();
@@ -1253,7 +1410,12 @@ const WIRE = {
 };
 
 function validate(s) {
-  if (s === "about" && !A.iam.trim()) return "Fill in \"I'm ___\" so your hooks sound like you.";
+  if (s === "for" && !A.forWhat) return "Pick one.";
+  if (s === "about") {
+    if (A.forWhat === "personal" && !A.iam.trim()) return "Fill in \"I'm ___\" so your hooks sound like you.";
+    if (A.forWhat === "business" && !A.biz.trim()) return "Tell me what your business is.";
+    if (A.forWhat === "faceless" && !A.page.trim()) return "Tell me what your page is about.";
+  }
   if (s === "topics" && !A.topics.some(t => t.trim())) return "Add at least one topic.";
   if (s === "takes") { const t = A.topics.filter(Boolean)[takeTopic]; const k = A.takes[t] || {};
     if (!["believe", "disagree", "untalked"].some(x => (k[x] || "").trim())) return "Fill in at least one."; }
@@ -1279,26 +1441,102 @@ $("stepBox").addEventListener("click", async e => {
   const s = STEPS[stepI];
   if (go === "back") {
     if (s === "takes" && takeTopic > 0) { takeTopic--; return render(); }
-    if (s === "story") { takeTopic = A.topics.filter(Boolean).length - 1; }
-    stepI--; return render();
+    do { stepI--; } while (stepI > 0 && skipStep(STEPS[stepI]));
+    if (STEPS[stepI] === "takes") takeTopic = A.topics.filter(Boolean).length - 1;
+    return render();
   }
-  if (s === "topics") A.topics = A.topics.map(t => t.trim()).filter(Boolean).length ? A.topics.map(t => t.trim()) : A.topics;
   const err = validate(s);
   if (err) { $("err").textContent = err; return; }
-  if (s === "topics") { A.topics = A.topics.filter(Boolean); takeTopic = 0; }
+  if (s === "topics") {
+    const keep = A.topics.map((t, i) => [t.trim(), A.subs[i] || []]).filter(([t]) => t);
+    A.topics = keep.map(k => k[0]); A.subs = keep.map(k => k[1]); takeTopic = 0;
+  }
   if (s === "takes" && takeTopic < A.topics.length - 1) { takeTopic++; return render(); }
   if (s === "email") return finish();
-  stepI++; render();
+  do { stepI++; } while (skipStep(STEPS[stepI]));
+  render();
 });
 
 async function finish() {
   if (CONFIG.emailEndpoint) {
     try { await fetch(CONFIG.emailEndpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({ name: A.name, email: A.email, wantsUpdates: A.updates, iam: A.iam, topics: A.topics, platforms: A.platforms }) }); } catch (e) {}
+      body: JSON.stringify({ name: A.name, email: A.email, wantsUpdates: A.updates, makingFor: A.forWhat, about: whoAmI() || A.page, topics: A.topics, platforms: A.platforms }) }); } catch (e) {}
   }
   BOOK = generate(A);
   save();
-  showBook();
+  deckI = 0;
+  showDeck();
+}
+
+/* ---------- first-post cards ("make it now") ---------- */
+let deckI = 0;
+const TODAY_STEPS = ["Say the hook out loud 3×", "Film it", "Edit it", "Post it"];
+function deckPosts() { return BOOK.posts.slice().sort((a, b) => a.date.localeCompare(b.date)).slice(0, 7); }
+function ring(pct) {
+  const c = 2 * Math.PI * 9;
+  return `<svg class="ring" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="#E8E1D6" stroke-width="3"/><circle cx="12" cy="12" r="9" fill="none" stroke="#2F8A5B" stroke-width="3" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c * (1 - pct / 100)}" transform="rotate(-90 12 12)"/></svg>`;
+}
+function showDeck(open = false) {
+  const list = deckPosts();
+  if (!list.length) return showBook();
+  deckI = Math.max(0, Math.min(deckI, list.length - 1));
+  const p = list[deckI];
+  if (!p.today) p.today = [false, false, false, false];
+  const pct = p.today.filter(Boolean).length * 25;
+  const f = F[p.fmt], pur = PURPOSES[p.purpose];
+  setTheme(deckI === 0 ? "takes" : ["about", "topics", "time", "promise", "takes", "about", "topics"][deckI % 7]);
+  $("quiz").hidden = true; $("book").hidden = true; $("deck").hidden = false;
+  const stepBody = [
+    `<p>${esc(p.hook)}</p><p class="hint">Tweak the words until it sounds like you, right on the card above.</p>`,
+    `<p><b>${esc(f.name)}</b> ${f.fire}</p><ol class="howto">${f.how.slice(0, 2).map(h => `<li>${esc(h)}</li>`).join("")}</ol>
+     <details><summary>All the steps</summary><ol class="howto">${f.how.slice(2).map(h => `<li>${esc(h)}</li>`).join("")}</ol></details>`,
+    `<ol class="howto">${BLOCK_TIPS.edit.map(t => `<li>${esc(t)}</li>`).join("")}</ol>`,
+    `<p>${p.purpose === "virality" ? "No CTA on this one, let it spread." : `End with: <b>${esc(p.cta)}</b>`}</p>
+     <div class="where" id="deckWhere">${Object.keys(p.where).map(pl => `<button class="wchip ${p.where[pl]}" data-pl="${esc(pl)}">${p.where[pl] === "done" ? "✓ " : ""}${esc(pl)}</button>`).join("")}</div>
+     <p class="hint">Tap where you posted it.</p>`
+  ];
+  $("deck").innerHTML = `
+    <div class="deck-wrap">
+      <div class="deck-top"><span class="qlabel">${deckI === 0 ? "Start here" : "Up next"}</span><span class="qlabel">${deckI + 1} / ${list.length}</span></div>
+      <h2 class="display">${deckI === 0 ? "Your first post. Make it today." : `Post ${deckI + 1}`}</h2>
+      <div class="pcard" id="pcard">
+        <div class="pc-head"><span class="ppill p-${p.purpose}">${pur.ico} ${pur.label}</span><span class="pdate">📅 ${fmtDate(p.date)}</span></div>
+        <div class="pc-title" contenteditable="true" data-f="hook" spellcheck="false">${esc(p.hook)}</div>
+        <div class="pc-desc" contenteditable="true" data-f="point">${esc(p.point)}</div>
+        <div class="pc-tags"><span># ${esc(TYPES[p.type].label)}</span><span># ${esc(f.name)}</span><span># ${esc(p.topic)}</span></div>
+        <div class="pc-steps" ${open || pct ? "" : "hidden"} id="pcSteps">
+          ${TODAY_STEPS.map((t, i) => `<div class="tstep ${p.today[i] ? "done" : ""}"><label><input type="checkbox" data-t="${i}" ${p.today[i] ? "checked" : ""}><b>${i + 1}. ${t}</b></label><div class="tbody">${stepBody[i]}</div></div>`).join("")}
+        </div>
+        <div class="pc-foot"><span class="pc-who">${A.name ? esc(A.name) : "You"} · ${p.film && p.type !== "carousel" ? `film ${fmtDate(p.film)}` : "no filming"}</span><span class="pc-pct">${ring(pct)} ${pct}%</span></div>
+      </div>
+      ${pct === 100 ? `<div class="note ok center">Posted! 🎉 That's the hardest one done.</div>` : ""}
+      <div class="nav">${open || pct ? "" : `<button class="btn primary" id="makeNow">Make it now →</button>`}</div>
+      <div class="deck-nav">
+        <button class="btn" id="dPrev" ${deckI === 0 ? "disabled" : ""} aria-label="Previous post">←</button>
+        <div class="dots">${list.map((_, i) => `<i class="${i === deckI ? "on" : ""}"></i>`).join("")}</div>
+        <button class="btn" id="dNext" ${deckI === list.length - 1 ? "disabled" : ""} aria-label="Next post">→</button>
+      </div>
+      <button class="saved-link" id="toBook">See my full calendar →</button>
+    </div>`;
+  const card = $("pcard");
+  card.oninput = e => { const f2 = e.target.dataset?.f; if (f2) { p[f2] = e.target.innerText.trim(); save(); } };
+  card.onchange = e => { const i = e.target.dataset?.t; if (i == null) return; p.today[+i] = e.target.checked; save(); showDeck(true); };
+  const wh = $("deckWhere");
+  if (wh) wh.onclick = e => { const b = e.target.closest("[data-pl]"); if (!b) return; const pl = b.dataset.pl;
+    p.where[pl] = p.where[pl] === "done" ? "plan" : "done";
+    if (Object.values(p.where).some(v => v === "done")) p.today[3] = true;
+    if (Object.values(p.where).every(v => v === "done")) p.status = "Posted";
+    save(); showDeck(true); };
+  const mk = $("makeNow"); if (mk) mk.onclick = () => showDeck(true);
+  $("dPrev").onclick = () => { deckI--; showDeck(); };
+  $("dNext").onclick = () => { deckI++; showDeck(); };
+  $("toBook").onclick = () => showBook();
+  // swipe between cards on phones
+  let x0 = null;
+  card.ontouchstart = e => { x0 = e.touches[0].clientX; };
+  card.ontouchend = e => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 60 && !e.target.isContentEditable) { if (dx < 0 && deckI < list.length - 1) { deckI++; showDeck(); } else if (dx > 0 && deckI > 0) { deckI--; showDeck(); } } };
+  window.scrollTo(0, 0);
 }
 
 /* ---------- generator ---------- */
@@ -1386,7 +1624,7 @@ function generate() {
   const slots = postSlots();
   const used = {}; const next = (pool, key) => { used[key] = (used[key] ?? -1) + 1; return pool[used[key] % pool.length]; };
   let ai = 0, si = 0, n = 0;
-  const seen = {};
+  const seen = {}, subTurn = {};
   const posts = slots.map(slot => {
     let ang;
     const wantStory = story.length && (slot.type === "story" || (n % 4 === 3));
@@ -1394,6 +1632,9 @@ function generate() {
     else if (angles.length) ang = angles[ai++ % angles.length];
     else ang = story[si++ % story.length];
     n++;
+    // rotate through the topic's subtopics so posts don't all sound the same
+    const ti = A.topics.indexOf(ang.topic), subs = ti >= 0 ? (A.subs[ti] || []) : [];
+    if (subs.length) { subTurn[ang.topic] = (subTurn[ang.topic] || 0) + 1; ang = { ...ang, sub: subs[(subTurn[ang.topic] - 1) % subs.length] }; }
     const angleId = ang.kind + "|" + (ang.text || ang.old);
     const repeat = seen[angleId + slot.type] = (seen[angleId + slot.type] || 0) + 1;
     let fmtKey = PICK[slot.type][ang.kind];
@@ -1443,7 +1684,7 @@ function generate() {
     const editD = taskDay(slot.date, A.time.edit.days, filmD || today0) || parse(slot.date);
     return {
       id: Math.random().toString(36).slice(2, 9),
-      date: slot.date, type: slot.type, fmt: fmtKey, topic: ang.topic, hook, point,
+      date: slot.date, type: slot.type, fmt: fmtKey, topic: ang.sub ? `${ang.topic} · ${ang.sub}` : ang.topic, hook, point,
       slots: slots2, purpose, cta,
       film: filmD ? iso(filmD) : "", edit: editD ? iso(editD) : "",
       // where it goes: "plan" = going to post there, "done" = posted
@@ -1519,7 +1760,9 @@ function showBook() {
         <h1 style="margin-top:8px">${A.name ? esc(A.name) + "'s" : "Your"} Batchbook</h1>
         <div class="sub">${fmtDate(A.start)} → ${fmtDate(A.end)} · ${posts.length} posts</div></div>
       <div class="actions">
+        <button class="btn" id="xDeck">← My first posts</button>
         <button class="btn primary" id="xSheets">Export to Google Sheets</button>
+        <button class="btn" id="xNotion">Export to Notion</button>
         <button class="btn" id="xPdf">Save as PDF</button>
         <button class="btn" id="xRedo">Start over</button>
       </div>
@@ -1531,6 +1774,8 @@ function showBook() {
     const id = e.target.closest("[data-open]")?.dataset.open; if (id) return openPost(id);
     const blk = e.target.closest("[data-block]")?.dataset.block; if (blk) return openBlock(blk);
     if (e.target.id === "xSheets") exportCsv();
+    if (e.target.id === "xNotion") exportNotion();
+    if (e.target.id === "xDeck") { deckI = 0; showDeck(); }
     if (e.target.id === "xPdf") printBook();
     if (e.target.id === "xRedo") { if (confirm("Start over? This clears your batchbook from this browser.")) { store.clear(); location.reload(); } }
   };
@@ -1654,8 +1899,9 @@ const SLOT = {
   goal: /^(personal goal)$/i
 };
 function fillBank(h, ang) {
-  const baseTopic = ang.topic && !["My story", "Building in public"].includes(ang.topic) ? ang.topic : (A.topics[0] || "");
-  const who = A.iam.replace(/^(i'?m|i am)\s+/i, "").replace(/^(a|an)\s+/i, "");
+  const rawTopic = ang.sub || (ang.topic || "").split(" · ").pop();
+  const baseTopic = rawTopic && !["My story", "Building in public"].includes(rawTopic) ? rawTopic : (A.topics[0] || "");
+  const who = whoAmI().replace(/^(a|an)\s+/i, "");
   // each kind of answer only goes into blanks where it reads right
   // hooks that argue AGAINST the blank ("I can't stand people who say ___") take the thing they disagree with
   const against = /can[’']t stand|sick of seeing|closed-minded|is lying|That’s a lie|myth/i.test(h);
@@ -1699,7 +1945,7 @@ function basePool(ang) {
   if (ang.kind === "untalked") return [...H.untalked.map(h => fill(h, t)), `5 things nobody tells you about ${t.replace(/[.!]+$/, "")}`, ...H.list, ...H.open];
   if (ang.kind === "working") return [...H.working, ...H.open];
   if (ang.kind === "story") return [
-    H.story[0].replace("[age]", A.iam.replace(/^(i'?m|i am)\s+/i, "")),
+    ...(whoAmI() ? [H.story[0].replace("[age]", whoAmI())] : []),
     H.story[1].replace("[PROBLEM]", ang.old).replace("[PAYOFF]", ang.now),
     fill(H.relate[0], ang.old), `Old me: ${ang.old} → Me now: ${ang.now}`, `${ang.old} vs ${ang.now}`, H.story[2], H.relate[1]];
   return [...H.working, ...H.open];
@@ -1747,6 +1993,32 @@ function exportCsv() {
   a.href = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" }));
   a.download = "my-batchbook.csv"; a.click();
   setTimeout(() => alert("Downloaded my-batchbook.csv ✅\n\nTo open it in Google Sheets:\n1. Go to sheets.new\n2. File → Import → Upload\n3. Pick my-batchbook.csv → Import data"), 300);
+}
+// Notion: a Markdown page (Import → Markdown) with every post as a toggle-style section + the time blocks
+function exportNotion() {
+  const posts = BOOK.posts.slice().sort((a, b) => a.date.localeCompare(b.date));
+  const line = s => String(s || "").replace(/\n+/g, " ").trim();
+  let md = `# ${A.name ? A.name + "'s" : "My"} Batchbook\n\n${fmtDate(A.start)} → ${fmtDate(A.end)} · ${posts.length} posts\n\n`;
+  md += `> Made with the Starter Batchbook. Tick things off as you go.\n\n## 📅 Posts\n\n`;
+  posts.forEach(p => {
+    const f = F[p.fmt];
+    md += `### ${fmtDate(p.date)} · ${line(p.hook)}\n\n`;
+    md += `- [ ] Posted\n- **Content:** ${TYPES[p.type].label} · ${f.name}\n- **Purpose:** ${PURPOSES[p.purpose].label}\n- **Topic:** ${line(p.topic)}\n`;
+    if (p.film) md += `- **Film on:** ${fmtDate(p.film)}\n`;
+    md += `- **Edit on:** ${fmtDate(p.edit)}\n- **Post to:** ${Object.keys(p.where || {}).join(", ")}\n\n`;
+    md += `**Main point:** ${line(p.point)}\n\n**Build it**\n\n${f.slots.map(l => `- ${l}: ${line(p.slots[l])}`).join("\n")}\n\n`;
+    md += `**CTA:** ${p.purpose === "virality" ? "None, let it spread" : line(p.cta)}\n\n**How to make it**\n\n${f.how.map((h, i) => `${i + 1}. ${line(h)}`).join("\n")}\n\n`;
+    if (p.notes) md += `**Notes:** ${line(p.notes)}\n\n`;
+    md += `---\n\n`;
+  });
+  md += `## ⏱️ Time blocks\n\n`;
+  Object.entries(window.__blocks || {}).sort().forEach(([ds, list]) => list.forEach(b => {
+    md += `- [ ] **${fmtDate(ds)}** · ${b.label}${b.posts.length ? `: ${b.posts.map(p => line(p.hook)).join(" / ")}` : ""}\n`;
+  }));
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([md], { type: "text/markdown;charset=utf-8" }));
+  a.download = "my-batchbook.md"; a.click();
+  setTimeout(() => alert("Downloaded my-batchbook.md ✅\n\nTo open it in Notion:\n1. In Notion, click Import (bottom of the sidebar, or ••• → Import)\n2. Pick Markdown & CSV → choose my-batchbook.md\n\nWant it as a Notion database instead? Use Export to Google Sheets, then import that .csv file in Notion the same way."), 300);
 }
 function printBook() {
   $("print").innerHTML = `<h1>${A.name ? esc(A.name) + "'s" : "Your"} Batchbook</h1><div class="p-meta">${fmtDate(A.start)} → ${fmtDate(A.end)} · ${BOOK.posts.length} posts</div>` +
