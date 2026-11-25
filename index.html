@@ -1,0 +1,1755 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Your Content Batchbook</title>
+<meta name="description" content="Answer a few questions and get your posting calendar with every post planned: hook, main point, how to film it and CTA.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%2337352f%22/%3E%3Ctext x=%2216%22 y=%2222%22 font-size=%2218%22 font-family=%22Arial%22 font-weight=%22700%22 fill=%22white%22 text-anchor=%22middle%22%3EB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..800&family=Fraunces:opsz,wght,SOFT,WONK@9..144,600..900,0..100,0..1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff; --side: #f7f7f5; --fg: #37352f; --muted: #787774; --faint: #a5a29c; --line: #e9e9e7;
+  --hover: rgba(55,53,47,.06); --card: #ffffff;
+  --shadow: 0 0 0 1px rgba(15,15,15,.07), 0 2px 4px rgba(15,15,15,.06);
+  --accent: #2383e2; --accent-soft: rgba(35,131,226,.12); --today: #eb5757; --warn-bg: #fdecc8; --warn-fg: #402c1b;
+  --font: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", Helvetica, Arial, sans-serif;
+  --c-carousel-bg: #d3e5ef; --c-carousel-fg: #183347; --c-carousel-dot: #337ea9;
+  --c-lowEffort-bg: #dbeddb; --c-lowEffort-fg: #1c3829; --c-lowEffort-dot: #448361;
+  --c-talking-bg: #f5e0e9; --c-talking-fg: #4c2337; --c-talking-dot: #c14c8a;
+  --c-story-bg: #fadec9; --c-story-fg: #49290e; --c-story-dot: #d9730d;
+  --c-task-bg: #e3e2e0; --c-task-fg: #32302c; --c-task-dot: #9b9a97;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #191919; --side: #202020; --fg: #e6e6e4; --muted: #9b9b9b; --faint: #6f6f6f; --line: #2f2f2f;
+    --hover: rgba(255,255,255,.055); --card: #252525; --shadow: 0 0 0 1px rgba(255,255,255,.07), 0 2px 4px rgba(0,0,0,.3);
+    --accent: #529cca; --accent-soft: rgba(82,156,202,.18); --today: #ff7369; --warn-bg: #56452a; --warn-fg: #fcefd2;
+    --c-carousel-bg: #28456c; --c-carousel-fg: #d6e8f7; --c-carousel-dot: #529cca;
+    --c-lowEffort-bg: #2b4535; --c-lowEffort-fg: #dcf0e1; --c-lowEffort-dot: #4dab9a;
+    --c-talking-bg: #4e2c3c; --c-talking-fg: #f7e1ec; --c-talking-dot: #e255a1;
+    --c-story-bg: #5c3b23; --c-story-fg: #fbe2cf; --c-story-dot: #ffa344;
+    --c-task-bg: #3a3a3a; --c-task-fg: #ebebea; --c-task-dot: #9b9b9b;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; min-height: 100%; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.5 var(--font); -webkit-font-smoothing: antialiased; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-radius: 4px; }
+h1, h2, h3 { margin: 0; letter-spacing: -.01em; }
+
+/* ---------- quiz (playful: colored page, stacked card, mascot) ---------- */
+body.quizmode { background: var(--page, #FFF4E6); transition: background .4s ease; }
+.quiz { --ink: #1E1B2E; --paper: #FFFDF8; --soft: #F5F1EA; --line2: #E8E1D6;
+  max-width: 620px; margin: 0 auto; padding: 20px 16px 60px; min-height: 100vh; display: flex; flex-direction: column; color: var(--ink); font-family: "DM Sans", var(--font); }
+.ws { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; }
+.ws-mark { width: 22px; height: 22px; border-radius: 5px; background: var(--fg); color: var(--bg); display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+.quiz .ws-mark { background: var(--ink); color: var(--paper); border-radius: 7px; }
+.display { font-family: "Fraunces", Georgia, serif; font-variation-settings: "SOFT" 100, "WONK" 1; font-weight: 800; letter-spacing: -.015em; }
+.stack { position: relative; margin-top: 18px; }
+.stack::before, .stack::after { content: ""; position: absolute; inset: 0; border-radius: 28px; background: var(--paper); opacity: .55; transform: rotate(-2.2deg) translateY(6px); }
+.stack::after { opacity: .35; transform: rotate(2deg) translateY(10px); }
+.card { position: relative; z-index: 1; background: var(--paper); border-radius: 28px; padding: 26px 24px 24px; box-shadow: 0 18px 40px -18px rgba(30,27,46,.35); }
+.dashes { display: flex; gap: 6px; margin-bottom: 18px; }
+.dashes i { flex: 1; height: 5px; border-radius: 99px; background: var(--line2); transition: background .3s; }
+.dashes i.on { background: var(--ink); }
+.qlabel { font: 600 12px/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .12em; color: #8A8396; text-transform: uppercase; }
+.mascot { width: 92px; height: 92px; margin: 2px 0 4px; animation: bob 3.2s ease-in-out infinite; }
+.mascot .eye { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
+@keyframes bob { 50% { transform: translateY(-6px) rotate(-3deg); } }
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+.step { animation: in .35s cubic-bezier(.2,.8,.2,1) both; display: grid; gap: 16px; }
+@keyframes in { from { opacity: 0; transform: translateY(10px) scale(.99); } to { opacity: 1; transform: none; } }
+.step h1 { font-size: clamp(38px, 9vw, 54px); line-height: 1.02; }
+.step h2 { font-size: clamp(28px, 6.5vw, 36px); line-height: 1.08; }
+.step h2 em { font-style: italic; color: var(--accent2, #7B5CE0); }
+.lede { color: #5E5869; }
+.field { display: grid; gap: 6px; }
+.field > label, .lbl { font-size: 14px; font-weight: 700; }
+.hint { font-size: 13px; color: #8A8396; }
+.quiz .in { width: 100%; border: 2px solid var(--line2); background: var(--paper); border-radius: 16px; padding: 13px 15px; outline: 0; color: var(--ink); }
+.quiz .in:focus { border-color: var(--ink); box-shadow: none; }
+.fill { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; background: var(--tint, var(--soft)); border-radius: 20px; padding: 14px 16px; }
+.fill span { font-weight: 700; }
+.fill .in { flex: 1 1 220px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 0; border-radius: 999px; padding: 9px 16px; background: transparent; box-shadow: inset 0 0 0 2px var(--line2); color: #5E5869; font-weight: 600; transition: transform .12s; }
+.chip:hover { color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+.chip:active { transform: scale(.96); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); box-shadow: none; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.tile { border: 0; border-radius: 22px; padding: 16px 14px; text-align: left; font-weight: 700; color: var(--ink); background: var(--t); display: grid; gap: 8px; transition: transform .15s, box-shadow .15s; box-shadow: inset 0 0 0 3px transparent; }
+.tile .ico { font-size: 26px; line-height: 1; }
+.tile:hover { transform: translateY(-2px) rotate(-.6deg); }
+.tile[aria-pressed="true"] { box-shadow: inset 0 0 0 3px var(--ink); }
+.tile[aria-pressed="true"]::after { content: "✓ picked"; font-size: 12px; font-weight: 700; }
+.day { width: 42px; height: 42px; padding: 0; text-align: center; border-radius: 50%; }
+.topic-row { display: flex; gap: 8px; }
+.topic-row .in { flex: 1; }
+.x { border: 0; background: transparent; color: #8A8396; border-radius: 12px; padding: 0 12px; font-size: 20px; }
+.x:hover { background: var(--soft); color: var(--ink); }
+.add { border: 2px dashed var(--line2); background: transparent; color: #5E5869; border-radius: 16px; padding: 12px; text-align: left; font-weight: 600; }
+.add:hover { border-color: var(--ink); color: var(--ink); }
+.timerow { display: grid; gap: 10px; padding: 16px; border-radius: 20px; background: var(--tint, var(--soft)); }
+.timerow .top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-weight: 600; }
+.hrs { width: 54px; height: 34px; text-align: center; padding: 0 4px; border: 2px solid var(--line2); border-radius: 10px; background: var(--paper); color: var(--ink); font-weight: 700; outline: 0; -moz-appearance: textfield; }
+.hrs::-webkit-inner-spin-button, .hrs::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.hrs:focus { border-color: var(--ink); }
+.timerow .day { width: 36px; height: 36px; font-size: 13px; }
+.promise { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 20px; background: var(--c-bg); color: var(--c-fg); }
+.promise .dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+.promise .txt { flex: 1; }
+.promise .txt small { display: block; opacity: .75; }
+.stepper { display: flex; align-items: center; gap: 6px; }
+.stepper button { width: 38px; height: 38px; border-radius: 50%; border: 0; background: var(--paper); color: var(--ink); font-size: 20px; line-height: 1; box-shadow: 0 2px 0 rgba(30,27,46,.15); }
+.stepper button:active { transform: translateY(1px); box-shadow: none; }
+.stepper b { min-width: 24px; text-align: center; font-variant-numeric: tabular-nums; font-size: 18px; }
+.note { border-radius: 16px; padding: 12px 14px; font-size: 14px; }
+.note.ok { background: #E3F4E6; color: #1C3829; }
+.note.warn { background: #FDECC8; color: #402c1b; }
+.nav { display: flex; gap: 10px; margin-top: 6px; align-items: center; }
+.btn { border: 0; border-radius: 8px; padding: 12px 18px; background: transparent; color: var(--muted); font-weight: 500; }
+.btn:hover { background: var(--hover); color: var(--fg); }
+.btn.primary { background: var(--accent); color: #fff; flex: 1; }
+.btn.primary:hover { filter: brightness(1.06); }
+.btn.primary:disabled { opacity: .45; cursor: default; filter: none; }
+.quiz .btn { border-radius: 999px; padding: 14px 22px; font-weight: 700; color: #5E5869; }
+.quiz .btn:hover { background: var(--soft); color: var(--ink); }
+.quiz .btn.primary { background: var(--ink); color: var(--paper); font-size: 16px; transition: transform .12s; }
+.quiz .btn.primary:hover { filter: none; transform: translateY(-1px); }
+.quiz .btn.primary:active { transform: translateY(1px); }
+.err { color: #D44C47; font-size: 14px; min-height: 18px; margin: 0; font-weight: 600; }
+.perks { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.perks li { display: flex; gap: 10px; align-items: flex-start; font-weight: 500; }
+.perks li::before { content: "✦"; color: var(--accent2, #7B5CE0); }
+.dates { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.top-row { display: flex; justify-content: space-between; align-items: center; }
+.quiet .step, .quiet { animation: none !important; }
+.tabhint { font-size: 12px; color: #8A8396; }
+.tabhint kbd { font: 600 11px ui-monospace, monospace; border: 1.5px solid var(--line2); border-bottom-width: 3px; border-radius: 6px; padding: 1px 6px; background: var(--paper); color: var(--ink); }
+@media (hover: none) { .tabhint { display: none; } }
+.optin { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; cursor: pointer; }
+.optin input { width: 20px; height: 20px; margin-top: 1px; accent-color: #FDE047; flex: none; }
+.saved-link { background: none; border: 0; color: var(--ink); text-decoration: underline; font-weight: 600; padding: 8px 0; justify-self: center; }
+/* intro hero */
+.hero-card { text-align: left; }
+.hero-card .mascot { width: 128px; height: 128px; }
+.blobs { display: flex; gap: 6px; margin: -4px 0 4px; }
+.blobs svg { width: 46px; height: 46px; }
+.blobs svg:nth-child(2) { animation-delay: .4s; } .blobs svg:nth-child(3) { animation-delay: .8s; } .blobs svg:nth-child(4) { animation-delay: 1.2s; }
+/* final step: rays */
+.card.rays { background: repeating-conic-gradient(from 0deg, rgba(255,255,255,.10) 0 10deg, transparent 10deg 20deg), var(--accent2, #3E9C8F); color: var(--paper); }
+.card.rays .lede, .card.rays .qlabel, .card.rays .hint { color: rgba(255,253,248,.85); }
+.card.rays .field > label { color: var(--paper); }
+.card.rays .dashes i { background: rgba(255,255,255,.3); } .card.rays .dashes i.on { background: var(--paper); }
+.card.rays .btn.primary { background: #FDE047; color: var(--ink); }
+.card.rays .btn { color: var(--paper); } .card.rays .btn:hover { background: rgba(255,255,255,.15); color: var(--paper); }
+.card.rays .err { color: #FFE1DC; }
+@media (max-width: 520px) { .card { padding: 22px 18px 20px; border-radius: 24px; } .mascot { width: 76px; height: 76px; } }
+
+/* ---------- batchbook ---------- */
+.book { max-width: 1200px; margin: 0 auto; padding: 18px 20px 80px; }
+.book-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.book-head h1 { font-size: 26px; }
+.book-head .sub { color: var(--muted); font-size: 14px; }
+.actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.actions .btn { padding: 8px 12px; font-size: 14px; box-shadow: inset 0 0 0 1px var(--line); }
+.actions .btn.primary { box-shadow: none; flex: none; }
+.banner { margin: 14px 0; background: var(--warn-bg); color: var(--warn-fg); border-radius: 8px; padding: 10px 14px; font-size: 14px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 0 16px; font-size: 13px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.week-h { font-size: 13px; color: var(--muted); font-weight: 600; margin: 18px 0 6px; }
+.grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.cell { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-height: 130px; padding: 6px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.cell.out { background: var(--side); }
+.cell .dnum { font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; }
+.cell.today .dnum b { background: var(--today); color: #fff; border-radius: 99px; padding: 0 6px; }
+.item { border: 0; text-align: left; border-radius: 5px; padding: 5px 7px; font-size: 12.5px; line-height: 1.3; background: var(--c-bg); color: var(--c-fg); display: grid; gap: 2px; width: 100%; }
+.item:hover { filter: brightness(.97); }
+.item .k { font-size: 11px; opacity: .75; display: flex; align-items: center; gap: 5px; }
+.item .k::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--c-dot); }
+.item .t { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow-wrap: anywhere; }
+.item.posted .t { text-decoration: line-through; opacity: .6; }
+.task { border: 0; font-size: 11.5px; color: var(--c-task-fg); background: var(--c-task-bg); border-radius: 4px; padding: 2px 6px; align-self: flex-start; text-align: left; }
+.task:hover { filter: brightness(.95); }
+.item .w { font-size: 11px; opacity: .7; }
+.where { display: flex; flex-wrap: wrap; gap: 6px; }
+.wchip { border: 0; border-radius: 99px; padding: 4px 10px; font-size: 12.5px; background: transparent; color: var(--muted); box-shadow: inset 0 0 0 1px var(--line); }
+.wchip.plan { background: var(--accent-soft); color: var(--fg); box-shadow: inset 0 0 0 1px var(--accent); }
+.wchip.done { background: var(--c-lowEffort-bg); color: var(--c-lowEffort-fg); box-shadow: none; font-weight: 600; }
+.c-carousel { --c-bg: var(--c-carousel-bg); --c-fg: var(--c-carousel-fg); --c-dot: var(--c-carousel-dot); }
+.c-lowEffort { --c-bg: var(--c-lowEffort-bg); --c-fg: var(--c-lowEffort-fg); --c-dot: var(--c-lowEffort-dot); }
+.c-talking { --c-bg: var(--c-talking-bg); --c-fg: var(--c-talking-fg); --c-dot: var(--c-talking-dot); }
+.c-story { --c-bg: var(--c-story-bg); --c-fg: var(--c-story-fg); --c-dot: var(--c-story-dot); }
+.dow { font-size: 12px; color: var(--muted); padding: 0 6px 4px; }
+.dows { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+
+/* drawer */
+.scrim { position: fixed; inset: 0; background: rgba(15,15,15,.35); z-index: 20; }
+.drawer { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(780px, calc(100% - 48px)); height: min(880px, calc(100% - 56px)); background: var(--bg); border-radius: 10px; box-shadow: 0 0 0 1px var(--line), 0 24px 64px rgba(15,15,15,.25); z-index: 21; display: flex; flex-direction: column; overflow: hidden; }
+.drawer-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); gap: 8px; }
+.drawer-bar .btn { padding: 6px 10px; font-size: 13px; }
+.drawer-body { overflow-y: auto; padding: 28px 56px 56px; display: grid; gap: 22px; align-content: start; flex: 1; }
+.d-hook { font-size: 24px; font-weight: 700; line-height: 1.25; border: 0; outline: 0; resize: none; background: transparent; width: 100%; padding: 0; field-sizing: content; min-height: 1.3em; }
+.props { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 2px 8px; align-items: center; font-size: 14px; }
+.props > label { color: var(--muted); padding: 5px 0; }
+.props .v { padding: 5px 6px; }
+.prop { border: 0; background: transparent; border-radius: 4px; padding: 5px 6px; width: 100%; outline: 0; }
+.prop:hover, .prop:focus { background: var(--hover); }
+.pill { display: inline-block; font-size: 12.5px; border-radius: 4px; padding: 2px 8px; background: var(--c-bg); color: var(--c-fg); }
+.sec { display: grid; gap: 8px; }
+.sec h3 { font-size: 15px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.sec h3 .btn { padding: 4px 10px; font-size: 13px; font-weight: 500; }
+.box { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; outline: 0; resize: vertical; width: 100%; background: var(--bg); line-height: 1.5; field-sizing: content; min-height: 44px; }
+.box:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.slot { display: grid; gap: 4px; }
+.slot label { font-size: 12.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.howto { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+.check { display: grid; gap: 4px; font-size: 14px; }
+.check label { display: flex; gap: 8px; align-items: flex-start; }
+.check input { margin-top: 4px; accent-color: var(--accent); }
+
+/* print */
+.print { display: none; }
+@media print {
+  body { background: #fff; color: #000; }
+  .quiz, .book, .scrim, .drawer { display: none !important; }
+  .print { display: block; font-size: 12px; }
+  .print h1 { font-size: 20px; margin-bottom: 4px; }
+  .p-post { border: 1px solid #ccc; border-radius: 6px; padding: 10px 12px; margin: 10px 0; break-inside: avoid; }
+  .p-post h2 { font-size: 14px; margin: 2px 0 6px; }
+  .p-meta { color: #555; font-size: 11px; }
+  .p-post p { margin: 4px 0; white-space: pre-wrap; }
+}
+
+@media (max-width: 760px) {
+  .book { padding: 14px 16px 60px; }
+  .dows { display: none; }
+  .grid { display: flex; flex-direction: column; border: 0; gap: 8px; }
+  .cell { border: 1px solid var(--line); border-radius: 8px; min-height: 0; }
+  .cell.empty-day { display: none; }
+  .cell .dnum { font-size: 13px; font-weight: 600; color: var(--fg); }
+  .drawer { top: 0; left: 0; transform: none; width: 100%; height: 100%; border-radius: 0; }
+  .drawer-body { padding: 18px 18px 40px; }
+  .props { grid-template-columns: 96px minmax(0, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<main class="quiz" id="quiz">
+  <div class="ws"><span class="ws-mark">B</span><span id="brandName">Content Starter Batchbook</span></div>
+  <div id="stepBox"></div>
+</main>
+
+<div class="book" id="book" hidden></div>
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden tabindex="-1" aria-label="Post details"></aside>
+<div class="print" id="print"></div>
+
+<!--
+  YOUR HOOK BANK
+  Paste more hooks anywhere inside this block, one per line. Bullets, numbers and quotes are fine.
+  Lines starting with "This works because" and "Example (...)" (plus the example line after it) are skipped automatically.
+  Blanks the quiz can fill: [TOPIC] [NICHE] [thing] (your niche) → their topic · [title] [identity] [profession] (avatar) → "I'm a ___"
+  · [BELIEF] [opinion] [LESSON] [MESSAGE] [UNEXPECTED TRUTH] etc → their take. Anything else stays in brackets for them to fill.
+-->
+<script id="my-hooks" type="text/plain">
+1. "Nobody talks about [TOPIC], but [UNEXPECTED INSIGHT]."
+This works because it creates curiosity and makes the viewer feel like they’re about to learn something hidden or overlooked. It positions your content as a fresh perspective.
+
+Example (Fitness):
+"Nobody talks about why most diets fail, but your environment matters more than your motivation."
+
+
+2. "Stop scrolling if you want to [DESIRED OUTCOME]."
+This works because it immediately qualifies the right audience. People who want the outcome feel personally addressed and are more likely to keep watching.
+
+Example (Business):
+"Stop scrolling if you want to get your first 10 clients online."
+
+
+3. "I wish someone had told me [LESSON] sooner."
+This works because it uses personal experience and regret. Viewers pay attention because they want to learn something that could save them time, money, or effort.
+
+Example (Content Creation):
+"I wish someone had told me storytelling mattered more than editing sooner."
+
+
+4. "This one mistake is costing you [RESULT]."
+This works because it highlights a hidden problem and creates urgency. People want to identify what they might be doing wrong.
+
+Example (Finance):
+"This one mistake is costing you thousands in unnecessary spending."
+
+
+5. "Here's what everyone gets wrong about [TOPIC]."
+This works because it challenges common beliefs. Viewers are curious to see if they’re following outdated advice.
+
+Example (Marketing):
+"Here's what everyone gets wrong about growing on social media."
+
+
+6. "You're making [GOAL] harder than it needs to be."
+This works because it gives the viewer hope that there’s a simpler solution. People are attracted to removing unnecessary complexity.
+
+Example (Productivity):
+"You're making productivity harder than it needs to be."
+
+
+7. "If I had to start from zero today, I'd [ACTION]."
+This works because it creates authority and curiosity. It gives viewers a roadmap based on experience rather than theory.
+
+Example (Entrepreneurship):
+"If I had to start a business from zero today, I'd focus on one skill first."
+
+
+8. "The biggest myth about [NICHE] is [BELIEF]."
+This works because myths create tension. People want to know whether something they believe is actually wrong.
+
+Example (Fitness):
+"The biggest myth about fitness is that you need hours in the gym to transform your body."
+
+
+9. "Before you [ACTION], watch this."
+This works because it creates urgency and prevents the viewer from moving forward without your advice.
+
+Example (Real Estate):
+"Before you buy your first property, watch this."
+
+
+10. "This changed everything for me when I [SITUATION]."
+This works because transformation stories create emotional connection and curiosity about the turning point.
+
+Example (Career):
+"This changed everything for me when I started applying for jobs differently."
+
+
+11. "You won't believe what happened when I [ACTION]."
+This works because it creates an open loop. The viewer wants to discover the outcome.
+
+Example (Fitness):
+"You won't believe what happened when I walked 10,000 steps every day for 30 days."
+
+
+12. "The reason you're not seeing [RESULT] is [HIDDEN PROBLEM]."
+This works because it identifies a potential cause behind frustration. It makes viewers question whether they’re missing something.
+
+Example (Content Creation):
+"The reason you're not seeing growth is because your videos don't hold attention."
+
+
+13. "Here's the part nobody tells you about [TOPIC]."
+This works because it suggests there’s a hidden reality that beginners don’t know about.
+
+Example (Entrepreneurship):
+"Here's the part nobody tells you about building a personal brand."
+
+
+14. "I almost didn't share this [LESSON/STORY], but [REASON]."
+This works because it feels personal and exclusive. It creates the feeling that the viewer is getting access to something valuable.
+
+Example (Mental Health):
+"I almost didn't share this lesson, but I think someone needs to hear it."
+
+
+15. "This simple shift in [AREA] made all the difference."
+This works because it promises an easy-to-understand change with a meaningful impact.
+
+Example (Sales):
+"This simple shift in my sales conversations made all the difference."
+
+
+16. "The answer might surprise you: [REVEAL]."
+This works because it challenges expectations and creates curiosity around the solution.
+
+Example (Nutrition):
+"The answer might surprise you: eating more helped me lose weight."
+
+
+17. "What if I told you [UNEXPECTED TRUTH]?"
+This works because it creates a mental challenge. The viewer pauses to consider whether your statement could be true.
+
+Example (Business):
+"What if I told you more customers isn't always the answer?"
+
+
+18. "I've been doing [THING] all wrong."
+This works because vulnerability builds trust. People connect with someone who shares mistakes and lessons.
+
+Example (Photography):
+"I've been doing portrait photography all wrong — here's what I changed."
+
+
+19. "This is why your [THING] isn't [RESULT]."
+This works because it directly addresses frustration and promises an explanation.
+
+Example (Content):
+"This is why your content isn't converting viewers into followers."
+
+
+20. "Let me show you what's actually working for [GOAL]."
+This works because it promises practical, current information instead of theory.
+
+Example (Marketing):
+"Let me show you what's actually working for growing an email list."
+
+
+21. "Three things you need to know before [ACTION]."
+This works because numbered lists feel clear and valuable. Viewers know exactly what they’ll receive.
+
+Example (Fitness):
+"Three things you need to know before starting a calorie deficit."
+
+
+22. "Save this for later because [REASON]."
+This works because it encourages saves, which signals value and gives viewers a reason to return.
+
+Example (Business):
+"Save this for later because you'll need this content strategy when you run out of ideas."
+
+
+23. "Here's a step-by-step way to [RESULT]."
+This works because people love clear processes. It removes uncertainty by showing there’s a path forward.
+
+Example (Cooking):
+"Here's a step-by-step way to meal prep for the entire week."
+
+
+24. "Do this instead of [COMMON ACTION]."
+This works because it creates contrast. The viewer immediately wants to know why the alternative is better.
+
+Example (Fitness):
+"Do this instead of doing endless cardio for fat loss."
+
+
+25. "The easiest way to [RESULT] is [METHOD]."
+This works because it appeals to efficiency. People are attracted to solutions that save time and energy.
+
+Example (Learning):
+"The easiest way to remember what you study is active recall."
+
+
+26. "If you're struggling with [PROBLEM], try this."
+This works because it directly speaks to a specific pain point and offers immediate help.
+
+Example (Creators):
+"If you're struggling with what to post, try documenting your process."
+
+
+27. "Here's the framework I use every time I [ACTION]."
+This works because frameworks feel repeatable and valuable. Viewers believe they can apply the same system.
+
+Example (Copywriting):
+"Here's the framework I use every time I write a sales page."
+
+
+28. "The shortcut nobody is talking about is [METHOD]."
+This works because people are naturally curious about overlooked advantages.
+
+Example (Fitness):
+"The shortcut nobody is talking about is building meals around protein first."
+
+
+29. "The exact process I follow to [RESULT]."
+This works because specificity builds trust. People want to see the actual steps instead of vague advice.
+
+Example (YouTube):
+"The exact process I follow to script videos that keep people watching."
+
+
+30. "Steal this strategy for [GOAL]."
+This works because it feels actionable and immediately useful.
+
+Example (Business):
+"Steal this strategy for getting more leads from Instagram."
+
+
+31. "If this sounds like you: [IDENTITY/PROBLEM]."
+This works because identity-based hooks make viewers feel seen. They attract people who relate to the situation.
+
+Example (Creators):
+"If this sounds like you: you have 100 ideas but never finish anything."
+
+
+32. "Raise your hand if you've ever [RELATABLE EXPERIENCE]."
+This works because it creates community and invites self-identification.
+
+Example (Entrepreneurs):
+"Raise your hand if you've ever doubted whether your business would work."
+
+
+33. "I know exactly how this feels when [SITUATION]."
+This works because empathy builds trust before offering advice.
+
+Example (Fitness):
+"I know exactly how this feels when you're working hard but seeing no results."
+
+
+34. "You're not alone if [PROBLEM]."
+This works because it removes isolation and creates connection.
+
+Example (Career):
+"You're not alone if you feel stuck and unsure what direction to take."
+
+
+35. "I used to think [BELIEF]..."
+This works because it creates a before-and-after perspective. Viewers want to know what changed your mind.
+
+Example (Business):
+"I used to think more followers meant more money."
+
+
+36. "This was me [TIMEFRAME] ago."
+This works because it introduces a transformation story. It shows progress is possible.
+
+Example (Fitness):
+"This was me 12 months ago before I changed my lifestyle."
+
+
+37. "Can we all agree that [OBSERVATION]?"
+This works because it encourages agreement and comments. It creates a conversation rather than a lecture.
+
+Example (Creators):
+"Can we all agree that coming up with content ideas is harder than creating the content?"
+
+
+38. "Here's your reminder that [MESSAGE]."
+This works because reminders feel valuable and shareable, especially for motivational content.
+
+Example (Personal Growth):
+"Here's your reminder that progress doesn't need to be perfect."
+
+
+39. "If you're feeling stuck, watch this."
+This works because it targets people experiencing frustration and promises direction.
+
+Example (Business):
+"If you're feeling stuck growing your brand, watch this."
+
+
+40. "This is the sign you've been waiting for."
+This works because it creates emotional urgency and makes viewers connect the message to their current situation.
+
+Example (Career):
+"This is the sign you've been waiting for to finally start that project."
+
+
+
+
+* Here’s exactly how to [outcome]. [solution].
+* Here’s exactly how you’re gonna [outcome].
+* Here’s the exact 3 step process to [outcome].
+* Here’s exactly how to NEVER [opposite of outcome].
+* Here’s the only [solution] that will let you [personal outcome].
+* Here’s the only method/way/strategy/hack that will let you [personal outcome].
+* Here’s the only guide to [solution] you will ever need.
+* Here’s how to never [opposite of solution] for the rest of your life.
+* Alright if I was you and I needed to [outcome] really quickly, I’m gonna tell you exactly what I would do. Free sauce.
+* You ever see videos on Youtube of [outcome], and you’re like how the hell is that even possible?
+* Everybody that tells you that you don’t need to [solution] to [outcome] is lying to you.
+* If there’s one piece of advice about how to [outcome] today, please let it be this.
+* If you wanna [outcome] in 3 months time, here’s your 5 step checklist for you to do right now, if you just do this I promise you’ll [outcome]. Step 1…
+* A lot of people who wanna [outcome] fail to do so because they’re not [solution].
+* Wanna know why most people never [outcome]?
+* Here’s how to stop [opposite of outcome]. [Solution].
+* If I was young again and I had to [personal outcome] all over again, this is exactly how I’d do it.
+* I’m gonna show you exactly how to [outcome] in a very very specific way.
+* Alright I’m gonna teach you exactly how to [outcome] in one video.
+* Here’s the story of how I accidentally [personal outcome].
+* You ever see people who just have [outcome], and you kinda wonder like, what it is that makes them so special?
+* You ever see people who seem to [outcome] SO easily, and you kinda wonder like, what it is that makes them so special?
+* In 60 seconds I’m going to logically prove to you how you can literally [outcome].
+* Here’s why you should [solution].
+* Here’s how to [outcome]. Stop [solution, if about quitting something].
+* Here’s how to [outcome]. [Solution].
+* Here’s the ONE [solution] I used to [outcome]. Like I [personal outcome] literally just spamming this ONE [solution].
+* Here’s how to [outcome]. The solution that’s always worked for me is [solution].
+* Here’s how to stop [opposite of outcome]. Stop [solution, if about quitting something].
+* Today, we’re gonna be talking about how to [outcome].
+* Alright this is the single easiest way to [outcome].
+* If you want to instantly [outcome], this is the ONLY video you will ever need to watch.
+* Here’s exactly how you’re gonna [outcome] in 2026. You’re gonna [solution].
+* Here’s the only video you will ever need to watch to [outcome].
+* Here’s the strategy I used to [outcome]. I used a strategy I like to call [solution].
+* The easiest way to [outcome] is to [solution].
+* Here’s exactly how you’re gonna [outcome] in 2024. You’re gonna [solution].
+* The way to instantly [outcome] is to simply [solution].
+* If there’s one thing you can do to [outcome] that actually takes ZERO work, it’s this.
+* If you’re tired of [opposite of outcome], here’s the ultimate guide to [outcome]. Take notes and thank me later.
+* If you’re tired of never [outcome], you NEED to watch this video.
+* I’m gonna give you guys my BEST [solution] as someone who [personal outcome] that’s literally gonna help you [outcome].
+* So I heard you wanna [outcome]. This is the SIMPLEST and BEST way to [outcome], coming from a guy whose [personal outcome].
+* Here’s exactly how you’re gonna [verb] your first [outcome].
+* I get this question SO often. How did you [personal outcome]? And I Iiterally just [solution].
+* Here’s some unethical life hacks to [outcome] that you definitely shouldn’t use.
+* Here’s exactly how you’re gonna [outcome] in the next 60 seconds.
+* Here’s exactly how I [personal outcome]. I [solution].
+* I [personal outcome], and I just wanna break down the exact [solution] I used to get such crazy results.
+* I recently [personal outcome], and I just wanna break down the exact [solution] I used to get such crazy results.
+* So you failed to [personal outcome]. Tough love, but it’s because you didn’t [solution].
+* Here’s how to ACTUALLY [outcome]. [Solution].
+* Here’s how to NOT [opposite of outcome]. Stop [opposite of solution]
+* It is officially the easiest time to [outcome], and I’m gonna give yall all the sauce on how you’re gonna [outcome] in the next week.
+* In 60 seconds, I’ll show you how to [outcome].
+* I’m gonna show you exactly how to become a [outcome] in one video.
+* I’m gonna show you exactly how to get over your [outcome] in one video.
+* It took me 4 years to learn what I’m about to teach you in a minute and a half.
+* This is how to [outcome]. What you’re gonna need is a [solution]. What is a [solution]?
+* Every day I [personal outcome], and here are my 8 tips to [personal outcome].
+* After years of [personal outcome], these are the 6 rules of [outcome] I know to be true.
+* After years of research, I’ve developed the greatest routine to [outcome]. Here are the 7 steps you should take every day.
+* I just completed [personal outcome]. Here’s why I haven’t stopped.
+* 3 steps for becoming [outcome].
+* 5 principles for becoming [outcome].
+* 3 things I wish I knew in my early 20s. [solution].
+* 4 ways to [outcome].
+* 5 things you need to know if you want to [outcome].
+* This goes out to all my homies who struggle with [outcome].
+* Here’s a life hack that’s gonna [outcome] that they never taught you in school.
+* Here’s how to [outcome] in a way a 5 year-old could understand.
+* This is exactly how to [outcome] in a way a 5 year-old could understand.
+* You wanna [outcome] in 2024, I recommend listening to this video all the way through because the trends/methods/strategies/tricks that have worked for [outcome] in the past aren’t anymore, but the new trend/method/strategy/trick you need to use is…
+* I was just [personal story] and I just got the best advice on [outcome] that I’ve ever heard.
+* This is the ultimate guide on how to [outcome].
+* Does [solution] ACTUALLY get you [outcome]?
+* You guys ever heard of the [solution]? Cus the [solution] is life-changing.
+* One of the things I really like to do if I wanna [outcome] but I don’t know how is the [solution] method.
+* Alright if you want one of your average [noun from the outcome] to look like this, the best thing you can do is [solution].
+* Here’s how to [outcome] literally anywhere.
+* If I needed to [dream outcome] or someone was gonna blow my brains out, this is what I would do.
+* Your [thing/situation]s will feel way less [outcome] when you understand these 3 things.
+* Here are 3 rules you should follow if you actually wanna [dream outcome].
+* Here are 3 reasons why you’re gonna [dream outcome].
+* In 60 seconds I’m gonna logically prove to you how you can [dream outcome].
+* There are 3 reasons you’re [problem] right now. Either one, you [negative habit/action]…
+
+1. Having [dream outcome] is pretty fucking cool. So if you wanna [dream outcome], here are 3 ways you can actually do that. Number one…[habit/action].
+
+* So I just [personal dream outcome] yesterday, and I wanted to tell yall some lessons I’ve learned along the way to teach you what I wish I knew now.
+* So I just [personal dream outcome] last week/month/year, and here are 3 lessons I’ve learned along the way.
+* Here are 3 [niche] hacks guaranteed to turn you into a [dream outcome].
+* If I could teleport back to before I [personal dream outcome], here are the 3 things that I would sell my kidney today to tell past me.
+* Here are the 3 easiest ways to [dream outcome].
+* The 3 [thing/action/habit]s you need to [dream outcome].
+* Here are 3 ways to actually [dream outcome]. If you don’t implement some sort of system to [same dream outcome], you’re gonna have [problem].
+* These are 3 [thing/situation] tips that you fuckin’ need. Lock in, implement them, and [dream outcome].
+* 3 signs you’re probably the [trait] homie.
+* I’m not sure if you guys know this or not, but right now people are boycotting [thing].
+* If you’re a guy and there’s this [dream outcome], or you’re a girl and there’s this [female variation of dream outcome], I’mma give you 3 ways to [dream outcome].
+* "Here's what (group) don't want you to know about (thing)"
+* "Here are the top 5 (thing avatar wants) for (avatar)"
+* "Here's how to get (thing avatar wants) literally anywhere"
+* "3 (resource type) that will save you from ebola as a (avatar) in 2023"
+* "The secret to (thing they want) is (intriguing phrasing of simple concept)"
+* "How to ACTUALLY (achieve thing they want)"
+* "How to get (thing they want)" - with green screen and you showing a guide
+* "The goated (way to do thing that is important to them)"
+* "The most important decision you have to make as a (avatar) is ()"
+* "Underrated (avatar) hack"
+* "I'm literally gonna solve all your (section of their life) problems in one video"
+* 17 ways to not be (thing they dont want to be)
+* Here’s the TRUTH about (thing they will experience)
+* Here’s how to do XYZ like the rich
+* (Thing they experience) 101
+* Here are 3 strange (topic) hacks guaranteed to turn you into a (term for someone really good at that topic)
+* You wanna know what the (most adjective they want) mf’s in (their age group/demographic) have in common?
+* I don’t think people understand how fucked up it is that we let people (do X thing)
+* The biggest problem with the (XX system) that nobody talks about is (bold claim)
+* Here are the 3 best (things related to your niche) for the year 2030
+* Let’s get you (thing they want) papi/bro/homie.
+* Here’s the no-fail system to getting (thing they want) your (roasting their normal source of information) didn’t teach you
+* If you want to win at (thing they experience) you need (thing that sounds counterintuitive)
+* The WORST (thing they do/choose) in 2026 is…
+* Here are 3 signs you picked the wrong (thing in your niche)
+* If you’re having trouble {thing they need to do}, watch this video, I’m gonna change your life. It might not change your life, but I’m gonna help you {dream outcome}.
+* If you’re not getting [dream outcome] in [situation/time], it’s probably because you don’t know the [solution name] framework.
+* There’s only 3 ways you can compete as a [title/identity/dream persona].
+* If you’re a {title} and you wanna crush it in {thing}, you need to watch this video, lock the f*ck in, because no one’s gonna give you the sauce. I’m gonna give you the complete roadmap to kill it in [thing]. It’s gonna help you [dream outcome examples].
+* Here are the 3 biggest “no-nos” when it comes to (your niche)
+* It’s (today’s date) and it’s not too late for you to (achieve thing they want)
+* This is gonna sound like pedantic advice, it’s gonna sound so obvious like ohhh shut the f*ck up! But if you’re crazy [nightmare problem situation] in [situation/place/time], you’re in one of those days where [example], you can take a breath and remind yourself that [solution/opinion].
+* This is gonna sound like repetitive advice, it’s gonna sound so obvious like ohhh shut the f*ck up! But if you’re crazy [nightmare problem situation] in [situation/place/time], you’re in one of those days where [example], take a breath and remember the [solution name].
+* If you’re down f*cking sad in {niche/position/situation/thing/pursuit}, you need to start {solution}.
+* Here are 4 fascinating facts about {thing they’re interested in}.
+* If you’re a [position/title], this is the EASIEST way to wake up with a [dream outcome].
+* When things click they click for (your IVP).
+* (reassuring the viewer video) If you’re a [title], there is nothing wrong with you if you are struggling in [thing/place/situation/title]. Like it’s okay if you’re [example 1], it’s okay if you’re [example 2].
+* If you’re in [thing/place/time/position] and your [thing they care about] is all f*cked up and you’re worried about [dream outcome], the NUMBER ONE thing you can do is go [solution].
+* You need to hear this if you’re obsessed with (thing)
+* I don’t think I could say this with any more conviction, but [thing a lot of people like] is so f*cking dumb.
+* So if you’re in [place/time/situation], and you feel like you [nightmare problem situation description with examples], watch this video and it’ll change your life.
+* One of the best things you can do for your [thing they need to do] in [time/situation/place] is literally just [one-word solution].
+* There are many times in [thing] where you take a massive f*cking L, and the only thing you can do is [solution].
+* These are the 3 hallmarks of a goated (thing they need to do)
+* Here are the 3 signs of a goated (thing they need to do).
+* Here are 3 {thing in your niche} tips that you f*cking need.
+* There’s only 2 kinds of people who get (dream outcome)s, one of whom is the most miserable, sad, upset people on earth, and the other one is the [dream outcome/persona], who you should try to be like.
+* This is what nobody seems to understand about [thing].
+* Ultimate [thing] hack for men is being able to [action], but [twist to solution]. You have to understand, [opinion].
+* When you actually [major event/accomplishment], there’s only 2 things you can do to [dream outcome].
+* When you actually graduate college/highschool, there’s only 2 things you can really do to [dream outcome].
+* In [place/time/age], there are a couple defining moments. There are gonna be times where [example 1], and there’s gonna be times where [example 2]. These 3 things are where all the [event/thing] comes out.
+* The number one decision you can make (in a situation your IVP finds themselves in)
+* (Category of celebrity / pop culture thing) as (things in your niche) part 1
+* If you’re a (IVP), you need to get (thing that sounds awful)
+* Whenever I get to a [bad situation], where I think, why do I even bother, I just try to remind myself: [insert quote].
+* Stop [habit/action] if you actually want to become successful.
+* Here’s 3 reasons why you need to [habit/action] in 2024.
+* Everybody that tells you you need to [opposite of solution, or negative habit/action] is lying to you.
+* If you want to ACTUALLY [outcome] in 2024, you need to [solution].
+* This is how I went from [personal outcome before] to [dream personal outcome] in _ years/months/days.
+
+1. Use specific numbers and dates
+
+* You don’t understand the 4 phases of [outcome].
+* All [niche] advice absolutely sucks. This is the only good piece of [niche] advice I’ve ever gotten, and it’s the most useful by far.
+* A lot of people who want to [outcome] fail to do so because…
+* You know what the problem is with this generation bro? None of you are [trait/solution] enough.
+* This is kinda fucked up, but I feel like [opinion].
+* A lot of people think you have to [limiting belief] to be [outcome]. I [personal outcome].
+* Everybody that tells you you have to [action] to [outcome] is lying to you. I am one of the [adjective version of the action]est people I know, and the reason why I’ve [personal outcome] is because I simply [solution].
+* Alright so if you’re young and you [problem], let me tell you a lil secret. This is coming from someone who also [problem] like 3 years ago, and now I [personal dream outcome].
+* I recently [personal dream outcome], and it’s really not that great.
+* Alright there’s this myth going around that [dream outcome] does not change your life whatsoever, and that [expand upon myth], and that is WRONG. I currently [personal dream outcome], and I will tell you what it’s actually like.
+* If you’re under 25 and you feel like you [problem], please just watch this video.
+* The reason you [problem] is because you’re trying to [limiting habit/action]
+* If you pause and genuinely [solution], you will never struggle with [negative outcome] again.
+* The way to instantly make your [situation/thing] way more [outcome] and way easier than it is right now is to simply understand that [opinion/idea].
+* The way to instantly make your [situation/thing] way easier than it is right now is to simply understand that [opinion/idea].
+* Take a second to pause and ask yourself, how would I live my life if I [solution]?
+* If there’s one thing you can do to [outcome] in your early 20’s that actually takes 0 work, it’s this.
+* I think a reason why a lot of men/women are [negative outcome] is because they [limiting action].
+* The reason why most men are [negative outcome] is because they think that [limiting action] will get them [outcome].
+* It took me about _ years to realize that [opinion].
+* Your [problem] will go away once you realize that [opinion].
+* The biggest sign of [dream outcome] is [solution].
+* Your [thing/situation]s will never be [problem] and you’ll [dream outcome] once you’re comfortable with [solution].
+* Your [thing/situation]s will never be [problem] once you start [solution].
+* Yo if you’re in college/highschool right now and you wanna [dream outcome] and you don’t wanna be [problem], watch this video.
+* If you just [situation/thing], these next 6 to 12 months will set you up for the rest of your life. So if you fuck this up, you’re probably gonna [negative outcome].
+* When you start to [outcome] but you don’t [habit/action], you start to lose [dream outcome].
+* I don’t agree with this trend on this app that’s like…
+* I’m starting to notice any cool guy I’ve ever met always has a cooler sister.
+* [thing 1] or [thing 2]? Now having done both, let me tell you the pros and cons, so you know what to expect.
+* Reasons why you should [action/solution]. I’m going to get straight into the point, so if you’re struggling with making that decision, this will push you over the edge.
+* Use/take [thing 1] or [thing 2]? Today I’m going to tell you the pros and cons so you know what to expect.
+* I don’t know who needs to hear this but if you’re a [title] and you’ve been [action], and [nightmare problem], bro. [opinion].
+* When I tell yall [problem] has gotten so bad, my homie has to [action] now.
+* I’m not gonna lie to yall, this [thing] hate is gettin crazy. It’s always that one person talkin about… [quote/paraphrase]
+* If I became the president of the United States today, the first thing that I’m banning is [thing creator hates].
+* Yall ever got [outcome] and then you realized there wasn’t splish you could do about it? I used to have a friend who was [story].
+* A lot of yall be talkin about, “oh I’m top 3 [thing],” but don’t even know what [thing] looks like. I’m gonna tell yall about the most [thing] shi I’ve ever done.
+* Is it possible to {personal goal} in 1 DAY/WEEK/MONTH?
+* I just spent $X on {thing}, and…{other hook}.
+* I LOVE {thing}. So in order to learn more about {thing}, today I decided to {personal action}.
+* THIS is my {thing}. And today, we’re going to {personal action, related to thing}.
+* I have an irrational fear of {personal fear}
+* I have been {adjective} for as long as I can remember. And at this point, I’m just gonna {personal action}.
+* I have wanted {personal goal} for the longest time, but today is the day we finally {personal action}.
+* I feel really {feeling/adjective}. Because I just {personal action}.
+* I have a confession to make. I regret {personal action}.
+* Come with me as I {action}.
+* Today, we {action;past tense}, and I {feeling}.
+* Tonight, I’m {action}.
+* Today is the first time I’m {action}, and I’m {feeling}.
+* I have X days left of my college/highschool semester, and/but/so…
+* I have X days left of being {personal title}, and/but/so…
+* I have been {personal action/title} for the past X hours/days/months/years, and I wanna show you guys…
+* So I just found out, if you {personal action}, you can
+* It is {time}AM/PM and I am {feeling}. So today, I’m going to be {personal action}.
+* You guys are overreacting. I just {personal action}, and {opinion on personal action}.
+* {Question}? This is a question I ask myself every single day as a {profession/title}.
+* {Statement}. This is something I tell myself every single day as a {profession/title}. Like everyone else, I’m just trying to {personal goal}.
+* I regret {personal action} as a {profession}.
+* I regret {personal action}. Well, kind of.
+* I spent the last X hours/days/months doing {personal action}, and I realized that {opinion}.
+* I spent the last X hours/days/months/years chasing {personal goal}, but today is the day I realized that {opinion}.
+* Hi, I’m {name}. And… {use other hook}.
+* I just {personal action}, and I’m now realizing that {opinion}.
+* I used to be obsessed with {thing related to personal action}, but today is the day we finally {personal action related to thing}
+* Today I learned it is actually possible to {personal action} without {condition}.
+* I was having a conversation with this girl today, and she said, “{quote of what person said to you},” and one of my very toxic traits is that I like to {}, so I said…
+* Somebody asked me why I’m {trait} that’s because I’m dedicated to {thing}.
+* My favorite thing about being the family disappointment is that {opinion/story}.
+* Here is my full day of eating that I used to increase my muscle mass as a [title/profession].
+* I’ve completed {thing/goal} at _ years old. And if you don’t know what I’m talking about, let me explain.
+* Today was my last day of work/school, and one of my coworkers said, it’s only a trend to hate on [thing].
+* The bad news is, [controversial opinion]. The good news is, [same controversial opinion]. So just [action].
+* Why is it so hard to [action]?
+* They said, just [action, preferably popular wisdom]. That’s a lie.
+* What if I told you I got [number] more in [thing], JUST by [action]? Here’s how I did it.
+* What if I told you I increased my [thing] JUST by [action]? Here’s how I did it.
+* You know, I’m sick of seeing people on TikTok/Instagram being like “Oh, [opinion paraphrased in a casual way].” Oh, so [opinion]? Well, [examples disproving opinion]
+* Having a [thing] is the most underrated shit, I now [action, explaining why thing is good].
+* You know, I can’t stand the people that come to me and be like, “Yo, [opinion].”
+* For those of you who are too closed-minded to understand [idea], I’m going to change your mind.
+* Cus you need to [action]. You need to [synonym of action]. If you’re not [dream result], you need to [action]. Fuck all these people that are telling you [opposite of action].
+* You don’t [action] as much as you say you do. You like to talk about it, you like to post about it.
+* If you’re [situation], and then [situation] happens, like “[quote paraphrasing event], or “[secondary quote paraphrasing event], if it’s within reason, then [opinion].
+* Some of you have got to cut [thing], the thought of [thing synonym] out of your life, and here’s why. Most of the time, when I see [identity] trying to [thing], it’s because they’re [deeper motivation that’s darker].
+* You have to believe [thing]. Every fiber of your being has to believe it. And I want you to believe it. Because you need to understand that if you don’t believe it, then you just [consequence].
+* One of my favorite hobbies is [odd thing].
+* 2025 is here. You need [thing]. It’s not hard.
+* How much can I [action] in a week as a X year-old full-time [identity]?
+* I just got the strong urge to talk about some of the biggest [niche] myths that people still believe that keep them [negative situation] and [stronger example depiction of negative situation].
+* With all due respect, if you are an [identity], and you are still [action], grow the f*ck up. You will [highly specific description of negative life outcome].
+* Growing up is understanding that [controversial opinion].
+* A year ago, I was [action], and [extended action] every single night because I couldn’t [overcome big problem].
+* After 3 years of cycling through [thing 1] and [thing 2], I [solution] because I realized ONE THING… [truth].
+* 2 years ago, I became addicted to [bad thing] every single day because I’d never felt more [bad emotion] in my LIFE.
+</script>
+
+<script>
+/* ================= EDIT THESE ================= */
+const CONFIG = {
+  creator: "@yourhandle",                 // shown on the intro + batchbook
+  emailEndpoint: ""                        // POST JSON endpoint for emails (e.g. Formspree). "" = emails aren't saved yet
+};
+/* ============================================== */
+
+/* ---------- hooks (word for word) ---------- */
+const H = {
+  // filled with "I totally believe that ___"
+  believe: [
+    "I need to borrow your brain for 30 seconds so I can convince it that...",
+    "I say this with no love whatsoever, ______",
+    "I'm going to need a show of hands to tell me you hear me when I say _____",
+    "You said you wanted the truth so _____",
+    "I hate to be the one to have to tell you this but _____",
+    "I'm not in the mood to sugarcoat so: _____",
+    "If we were best friends I'd tell you right to your face that _____",
+    "Let me be the little voice in your head for a second and tell you _____",
+    "I think we can all agree that _____",
+    "If I could sit down with a younger version of you, I'd say _____"
+  ],
+  // filled with "I disagree with people who think ___"
+  disagree: [
+    "You are delusional and not in the cute way if you still believe _____",
+    "We are simply too old to keep believing _____",
+    "The biggest lie we've normalized is _______",
+    "Not enough people are questioning _____",
+    "Let's settle this once & for all: _____",
+    "Alright time to settle this debate: _____"
+  ],
+  // filled with "I don't see a lot of people talking about ___"
+  untalked: [
+    "I was today years old when I realized...",
+    "I have no business telling you guys this much but _____"
+  ],
+  // stand-alone hooks; the take becomes the main point
+  truth: [
+    "I'm going to hold your hand when I say this",
+    "I don't want to have to repeat myself so I'm going to say this loud & clear",
+    "This is a very unofficial roll call for the girls who need to hear this",
+    "Welcome to today's episode of hard truths you probably don't want to hear, but definitely need to",
+    "I need you to be so honest with me right now"
+  ],
+  open: [
+    "Please tell me this is a universal experience...",
+    "Come sit with me for a second",
+    "I really wasn't planning on telling you this much but here we are",
+    "Who in their right mind let me start yapping to you guys",
+    "I need you to be so honest with me right now"
+  ],
+  part2: [
+    "Apparently we're not done talking about this",
+    "Since you guys had questions and I unfortunately have answers, we're back with part two",
+    "Buckle up.. your feathers are about to be ruffled again because I'm back with part two",
+    "I'm calling an emergency meeting to follow part 1's saga",
+    "And just when you thought it couldn't get any worse we're back with part 2"
+  ],
+  relate: [
+    "Let's be best friends if you can relate to _____",
+    "Please tell me this is a universal experience..."
+  ],
+  story: [
+    "I'm [age] and I'm a bit embarrassed to admit that…",
+    "POV: you were [PROBLEM] then [PURSUIT]. Now [PAYOFF].",
+    "Two years ago I would have hated the version of me making this video."
+  ],
+  // from github.com/Ootto-AI/claude-content-skills (MIT License, Copyright (c) 2026 Ootto)
+  list: [
+    "The one [setting / prompt / step] nobody talks about — and it's #[N].",
+    "Watch till the end — the last one is the only one that actually worked.",
+    "[N] ways to do [X]. #[N] should be illegal."
+  ],
+  working: [
+    "I did [X] for [N] days — [Day N / the last one] broke everything."
+  ]
+};
+// re-hooks for the middle of a video (same MIT source)
+const REHOOK = "Re-hook at the dips (~4s / 9s / 15s) with a micro-loop: \"but here's the part nobody tells you…\", \"and it gets better…\", \"wait for the last one.\"";
+
+/* ---------- formats (from the playbook) ---------- */
+const TYPES = {
+  carousel:  { label: "Carousel", short: "Carousels", sub: "Slides, one point per slide", film: 0, edit: 30 },
+  lowEffort: { label: "Low-effort video", short: "Low-effort videos", sub: "B-roll + text, no talking", film: 10, edit: 15 },
+  talking:   { label: "Talking video", short: "Talking videos", sub: "You, talking to camera", film: 15, edit: 30 },
+  story:     { label: "Story video", short: "Story videos", sub: "Silent film or voiceover", film: 20, edit: 45 }
+};
+
+const F = {
+  singleBroll: { name: "Single B-Roll + Text", fire: "🔥",
+    how: ["Visual: 7–10 second B-roll clip that acts as visual hook (genuine emotional reaction, setting up camera, 0.5 selfie w/ movement, subtle zoom, walking into frame, moving background). Text stays on screen full duration.",
+      "Text: vulnerable / relatable / intriguing, readable in 2–3 seconds, split into lines.",
+      "Caption: 5–8 reflections from lived experience. Share something you usually keep to yourself; hold tension instead of giving simple answers; real specific details; write to ONE person; end with what you're learning/healing/becoming; finish with an invitation.",
+      "Edit: no cuts, no polish. Simplicity is the point."],
+    slots: ["Visual hook (what's happening on screen)", "On-screen text", "Caption"] },
+  problemStatement: { name: "Problem-Statement B-Roll + Text", fire: "🔥",
+    how: ["Open with an assumption/dismissal in quotation marks, then defy it.",
+      "The quotation marks do the work: it's a line the viewer has heard or said. They stay to see it debunked.",
+      "Hold the problem statement long enough to be read twice; cut the reframe to the music swell/beat drop."],
+    slots: ["On-screen text (the assumption, in quotes)", "The reframe (after the beat drop)", "B-roll", "Caption"] },
+  beforeAfter: { name: "Before & After", fire: "🔥",
+    how: ["Hook: \"Old me: [specific behavior]\". Name the actual thought or behavior, not vague labels.",
+      "Make before & after visibly different (expression, action, styling, body language).",
+      "First part of audio = \"before\" clip; switch to \"after\" clip ON the beat drop. The beat drop IS the transition.",
+      "Caption tells the missing 3P journey: Problem (what you believed/did), Pursuit (what challenged it), Payoff (what you believe/do now)."],
+    slots: ["Before clip", "After clip (on the beat drop)", "Caption: Problem", "Caption: Pursuit", "Caption: Payoff"] },
+  splitScreen: { name: "Split Screen Reel", fire: "🔥🔥🔥",
+    how: ["Two contrasting approaches to the same moment, stacked on screen.",
+      "Top story = identity/mindset/outcome + time anchor. Bottom story = opposing identity + matching time anchor.",
+      "Text is the only variable. Strongest version: both people had the same difficult moment; the difference was the response.",
+      "DON'T: make both sides tell separate stories; overcrowd the frame; rely on text to explain everything."],
+    slots: ["Top (old mindset + time anchor)", "Bottom (new mindset + same time anchor)", "Caption"] },
+  silentFilm: { name: "Silent Film / Visual Timeline", fire: "🔥🔥",
+    how: ["Story told through on-screen text + photos/clips from your real life, set to one rising piece of music.",
+      "Build timeline as 5–8 short moments, each with own text line + clip: Problem (2–3 moments), Pursuit (1–2), Payoff (2–3). [Time anchor] → [this happened].",
+      "Pictures for the past, video for the present.",
+      "Give every line time to land (max 2 lines, long enough to read). Payoff starts the moment the beat drops."],
+    slots: ["Problem (2–3 lines)", "Pursuit (1–2 lines)", "Payoff (2–3 lines)", "Caption"] },
+  voiceover: { name: "Voiceover Story Reel", fire: "🔥🔥🔥",
+    how: ["Script first, like a short story: pain/goal hook → pursuit → payoff.",
+      "Record naturally, not stiffly.",
+      "B-roll matches the beats (key moments only, not every sentence).",
+      "Captions synced + sound effects/zoom/flash for emphasis."],
+    slots: ["Pain / goal", "Pursuit", "Payoff", "B-roll to film"] },
+  valueTalking: { name: "Value-Driven Talking Head", fire: "🔥🔥🔥",
+    how: ["Straight-to-camera advice grounded in your own story: the most trust-building format.",
+      "Bold specific opening line (mistake, journey, realization moment) → \"wait, tell me more.\"",
+      "Jump cuts for pace; captions throughout; text + image overlays at key moments; sound effects/zooms on the \"quotable\" moment."],
+    slots: ["Why this matters to me (my story)", "The point", "Close"] },
+  numberedTalking: { name: "Talking Head: Numbered Value List", fire: "🔥🔥🔥",
+    how: ["Visual hook: camera off-centre or start mid-motion (unpolished = urgent, not staged).",
+      "Open with the result plainly → name the tension (what you assumed and wasn't true) → POINT ONE, one sentence, no setup → cost of not knowing it.",
+      "Points 2–4 same rhythm, escalating specificity → save POINT FIVE as the one that reframes the other four.",
+      "Close on what you'd do differently, NOT a summary.",
+      "Edit: tight jump cuts, rising music, on-screen numbers, small zoom pushes on strongest moments."],
+    slots: ["The tension", "Point 1", "Point 2", "Point 3", "Point 4", "Point 5 (the reframe)", "What I'd do differently"] },
+  numberedCarousel: { name: "Numbered List Carousel", fire: "🔥",
+    how: ["Cover slide: number + topic. The number promises finite value; curiosity pulls through.",
+      "One point per slide, minimal words. Consistent Canva template (one header font, one body font, image background).",
+      "Strongest/most surprising point at #1 or last. End with CTA slide (save / follow / comment)."],
+    slots: ["Slide 1 (cover)", "Slide 2", "Slide 3", "Slide 4", "Slide 5", "Slide 6", "Last slide (CTA)"] },
+  assumptionCarousel: { name: "Split Screen Carousel: Assumption vs Reality", fire: "🔥",
+    how: ["Every slide: Surface story (top) = the assumption people have / Hidden story (bottom) = the deeper story that changes the interpretation.",
+      "5–8 slides.",
+      "Final slide = Your Resolve: the larger truth connecting every hidden story."],
+    slots: ["Slide 1: assumption (top) / reality (bottom)", "Slide 2", "Slide 3", "Slide 4", "Slide 5", "Final slide: your resolve"] },
+  actionCarousel: { name: "Split Screen Carousel: Action → Result", fire: "🔥🔥",
+    how: ["Top half = the action you took; bottom half = the result it had.",
+      "Same structure slide after slide builds anticipation; final slide breaks the pattern to land the payoff/lesson.",
+      "Check the emotional arc builds: each slide raises stakes slightly before the final payoff."],
+    slots: ["Slide 1: action / result", "Slide 2", "Slide 3", "Slide 4", "Slide 5", "Final slide: payoff / lesson"] }
+};
+
+// which format to use for each content type + angle
+const PICK = {
+  carousel:  { believe: "numberedCarousel", disagree: "assumptionCarousel", untalked: "numberedCarousel", story: "actionCarousel", working: "numberedCarousel" },
+  lowEffort: { believe: "singleBroll", disagree: "problemStatement", untalked: "singleBroll", story: ["beforeAfter", "splitScreen"], working: "singleBroll" },
+  talking:   { believe: "valueTalking", disagree: "valueTalking", untalked: "numberedTalking", story: "valueTalking", working: "valueTalking" },
+  story:     { believe: "voiceover", disagree: "voiceover", untalked: "voiceover", story: "silentFilm", working: "voiceover" }
+};
+
+const CHECK = [
+  "Hook opens a curiosity gap in ≤3 seconds (verbal + visual + written stacked)",
+  "Story follows Problem → Pursuit → Payoff",
+  "A stranger with zero context could follow it",
+  "Text readable in its screen time (read aloud test)",
+  "If it feels too obvious to post, post it"
+];
+
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const CTAS = [
+  { id: "follow", label: "Follow me", ico: "➕", t: "#EFE9FC" }, { id: "comment", label: "Comment", ico: "💬", t: "#FFE8F5" },
+  { id: "save", label: "Save the post", ico: "🔖", t: "#FFF4D6" }, { id: "dm", label: "DM me a word", ico: "📩", t: "#E6F4EA" },
+  { id: "link", label: "Click my link in bio", ico: "🔗", t: "#E6F0FA" }
+];
+
+/* ---------- state ---------- */
+const KEY = "starter-batchbook-v1";
+const store = {
+  get() { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } },
+  set(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} },
+  clear() { try { localStorage.removeItem(KEY); } catch (e) {} }
+};
+const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const parse = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const dowIdx = d => (d.getDay() + 6) % 7; // Mon = 0
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const $ = id => document.getElementById(id);
+
+const tomorrow = addDays(new Date(), 1);
+let A = {
+  iam: "", platforms: [], topics: [""], takes: {}, oldMe: "", newMe: "", working: "",
+  time: { ideas: { h: 1, days: [6] }, plan: { h: 1, days: [6] }, film: { h: 2, days: [5] }, edit: { h: 2, days: [5, 6] } },
+  promise: { carousel: 1, lowEffort: 2, talking: 1, story: 1 },
+  start: iso(tomorrow), end: iso(addDays(tomorrow, 6)),
+  ctas: ["follow"], dmWord: "", linkFor: "", name: "", email: "", updates: false
+};
+const PLATFORMS = ["TikTok", "Instagram", "YouTube Shorts", "Facebook"];
+const PURPOSES = {
+  educational: { label: "Educational", ico: "📚", ctas: ["save", "follow", "link", "dm", "comment"] },
+  virality:    { label: "Virality", ico: "🚀", ctas: [] },
+  community:   { label: "Community", ico: "🫶", ctas: ["comment", "dm", "follow", "save", "link"] },
+  bts:         { label: "Behind the scenes", ico: "🎬", ctas: ["follow", "dm", "link", "comment", "save"] }
+};
+// older saves used a single cta
+function migrate(a) {
+  if (!a.ctas) a.ctas = a.cta ? [a.cta] : ["follow"];
+  if (a.ctaText && a.cta === "dm" && !a.dmWord) a.dmWord = a.ctaText;
+  if (a.ctaText && a.cta === "link" && !a.linkFor) a.linkFor = a.ctaText;
+  a.dmWord = a.dmWord || ""; a.linkFor = a.linkFor || ""; a.updates = !!a.updates;
+  return a;
+}
+let BOOK = null;
+let stepI = 0;
+let takeTopic = 0;
+
+/* ---------- quiz steps ---------- */
+const STEPS = ["intro", "about", "topics", "takes", "story", "time", "promise", "dates", "cta", "email"];
+
+/* page color, accent, mascot color + shape for each step */
+const THEMES = {
+  intro:   { page: "#FFC9A8", accent: "#F26B4F", m: "#F26B4F", shape: "flower" },
+  about:   { page: "#D9CCF7", accent: "#7B5CE0", m: "#7B5CE0", shape: "blob", tint: "#EFE9FC" },
+  topics:  { page: "#FFC6EA", accent: "#C14C8A", m: "#3E9C8F", shape: "squircle", tint: "#FFE8F5" },
+  takes:   { page: "#BFE3CB", accent: "#2F8A5B", m: "#F4A23A", shape: "flower", tint: "#E6F4EA" },
+  story:   { page: "#B9D6F2", accent: "#355A7A", m: "#355A7A", shape: "cloud", tint: "#E6F0FA" },
+  time:    { page: "#FDE7A6", accent: "#B7791F", m: "#F26B4F", shape: "blob", tint: "#FFF4D6" },
+  promise: { page: "#FFD3C2", accent: "#D9534F", m: "#7B5CE0", shape: "squircle" },
+  dates:   { page: "#D9CCF7", accent: "#7B5CE0", m: "#3E9C8F", shape: "flower", tint: "#EFE9FC" },
+  cta:     { page: "#FFC6EA", accent: "#C14C8A", m: "#F4A23A", shape: "cloud" },
+  email:   { page: "#FFC6EA", accent: "#3E9C8F", m: "#FDE047", shape: "flower" }
+};
+function mascot(color, shape, cls = "mascot") {
+  const body = {
+    blob: `<path d="M50 6c24 0 42 16 42 42s-15 46-42 46S8 74 8 48 26 6 50 6z" fill="${color}"/>`,
+    squircle: `<rect x="8" y="10" width="84" height="80" rx="30" fill="${color}"/>`,
+    flower: [0, 72, 144, 216, 288].map(a => `<circle cx="${50 + 24 * Math.cos((a - 90) * Math.PI / 180)}" cy="${52 + 24 * Math.sin((a - 90) * Math.PI / 180)}" r="22" fill="${color}"/>`).join("") + `<circle cx="50" cy="52" r="26" fill="${color}"/>`,
+    cloud: `<circle cx="32" cy="58" r="24" fill="${color}"/><circle cx="68" cy="58" r="24" fill="${color}"/><circle cx="50" cy="40" r="28" fill="${color}"/><rect x="20" y="56" width="60" height="26" rx="13" fill="${color}"/>`
+  }[shape];
+  return `<svg class="${cls}" viewBox="0 0 100 100" aria-hidden="true">${body}
+    <g class="eye"><ellipse cx="38" cy="50" rx="6.5" ry="9" fill="#1E1B2E"/><circle cx="40" cy="46" r="2.2" fill="#fff"/></g>
+    <g class="eye"><ellipse cx="62" cy="50" rx="6.5" ry="9" fill="#1E1B2E"/><circle cx="64" cy="46" r="2.2" fill="#fff"/></g>
+    <path d="M42 64c4 5 12 5 16 0" stroke="#1E1B2E" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`;
+}
+
+// quiet = redraw the same step in place (no slide-in animation, no jump to top); focus = selector to focus after
+function render(opts = {}) {
+  const s = STEPS[stepI];
+  const keepY = window.scrollY;
+  const quizSteps = STEPS.length - 1;
+  const th = THEMES[s];
+  document.body.classList.add("quizmode");
+  document.body.style.setProperty("--page", th.page);
+  const q = $("quiz");
+  q.style.setProperty("--accent2", th.accent);
+  q.style.setProperty("--tint", th.tint || "#F5F1EA");
+  const box = $("stepBox");
+  const dashes = s === "intro" ? "" : `<div class="dashes">${Array.from({ length: quizSteps }, (_, i) => `<i class="${i < stepI ? "on" : ""}"></i>`).join("")}</div>`;
+  const label = s === "intro" ? "" : `<div class="top-row"><span class="qlabel">${s === "email" ? "Last step" : `Question ${String(stepI).padStart(2, "0")}`}</span>${mascot(th.m, th.shape)}</div>`;
+  box.innerHTML = `<div class="stack ${opts.quiet ? "quiet" : ""}"><div class="card ${s === "email" ? "rays" : ""} ${s === "intro" ? "hero-card" : ""}">${dashes}${label}<div class="step">${VIEWS[s]()}</div></div></div>`;
+  box.querySelectorAll("h1, h2").forEach(h => h.classList.add("display"));
+  if (WIRE[s]) WIRE[s]();
+  if (opts.focus) { const f = box.querySelector(opts.focus); if (f) f.focus({ preventScroll: true }); }
+  else if (!opts.quiet) { const first = box.querySelector("input, textarea"); if (first && s !== "intro" && window.innerWidth > 760) first.focus(); }
+  window.scrollTo(0, opts.quiet ? keepY : 0);
+}
+// Tab on an empty box fills in the example (the grey text), so people can accept it and move on
+document.addEventListener("keydown", e => {
+  const t = e.target;
+  if (e.key !== "Tab" || e.shiftKey || !t.classList?.contains("ex") || t.value || !t.placeholder) return;
+  e.preventDefault();
+  t.value = t.placeholder;
+  t.dispatchEvent(new Event("input", { bubbles: true }));
+});
+const nav = (nextLabel = "Next", canBack = true) =>
+  `<p class="err" id="err"></p><div class="nav">${canBack ? `<button class="btn" data-go="back">← Back</button>` : ""}<button class="btn primary" data-go="next">${nextLabel}</button></div>`;
+
+const VIEWS = {
+  intro: () => {
+    const saved = store.get();
+    return `
+    <div class="blobs">${mascot("#F26B4F", "flower", "mascot")}${mascot("#7B5CE0", "blob", "mascot")}${mascot("#3E9C8F", "squircle", "mascot")}${mascot("#F4A23A", "cloud", "mascot")}</div>
+    <h1>Plan your first posts in 5 minutes</h1>
+    <p class="lede">I read so many tips on how to start posting. This is the one that actually gets you making something. Answer a few questions and get your own batchbook:</p>
+    <ul class="perks">
+      <li>A calendar of what to post and when</li>
+      <li>Every post planned: hook, main point, format, how to make it, CTA</li>
+      <li>When to film, edit and plan, based on your real schedule</li>
+    </ul>
+    <div class="nav"><button class="btn primary" data-go="next">Let's get started</button></div>
+    ${saved?.book ? `<button class="saved-link" id="openSaved">Open my saved batchbook →</button>` : ""}`;
+  },
+  about: () => `
+    <h2>First, who are you?</h2>
+    <div class="fill"><span>I'm</span><input class="in ex" id="iam" placeholder="a remote worker in my 20s" value="${esc(A.iam)}"></div>
+    <p class="hint">Keep it short: what you do + something about you. It goes into your hooks.</p>
+    <p class="tabhint">Like the example? Press <kbd>Tab</kbd> to use it.</p>
+    <div class="field"><span class="lbl">Where will you post?</span>
+      <div class="tiles" id="plat">${[["TikTok", "🎵", "#FFE8F5"], ["Instagram", "📸", "#FFF4D6"], ["YouTube Shorts", "▶️", "#E6F0FA"]].map(([p, ico, t]) => `<button class="tile" style="--t:${t}" aria-pressed="${A.platforms.includes(p)}" data-v="${p}"><span class="ico">${ico}</span>${p}</button>`).join("")}</div></div>
+    ${nav()}`,
+  topics: () => `
+    <h2>What topics are you obsessed with?</h2>
+    <p class="lede">The stuff you'd talk about for hours. Add as many as you want (up to 5).</p>
+    <div class="field" id="topicList">${A.topics.map((t, i) => `
+      <div class="topic-row"><input class="in ex" data-i="${i}" placeholder="${["gym", "planning my week", "remote work", "skincare", "saving money"][i] || "another topic"}" value="${esc(t)}">${A.topics.length > 1 ? `<button class="x" data-del="${i}" aria-label="Remove">×</button>` : ""}</div>`).join("")}
+      ${A.topics.length < 5 ? `<button class="add" id="addTopic">+ Add another topic</button>` : ""}
+    </div>
+    ${nav()}`,
+  takes: () => {
+    const topics = A.topics.filter(Boolean);
+    const t = topics[takeTopic];
+    const k = A.takes[t] || {};
+    return `
+    <h2>What's your take on <em>${esc(t)}</em>?</h2>
+    <p class="lede">Fill in at least one. These become your hooks, so say it like you'd say it to a friend.</p>
+    <div class="fill"><span>I totally believe that</span><input class="in ex" data-k="believe" placeholder="you don't need motivation to start" value="${esc(k.believe)}"></div>
+    <div class="fill"><span>I disagree with people who think</span><input class="in ex" data-k="disagree" placeholder="you need a perfect routine to be productive" value="${esc(k.disagree)}"></div>
+    <div class="fill"><span>I don't see a lot of people talking about</span><input class="in ex" data-k="untalked" placeholder="how lonely working from home gets" value="${esc(k.untalked)}"></div>
+    <p class="tabhint">Press <kbd>Tab</kbd> to use an example as-is.</p>
+    ${topics.length > 1 ? `<p class="hint">Topic ${takeTopic + 1} of ${topics.length}</p>` : ""}
+    ${nav()}`;
+  },
+  story: () => `
+    <h2>Your story</h2>
+    <p class="lede">Story posts are what people remember. Skip anything you're not ready to share.</p>
+    <div class="fill"><span>Old me:</span><input class="in ex" id="oldMe" placeholder="saying yes to everything so no one would be disappointed" value="${esc(A.oldMe)}"></div>
+    <div class="fill"><span>Me now:</span><input class="in ex" id="newMe" placeholder="protecting my time for what matters" value="${esc(A.newMe)}"></div>
+    <div class="fill"><span>Something I'm working on right now:</span><input class="in ex" id="working" placeholder="getting fit before 2027" value="${esc(A.working)}"></div>
+    <p class="hint">Name the actual behavior, not a label. "rewriting texts so no one would be mad at me" beats "insecure".</p>
+    ${nav("Next")}`,
+  time: () => `
+    <h2>How much time do you have?</h2>
+    <p class="lede">Be honest. Your calendar will tell you when to do each one.</p>
+    ${[["ideas", "find content ideas"], ["plan", "plan content"], ["film", "film content"], ["edit", "edit content"]].map(([k, l]) => `
+      <div class="timerow" data-t="${k}">
+        <div class="top"><span>I have</span><input class="hrs" type="number" inputmode="decimal" min="0" max="12" step="0.5" value="${A.time[k].h}" data-h="${k}" aria-label="hours"><span>hrs to ${l} every</span></div>
+        <div class="chips">${DAYS.map((d, i) => `<button class="chip day" aria-pressed="${A.time[k].days.includes(i)}" data-d="${i}">${d}</button>`).join("")}</div>
+      </div>`).join("")}
+    ${nav()}`,
+  promise: () => `
+    <h2>Your posting promise</h2>
+    <p class="lede">How many of each will you post every week?</p>
+    ${Object.entries(TYPES).map(([k, t]) => `
+      <div class="promise c-${k}"><span class="dot" style="background:var(--c-dot)"></span>
+        <div class="txt">I will post <b>${A.promise[k]}</b> ${t.short.toLowerCase()}<small>${t.sub}</small></div>
+        <div class="stepper"><button data-p="${k}" data-d="-1" aria-label="Less">−</button><b>${A.promise[k]}</b><button data-p="${k}" data-d="1" aria-label="More">+</button></div>
+      </div>`).join("")}
+    <div id="promiseNote"></div>
+    ${nav()}`,
+  dates: () => `
+    <h2>When are you starting?</h2>
+    <div class="dates">
+      <div class="field"><label for="start">Start posting on</label><input class="in" type="date" id="start" value="${A.start}"></div>
+      <div class="field"><label for="end">Until</label><input class="in" type="date" id="end" value="${A.end}"></div>
+    </div>
+    <p class="hint">Up to 31 days. Start with 1–2 weeks if you're new.</p>
+    ${nav()}`,
+  cta: () => `
+    <h2>What should viewers do after watching?</h2>
+    <p class="lede">Pick as many as you want. Not every post gets one: viral and low-effort posts go out with no CTA so they don't feel like an ad.</p>
+    <div class="tiles" id="ctaChips">${CTAS.map(c => `<button class="tile" style="--t:${c.t}" aria-pressed="${A.ctas.includes(c.id)}" data-v="${c.id}"><span class="ico">${c.ico}</span>${c.label}</button>`).join("")}</div>
+    <div class="field" id="dmField" ${A.ctas.includes("dm") ? "" : "hidden"}><label for="dmWord">What word should they DM you?</label><input class="in ex" id="dmWord" placeholder="START" value="${esc(A.dmWord)}"></div>
+    <div class="field" id="linkField" ${A.ctas.includes("link") ? "" : "hidden"}><label for="linkFor">What's the link in your bio for?</label><input class="in ex" id="linkFor" placeholder="my free planner" value="${esc(A.linkFor)}"></div>
+    ${nav()}`,
+  email: () => `
+    <h2>Your batchbook is ready ✨</h2>
+    <p class="lede">Where should I send it?</p>
+    <div class="field"><label for="name">First name</label><input class="in" id="name" autocomplete="given-name" value="${esc(A.name)}"></div>
+    <div class="field"><label for="email">Email</label><input class="in" id="email" type="email" autocomplete="email" value="${esc(A.email)}"></div>
+    <label class="optin"><input type="checkbox" id="updates" ${A.updates ? "checked" : ""}><span>Let me know when I drop more free templates and tools 🤍 <span class="hint">No spam, unsubscribe anytime.</span></span></label>
+    ${nav("Make my batchbook")}`
+};
+
+const WIRE = {
+  intro: () => { const b = $("openSaved"); if (b) b.onclick = () => { const s = store.get(); A = migrate(s.answers); BOOK = s.book; showBook(); }; },
+  about: () => {
+    $("iam").oninput = e => A.iam = e.target.value;
+    $("plat").onclick = e => { const b = e.target.closest("[data-v]"); if (!b) return; const v = b.dataset.v;
+      A.platforms = A.platforms.includes(v) ? A.platforms.filter(x => x !== v) : [...A.platforms, v];
+      b.setAttribute("aria-pressed", A.platforms.includes(v)); };
+  },
+  topics: () => {
+    $("topicList").oninput = e => { if (e.target.dataset.i != null) A.topics[+e.target.dataset.i] = e.target.value; };
+    const addOne = () => { if (A.topics.length >= 5) return; A.topics.push(""); render({ quiet: true, focus: `[data-i="${A.topics.length - 1}"]` }); };
+    $("topicList").onclick = e => {
+      if (e.target.id === "addTopic") addOne();
+      if (e.target.dataset.del != null) { A.topics.splice(+e.target.dataset.del, 1); render({ quiet: true }); }
+    };
+    $("topicList").onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); addOne(); } };
+  },
+  takes: () => {
+    const t = A.topics.filter(Boolean)[takeTopic];
+    document.querySelectorAll("[data-k]").forEach(inp => inp.oninput = e => { A.takes[t] = { ...(A.takes[t] || {}), [e.target.dataset.k]: e.target.value }; });
+  },
+  story: () => { ["oldMe", "newMe", "working"].forEach(id => $(id).oninput = e => A[id] = e.target.value); },
+  time: () => {
+    document.querySelectorAll("[data-h]").forEach(inp => inp.oninput = e => A.time[e.target.dataset.h].h = Math.max(0, +e.target.value || 0));
+    document.querySelectorAll(".timerow").forEach(row => row.onclick = e => {
+      const d = e.target.dataset?.d; if (d == null) return;
+      const k = row.dataset.t, days = A.time[k].days, n = +d;
+      A.time[k].days = days.includes(n) ? days.filter(x => x !== n) : [...days, n].sort();
+      e.target.setAttribute("aria-pressed", A.time[k].days.includes(n));
+    });
+  },
+  promise: () => {
+    const note = () => {
+      const total = Object.values(A.promise).reduce((a, b) => a + b, 0);
+      const need = { film: 0, edit: 0 };
+      for (const k in A.promise) { need.film += A.promise[k] * TYPES[k].film; need.edit += A.promise[k] * TYPES[k].edit; }
+      const have = { film: A.time.film.h * A.time.film.days.length * 60, edit: A.time.edit.h * A.time.edit.days.length * 60 };
+      const over = ["film", "edit"].filter(k => need[k] > have[k]);
+      $("promiseNote").innerHTML = total === 0 ? `<div class="note warn">Pick at least 1 post a week.</div>`
+        : over.length ? `<div class="note warn">That's <b>${total} posts a week</b>. Heads up: it needs about ${Math.ceil(need.film / 60 * 2) / 2} hrs of filming and ${Math.ceil(need.edit / 60 * 2) / 2} hrs of editing a week, which is more than the time you gave. Fewer posts you actually make beats more posts you skip.</div>`
+        : `<div class="note ok">That's <b>${total} post${total > 1 ? "s" : ""} a week</b> ✨ and it fits your time.</div>`;
+    };
+    // update the numbers in place instead of redrawing the whole card
+    document.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
+      const k = b.dataset.p; A.promise[k] = Math.max(0, Math.min(14, A.promise[k] + +b.dataset.d));
+      const row = b.closest(".promise");
+      row.querySelectorAll("b").forEach(x => x.textContent = A.promise[k]);
+      note();
+    });
+    note();
+  },
+  dates: () => { $("start").oninput = e => A.start = e.target.value; $("end").oninput = e => A.end = e.target.value; },
+  cta: () => {
+    $("ctaChips").onclick = e => {
+      const b = e.target.closest("[data-v]"); if (!b) return; const v = b.dataset.v;
+      A.ctas = A.ctas.includes(v) ? A.ctas.filter(x => x !== v) : [...A.ctas, v];
+      b.setAttribute("aria-pressed", A.ctas.includes(v));
+      $("dmField").hidden = !A.ctas.includes("dm"); $("linkField").hidden = !A.ctas.includes("link");
+      if (v === "dm" && A.ctas.includes("dm")) $("dmWord").focus();
+      if (v === "link" && A.ctas.includes("link")) $("linkFor").focus();
+    };
+    $("dmWord").oninput = e => A.dmWord = e.target.value;
+    $("linkFor").oninput = e => A.linkFor = e.target.value;
+  },
+  email: () => {
+    $("name").oninput = e => A.name = e.target.value; $("email").oninput = e => A.email = e.target.value;
+    $("updates").onchange = e => A.updates = e.target.checked;
+  }
+};
+
+function validate(s) {
+  if (s === "about" && !A.iam.trim()) return "Fill in \"I'm ___\" so your hooks sound like you.";
+  if (s === "topics" && !A.topics.some(t => t.trim())) return "Add at least one topic.";
+  if (s === "takes") { const t = A.topics.filter(Boolean)[takeTopic]; const k = A.takes[t] || {};
+    if (!["believe", "disagree", "untalked"].some(x => (k[x] || "").trim())) return "Fill in at least one."; }
+  if (s === "time" && (!A.time.film.days.length || !A.time.edit.days.length)) return "Pick at least one day to film and one day to edit.";
+  if (s === "promise" && !Object.values(A.promise).some(Boolean)) return "Pick at least 1 post a week.";
+  if (s === "dates") {
+    if (!A.start || !A.end) return "Pick both dates.";
+    const days = (parse(A.end) - parse(A.start)) / 864e5 + 1;
+    if (days < 1) return "The end date has to be after the start date.";
+    if (days > 31) return "Keep it to 31 days max.";
+  }
+  if (s === "cta") {
+    if (!A.ctas.length) return "Pick at least one.";
+    if (A.ctas.includes("dm") && !A.dmWord.trim()) return "Add the word they should DM you.";
+    if (A.ctas.includes("link") && !A.linkFor.trim()) return "Add what the link is for.";
+  }
+  if (s === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(A.email.trim())) return "Pop in a valid email.";
+  return "";
+}
+
+$("stepBox").addEventListener("click", async e => {
+  const go = e.target.dataset?.go; if (!go) return;
+  const s = STEPS[stepI];
+  if (go === "back") {
+    if (s === "takes" && takeTopic > 0) { takeTopic--; return render(); }
+    if (s === "story") { takeTopic = A.topics.filter(Boolean).length - 1; }
+    stepI--; return render();
+  }
+  if (s === "topics") A.topics = A.topics.map(t => t.trim()).filter(Boolean).length ? A.topics.map(t => t.trim()) : A.topics;
+  const err = validate(s);
+  if (err) { $("err").textContent = err; return; }
+  if (s === "topics") { A.topics = A.topics.filter(Boolean); takeTopic = 0; }
+  if (s === "takes" && takeTopic < A.topics.length - 1) { takeTopic++; return render(); }
+  if (s === "email") return finish();
+  stepI++; render();
+});
+
+async function finish() {
+  if (CONFIG.emailEndpoint) {
+    try { await fetch(CONFIG.emailEndpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ name: A.name, email: A.email, wantsUpdates: A.updates, iam: A.iam, topics: A.topics, platforms: A.platforms }) }); } catch (e) {}
+  }
+  BOOK = generate(A);
+  save();
+  showBook();
+}
+
+/* ---------- generator ---------- */
+function fill(hook, text) {
+  const t = text.trim().replace(/[.!]+$/, "");
+  if (/_{3,}/.test(hook)) return hook.replace(/_{3,}/, t);
+  if (/(\.\.\.|…)$/.test(hook)) return hook.replace(/(\.\.\.|…)$/, `... ${t}`);
+  return hook;
+}
+
+function ctaText(id, topic) {
+  return { follow: `Follow for more ${topic || A.topics[0] || "of this"}`, comment: "Comment your take below 👇", save: "Save this for later",
+    dm: `DM me "${A.dmWord.trim()}"`, link: `Link in my bio for ${A.linkFor.trim()}` }[id] || "";
+}
+// purpose decides whether a post gets a CTA, and which of their picked CTAs fits best
+let ctaTurn = 0;
+function ctaFor(purpose, topic) {
+  const pref = PURPOSES[purpose].ctas;
+  if (!pref.length) return "";
+  const fits = pref.filter(id => A.ctas.includes(id));
+  const pool = fits.length ? fits.slice(0, 2) : A.ctas;
+  return ctaText(pool[ctaTurn++ % pool.length], topic);
+}
+function purposeFor(type, kind) {
+  if (type === "lowEffort") return "virality";
+  if (kind === "working") return "bts";
+  if (kind === "believe" || kind === "untalked") return type === "story" ? "virality" : "educational";
+  if (kind === "disagree") return type === "talking" || type === "carousel" ? "community" : "virality";
+  if (kind === "story") return type === "talking" || type === "carousel" ? "community" : "virality";
+  return "educational";
+}
+
+function buildAngles() {
+  const angles = [];
+  A.topics.forEach(topic => {
+    const k = A.takes[topic] || {};
+    ["believe", "disagree", "untalked"].forEach(kind => { if ((k[kind] || "").trim()) angles.push({ kind, topic, text: k[kind].trim() }); });
+  });
+  const story = [];
+  if (A.oldMe.trim() && A.newMe.trim()) story.push({ kind: "story", topic: "My story", old: A.oldMe.trim(), now: A.newMe.trim() });
+  if (A.working.trim()) story.push({ kind: "working", topic: "Building in public", text: A.working.trim() });
+  return { angles, story };
+}
+
+function postSlots() {
+  // spread each week's posts across the days, interleaving types
+  const start = parse(A.start), end = parse(A.end);
+  const days = []; for (let d = new Date(start); d <= end; d = addDays(d, 1)) days.push(new Date(d));
+  const weekly = []; Object.entries(A.promise).forEach(([k, n]) => { for (let i = 0; i < n; i++) weekly.push(k); });
+  // interleave: round robin by type
+  const byType = {}; weekly.forEach(k => (byType[k] = byType[k] || []).push(k));
+  const order = []; let more = true;
+  while (more) { more = false; for (const k in byType) if (byType[k].length) { order.push(byType[k].shift()); more = true; } }
+  const slots = [];
+  for (let w = 0; w * 7 < days.length; w++) {
+    const wk = days.slice(w * 7, w * 7 + 7);
+    const n = Math.round(order.length * wk.length / 7);
+    for (let i = 0; i < n; i++) {
+      const day = wk[Math.min(wk.length - 1, Math.floor(i * wk.length / n))];
+      slots.push({ date: iso(day), type: order[i % order.length] });
+    }
+  }
+  return slots;
+}
+
+function taskDay(dateStr, dayIdxs, notAfter) {
+  // most recent selected weekday on or before the post date (up to 7 days back)
+  const d = parse(dateStr);
+  for (let back = 0; back <= 7; back++) {
+    const c = addDays(d, -back);
+    if (dayIdxs.includes(dowIdx(c)) && (!notAfter || c >= notAfter)) return c;
+  }
+  return null;
+}
+
+function generate() {
+  const { angles, story } = buildAngles();
+  const slots = postSlots();
+  const used = {}; const next = (pool, key) => { used[key] = (used[key] ?? -1) + 1; return pool[used[key] % pool.length]; };
+  let ai = 0, si = 0, n = 0;
+  const seen = {};
+  const posts = slots.map(slot => {
+    let ang;
+    const wantStory = story.length && (slot.type === "story" || (n % 4 === 3));
+    if (wantStory) ang = story[si++ % story.length];
+    else if (angles.length) ang = angles[ai++ % angles.length];
+    else ang = story[si++ % story.length];
+    n++;
+    const angleId = ang.kind + "|" + (ang.text || ang.old);
+    const repeat = seen[angleId + slot.type] = (seen[angleId + slot.type] || 0) + 1;
+    let fmtKey = PICK[slot.type][ang.kind];
+    if (Array.isArray(fmtKey)) fmtKey = next(fmtKey, "fmt-" + slot.type);
+    // when the same angle comes back, switch up the format so it isn't the same post twice
+    if (repeat > 1) {
+      const alt = { problemStatement: "singleBroll", silentFilm: "voiceover", numberedCarousel: "numberedCarousel" };
+      if (repeat % 2 === 0 && alt[fmtKey]) fmtKey = alt[fmtKey];
+    }
+    const fmt = F[fmtKey];
+    const fixed = {
+      problemStatement: () => `"${ang.text.charAt(0).toUpperCase() + ang.text.slice(1)}"`,
+      beforeAfter: () => `Old me: ${ang.old} → Me now: ${ang.now}`,
+      splitScreen: () => `${ang.old} vs ${ang.now}`,
+      silentFilm: () => `[YEAR]: ${ang.old}`
+    };
+
+    let hook, point, slots2 = {};
+    const s = fmt.slots;
+    if (fixed[fmtKey] && repeat === 1) hook = fixed[fmtKey]();
+    else hook = next(hookPool(ang), "hook-" + angleId);
+    if (repeat === 2 && (slot.type === "talking" || slot.type === "story")) hook = next(H.part2, "p2");
+    point = ang.kind === "believe" ? `I totally believe that ${ang.text}`
+      : ang.kind === "disagree" ? `I disagree with people who think ${ang.text}`
+      : ang.kind === "untalked" ? `I don't see a lot of people talking about ${ang.text}`
+      : ang.kind === "story" ? `Old me: ${ang.old} → Me now: ${ang.now}`
+      : `What I'm working on right now: ${ang.text}`;
+
+    // prefill structure slots
+    s.forEach(label => slots2[label] = "");
+    if (fmtKey === "singleBroll") { slots2[s[1]] = hook; }
+    if (fmtKey === "problemStatement") { slots2[s[0]] = hook; }
+    if (fmtKey === "beforeAfter") { slots2[s[0]] = ang.old; slots2[s[1]] = ang.now; slots2[s[2]] = ang.old; slots2[s[4]] = ang.now; }
+    if (fmtKey === "splitScreen") { slots2[s[0]] = `${ang.old} (time: ___)`; slots2[s[1]] = `${ang.now} (same time: ___)`; }
+    if (fmtKey === "silentFilm") { slots2[s[0]] = `[YEAR]: ${ang.old}`; slots2[s[2]] = ang.now; }
+    if (fmtKey === "voiceover") { slots2[s[0]] = ang.old || ang.text; if (ang.now) slots2[s[2]] = ang.now; }
+    if (fmtKey === "valueTalking") { slots2[s[1]] = ang.text || `${ang.old} → ${ang.now}`; slots2[s[2]] = ""; }
+    const purpose = purposeFor(slot.type, ang.kind);
+    const cta = ctaFor(purpose, ang.topic);
+    if (fmtKey === "numberedCarousel") { slots2[s[0]] = hook; slots2[s[6]] = cta; }
+    if (fmtKey === "assumptionCarousel") { slots2[s[0]] = `"${ang.text}" / the reality: ___`; }
+    if (fmtKey === "actionCarousel") { slots2[s[5]] = ang.now ? `Now: ${ang.now}` : ""; }
+
+    // film/edit on your chosen days before the post, never in the past; if there's no chosen day in time, do it on the post day
+    const today0 = parse(iso(new Date()));
+    const filmD = slot.type === "carousel" ? null : (taskDay(slot.date, A.time.film.days, today0) || parse(slot.date));
+    const editD = taskDay(slot.date, A.time.edit.days, filmD || today0) || parse(slot.date);
+    return {
+      id: Math.random().toString(36).slice(2, 9),
+      date: slot.date, type: slot.type, fmt: fmtKey, topic: ang.topic, hook, point,
+      slots: slots2, purpose, cta,
+      film: filmD ? iso(filmD) : "", edit: editD ? iso(editD) : "",
+      // where it goes: "plan" = going to post there, "done" = posted
+      where: Object.fromEntries((A.platforms.length ? A.platforms : ["TikTok", "Instagram"]).map(pl => [pl, "plan"])),
+      status: "Idea", notes: "", checks: []
+    };
+  });
+  return { posts, created: Date.now() };
+}
+
+// fill in fields that older saved batchbooks don't have
+function upgradeBook() {
+  BOOK.posts.forEach(p => {
+    if (!p.purpose) p.purpose = purposeFor(p.type, p.point.startsWith("What I'm working") ? "working" : "believe");
+    if (!p.where) p.where = Object.fromEntries((A.platforms.length ? A.platforms : ["TikTok", "Instagram"]).map(pl => [pl, "plan"]));
+  });
+}
+const whereSummary = p => { const v = Object.values(p.where || {}); return v.length ? `${v.filter(x => x === "done").length}/${v.length} posted` : ""; };
+
+// time blocks: what to do on each film / edit / plan / ideas day
+function timeBlocks(posts, from, start, end) {
+  const out = {};
+  const mins = (list, k) => list.reduce((s, p) => s + TYPES[p.type][k], 0);
+  for (let d = new Date(from); d <= end; d = addDays(d, 1)) {
+    const ds = iso(d), i = dowIdx(d), t = [];
+    if (d >= start && A.time.ideas.days.includes(i)) t.push({ kind: "ideas", label: `💡 Find ideas · ${A.time.ideas.h}h`, posts: [] });
+    if (d >= start && A.time.plan.days.includes(i)) t.push({ kind: "plan", label: `🗓️ Plan · ${A.time.plan.h}h`, posts: posts.filter(p => p.date > ds && p.date <= iso(addDays(d, 7))) });
+    const f = posts.filter(p => p.film === ds), e = posts.filter(p => p.edit === ds);
+    if (f.length) t.push({ kind: "film", label: `🎬 Film ${f.length} · ${A.time.film.h}h`, posts: f, need: mins(f, "film") });
+    if (e.length) t.push({ kind: "edit", label: `✂️ Edit ${e.length} · ${A.time.edit.h}h`, posts: e, need: mins(e, "edit") });
+    if (t.length) out[ds] = t;
+  }
+  return out;
+}
+
+/* ---------- batchbook view ---------- */
+const fmtDate = s => s ? parse(s).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }) : "—";
+function save() { store.set({ answers: A, book: BOOK }); }
+
+function showBook() {
+  upgradeBook();
+  $("quiz").hidden = true; $("book").hidden = false;
+  document.body.classList.remove("quizmode");
+  document.title = `${A.name ? A.name + "'s" : "Your"} Batchbook`;
+  const posts = BOOK.posts;
+  const counts = {}; posts.forEach(p => counts[p.type] = (counts[p.type] || 0) + 1);
+  const start = parse(A.start), end = parse(A.end);
+  // show the week(s) before the start too if the first posts need filming/editing before day 1
+  const firstWork = posts.flatMap(p => [p.film, p.edit]).filter(Boolean).sort()[0];
+  const from = firstWork && parse(firstWork) < start ? parse(firstWork) : start;
+  const gStart = addDays(from, -dowIdx(from)), gEnd = addDays(end, 6 - dowIdx(end));
+  const todayS = iso(new Date());
+  const tasks = timeBlocks(posts, from, start, end);
+  window.__blocks = tasks;
+  let weeks = "";
+  for (let w = new Date(gStart); w <= gEnd; w = addDays(w, 7)) {
+    weeks += `<div class="week-h">Week of ${w.toLocaleDateString(undefined, { month: "short", day: "numeric" })}</div><div class="dows">${DAYS.map(d => `<div class="dow">${d}</div>`).join("")}</div><div class="grid">`;
+    for (let i = 0; i < 7; i++) {
+      const d = addDays(w, i), ds = iso(d);
+      const inRange = d >= start && d <= end;      const dayPosts = posts.filter(p => p.date === ds);
+      const dayTasks = tasks[ds] || [];
+      weeks += `<div class="cell ${inRange ? "" : "out"} ${ds === todayS ? "today" : ""} ${dayPosts.length || dayTasks.length ? "" : "empty-day"}">
+        <div class="dnum"><span>${d.toLocaleDateString(undefined, { weekday: window.innerWidth <= 760 ? "long" : undefined, month: d.getDate() === 1 || i === 0 ? "short" : undefined, day: "numeric" })}</span><b>${ds === todayS ? "today" : ""}</b></div>
+        ${dayTasks.map((t, ti) => `<button class="task" data-block="${ds}|${ti}">${esc(t.label)}</button>`).join("")}
+        ${dayPosts.map(p => `<button class="item c-${p.type} ${p.status === "Posted" ? "posted" : ""}" data-open="${p.id}"><span class="k">${TYPES[p.type].label} · ${PURPOSES[p.purpose].ico} ${PURPOSES[p.purpose].label}</span><span class="t">${esc(p.hook)}</span>${whereSummary(p) ? `<span class="w">${whereSummary(p)}</span>` : ""}</button>`).join("")}
+      </div>`;
+    }
+    weeks += `</div>`;
+  }
+  $("book").innerHTML = `
+    <div class="book-head">
+      <div><div class="ws"><span class="ws-mark">B</span>${esc(CONFIG.creator)}</div>
+        <h1 style="margin-top:8px">${A.name ? esc(A.name) + "'s" : "Your"} Batchbook</h1>
+        <div class="sub">${fmtDate(A.start)} → ${fmtDate(A.end)} · ${posts.length} posts</div></div>
+      <div class="actions">
+        <button class="btn primary" id="xSheets">Export to Google Sheets</button>
+        <button class="btn" id="xPdf">Save as PDF</button>
+        <button class="btn" id="xRedo">Start over</button>
+      </div>
+    </div>
+    <div class="banner">⚠️ <b>This isn't saved to an account.</b> It only stays in this browser, and clearing your browser data erases it. Export it to Google Sheets or save it as a PDF so you don't lose it.</div>
+    <div class="legend">${Object.entries(TYPES).filter(([k]) => counts[k]).map(([k, t]) => `<span class="c-${k}"><i style="background:var(--c-dot)"></i>${counts[k]} ${(counts[k] === 1 ? t.label : t.short).toLowerCase()}</span>`).join("")}<span>Tap any post to open it</span></div>
+    ${weeks}`;
+  $("book").onclick = e => {
+    const id = e.target.closest("[data-open]")?.dataset.open; if (id) return openPost(id);
+    const blk = e.target.closest("[data-block]")?.dataset.block; if (blk) return openBlock(blk);
+    if (e.target.id === "xSheets") exportCsv();
+    if (e.target.id === "xPdf") printBook();
+    if (e.target.id === "xRedo") { if (confirm("Start over? This clears your batchbook from this browser.")) { store.clear(); location.reload(); } }
+  };
+  window.scrollTo(0, 0);
+}
+
+function openPost(id) {
+  const p = BOOK.posts.find(x => x.id === id); if (!p) return;
+  const f = F[p.fmt];
+  $("drawer").innerHTML = `
+    <div class="drawer-bar"><span>${fmtDate(p.date)} · ${esc(p.topic)}</span><span><button class="btn" id="dClose">Close ✕</button></span></div>
+    <div class="drawer-body c-${p.type}">
+      <textarea class="d-hook" data-f="hook" rows="1">${esc(p.hook)}</textarea>
+      <div class="props">
+        <label>Post on</label><input class="prop" type="date" data-f="date" value="${p.date}">
+        <label>Content</label><div class="v"><span class="pill">${TYPES[p.type].label}</span></div>
+        <label>Format</label><div class="v">${esc(f.name)} ${f.fire}</div>
+        <label>Topic</label><input class="prop" data-f="topic" value="${esc(p.topic)}">
+        <label>Film on</label><input class="prop" type="date" data-f="film" value="${p.film}">
+        <label>Edit on</label><input class="prop" type="date" data-f="edit" value="${p.edit}">
+        <label>Purpose</label><select class="prop" data-f="purpose">${Object.entries(PURPOSES).map(([k, v]) => `<option value="${k}" ${p.purpose === k ? "selected" : ""}>${v.ico} ${v.label}</option>`).join("")}</select>
+        <label>Status</label><select class="prop" data-f="status">${["Idea", "Filmed", "Edited", "Posted"].map(s => `<option ${p.status === s ? "selected" : ""}>${s}</option>`).join("")}</select>
+        <label>Post to</label><div class="v where" id="where">${PLATFORMS.map(pl => { const st = p.where[pl] || "off";
+          return `<button class="wchip ${st}" data-pl="${esc(pl)}" title="Tap to switch: not posting → posting → posted">${st === "done" ? "✓ " : ""}${esc(pl)}</button>`; }).join("")}
+          <span class="hint" style="display:block;margin-top:4px">Tap: not posting → posting → posted ✓. Crossposting? Turn on more than one.</span></div>
+      </div>
+      <div class="sec"><h3>Hook <button class="btn" id="swapHook">🔀 Try another hook</button></h3>
+        <p class="hint" style="margin:0">Stack it: say it (verbal), show it (visual), and put it on screen (text).</p></div>
+      <div class="sec"><h3>Main point</h3><textarea class="box" data-f="point">${esc(p.point)}</textarea></div>
+      <div class="sec"><h3>Build it</h3>
+        ${f.slots.map(l => `<div class="slot"><label>${esc(l)}</label><textarea class="box" data-slot="${esc(l)}">${esc(p.slots[l] || "")}</textarea></div>`).join("")}</div>
+      <div class="sec"><h3>CTA</h3>${p.purpose === "virality"
+        ? `<p class="hint" style="margin:0">No CTA on this one. Viral posts spread better when they don't ask for anything. Change the purpose above if you want one.</p>`
+        : `<textarea class="box" data-f="cta">${esc(p.cta)}</textarea>`}</div>
+      <div class="sec"><h3>How to make it: ${esc(f.name)}</h3><ol class="howto">${[...f.how, ...(p.type === "talking" || p.fmt === "voiceover" ? [REHOOK] : [])].map(h => `<li>${esc(h)}</li>`).join("")}</ol></div>
+      <div class="sec"><h3>Before you post</h3><div class="check">${CHECK.map((c, i) => `<label><input type="checkbox" data-c="${i}" ${p.checks.includes(i) ? "checked" : ""}>${esc(c)}</label>`).join("")}</div></div>
+      <div class="sec"><h3>Notes</h3><textarea class="box" data-f="notes" placeholder="Links, audio, B-roll ideas…">${esc(p.notes)}</textarea></div>
+    </div>`;
+  $("drawer").hidden = false; $("scrim").hidden = false;
+  const d = $("drawer");
+  const grow = el => { el.style.height = "auto"; el.style.height = el.scrollHeight + 2 + "px"; };
+  d.querySelectorAll("textarea").forEach(grow);
+  d.oninput = e => {
+    const t = e.target;
+    if (t.tagName === "TEXTAREA") grow(t);
+    if (t.dataset.f) p[t.dataset.f] = t.value;
+    if (t.dataset.slot) p.slots[t.dataset.slot] = t.value;
+    save();
+  };
+  d.onchange = e => {
+    const t = e.target;
+    if (t.dataset.c != null) { const i = +t.dataset.c; p.checks = t.checked ? [...p.checks, i] : p.checks.filter(x => x !== i); save(); }
+    if (t.dataset.f === "purpose") { p.cta = ctaFor(p.purpose, p.topic); save(); showBook(); openPost(p.id); return; }
+    if (t.dataset.f === "date" || t.dataset.f === "status") { save(); showBook(); openPost(p.id); }
+  };
+  $("where").onclick = e => {
+    const b = e.target.closest("[data-pl]"); if (!b) return;
+    const pl = b.dataset.pl, st = p.where[pl] || "off";
+    const nextSt = { off: "plan", plan: "done", done: "off" }[st];
+    if (nextSt === "off") delete p.where[pl]; else p.where[pl] = nextSt;
+    const v = Object.values(p.where);
+    if (v.length && v.every(x => x === "done")) p.status = "Posted";
+    else if (p.status === "Posted") p.status = "Edited";
+    save(); showBook(); openPost(p.id);
+  };
+  $("dClose").onclick = closePost;
+  $("swapHook").onclick = () => { p.hook = swapHook(p); save(); const h = d.querySelector(".d-hook"); h.value = p.hook; grow(h); showBook(); };
+  d.focus();
+}
+const BLOCK_TIPS = {
+  ideas: ["Search 2–3 keywords in your niche and watch the top posts all the way through", "Save 5 posts you'd remake in your own style", "Write down any idea, question or comment that made you think \"I have a take on that\""],
+  plan: ["Open each post below and read the hook out loud", "Fill in the empty Build it boxes", "Pick audio and B-roll for each one"],
+  film: ["Same outfit and setup for everything, it's faster", "Face a window for light", "Film each hook 2–3 times so you can pick the best one", "Grab extra B-roll while you're set up"],
+  edit: ["Captions on everything", "Cut every 2–3 seconds", "Hook text on the first frame", "Read every line out loud: if it's hard to say in its screen time, shorten it"]
+};
+function openBlock(key) {
+  const [ds, ti] = key.split("|");
+  const b = window.__blocks?.[ds]?.[+ti]; if (!b) return;
+  const name = { ideas: "Find ideas", plan: "Plan", film: "Film day", edit: "Edit day" }[b.kind];
+  const hrs = A.time[b.kind].h;
+  $("drawer").innerHTML = `
+    <div class="drawer-bar"><span>${fmtDate(ds)} · time block</span><span><button class="btn" id="dClose">Close ✕</button></span></div>
+    <div class="drawer-body">
+      <h2 style="font-size:24px">${esc(b.label)}</h2>
+      ${b.need ? `<p class="hint" style="margin:0">These take about ${Math.round(b.need / 60 * 10) / 10}h. You blocked ${hrs}h${b.need / 60 > hrs ? ", so you might need to move one to another day." : " ✨"}</p>` : ""}
+      ${b.posts.length ? `<div class="sec"><h3>${b.kind === "plan" ? "Posts coming up this week" : "Posts to " + (b.kind === "film" ? "film" : "edit")}</h3>
+        ${b.posts.map(p => `<button class="item c-${p.type}" data-open="${p.id}"><span class="k">${fmtDate(p.date)} · ${TYPES[p.type].label}</span><span class="t">${esc(p.hook)}</span></button>`).join("")}</div>` : ""}
+      <div class="sec"><h3>Checklist</h3><ol class="howto">${BLOCK_TIPS[b.kind].map(t => `<li>${esc(t)}</li>`).join("")}</ol></div>
+    </div>`;
+  $("drawer").hidden = false; $("scrim").hidden = false;
+  $("dClose").onclick = closePost;
+  $("drawer").onclick = e => { const id = e.target.closest("[data-open]")?.dataset.open; if (id) openPost(id); };
+  $("drawer").oninput = null; $("drawer").onchange = null;
+}
+function closePost() { $("drawer").hidden = true; $("scrim").hidden = true; $("drawer").onclick = null; }
+$("scrim").onclick = closePost;
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("drawer").hidden) closePost(); });
+
+/* ---------- hook bank (pasted list) + filling its blanks from quiz answers ---------- */
+const BANK = (() => {
+  const out = []; let skipNext = false;
+  ($("my-hooks")?.textContent || "").split("\n").forEach(raw => {
+    let l = raw.trim();
+    if (!l) return;
+    if (skipNext) { skipNext = false; return; }
+    if (/^This works because/i.test(l)) return;
+    if (/^Example\b/i.test(l)) { skipNext = true; return; }
+    l = l.replace(/^(\*|-|•|\d+\.)\s*/, "").replace(/^["“](.*)["”](\s*-.*)?$/, "$1").trim();
+    if (!l || /^Use specific numbers and dates$/i.test(l)) return;
+    if (!out.includes(l)) out.push(l);
+  });
+  return out;
+})();
+const SLOT = {
+  topic: /^(topic|niche|your niche|thing|area|thing in your niche|things related to your niche|thing they’re interested in|thing they're interested in|thing\/situation|situation\/thing|niche\/position\/situation\/thing\/pursuit|thing they experience|thing they will experience|section of their life)$/i,
+  who: /^(title|identity|profession|avatar|ivp|your ivp|position\/title|profession\/title|title\/profession|personal title|title\/identity\/dream persona)$/i,
+  take: /^(unexpected truth|unexpected insight|opinion|opinion\/idea|controversial opinion|same controversial opinion|truth|lesson|message|reveal|observation|idea|statement)$/i,
+  myth: /^(belief|limiting belief|bold claim)$/i,
+  now: /^(personal outcome|personal dream outcome|dream personal outcome)$/i,
+  before: /^(personal outcome before)$/i,
+  goal: /^(personal goal)$/i
+};
+function fillBank(h, ang) {
+  const baseTopic = ang.topic && !["My story", "Building in public"].includes(ang.topic) ? ang.topic : (A.topics[0] || "");
+  const who = A.iam.replace(/^(i'?m|i am)\s+/i, "").replace(/^(a|an)\s+/i, "");
+  // each kind of answer only goes into blanks where it reads right
+  // hooks that argue AGAINST the blank ("I can't stand people who say ___") take the thing they disagree with
+  const against = /can[’']t stand|sick of seeing|closed-minded|is lying|That’s a lie|myth/i.test(h);
+  const nobodyHook = /nobody|no one|wrong about|truth about|understand about/i.test(h);
+  const mythVal = ang.kind === "disagree" ? ang.text : ang.kind === "story" ? ang.old : "";
+  const val = {
+    topic: ang.kind === "untalked" && nobodyHook ? ang.text : baseTopic,
+    who,
+    take: against ? mythVal : ang.kind === "believe" ? ang.text : "",
+    myth: mythVal,
+    now: ang.now || "", before: ang.old || "",
+    goal: ang.kind === "working" ? ang.text : ""
+  };
+  let changed = false;
+  const outH = h.replace(/\[([^\]]+)\]|\{([^}]+)\}|\(([^)]+)\)/g, (m, a, b, c) => {
+    const key = (a || b || c).trim();
+    for (const k in SLOT) if (SLOT[k].test(key) && val[k]) { changed = true; return val[k].replace(/[.!]+$/, ""); }
+    return m;
+  });
+  return { hook: outH, changed };
+}
+// bank hooks that got at least one blank filled for this angle
+const blanksLeft = h => (h.match(/\[[^\]]*\]|\{[^}]*\}|\([^)]*\)/g) || []).length;
+function bankFor(ang, maxLeft = 0) {
+  // only use bank hooks where every blank got filled (or at most maxLeft are left for them to fill)
+  const list = BANK.map(h => fillBank(h, ang)).filter(r => r.changed && blanksLeft(r.hook) <= maxLeft).map(r => r.hook);
+  // start each answer at a different spot in the bank so posts don't all open the same way
+  const seed = [...(ang.text || ang.old || "") + ang.kind].reduce((s, c) => (s * 31 + c.charCodeAt(0)) >>> 0, 7);
+  const k = list.length ? seed % list.length : 0;
+  return [...list.slice(k), ...list.slice(0, k)];
+}
+const interleave = (a, b) => { const o = []; for (let i = 0; i < Math.max(a.length, b.length); i++) { if (a[i]) o.push(a[i]); if (b[i]) o.push(b[i]); } return o; };
+
+function hookPool(ang) {
+  return interleave(basePool(ang), bankFor(ang));
+}
+function basePool(ang) {
+  const t = ang.text;
+  if (ang.kind === "believe") return [...H.believe.map(h => fill(h, t)), ...H.truth];
+  if (ang.kind === "disagree") return [...H.disagree.map(h => fill(h, t)), `"${t.charAt(0).toUpperCase() + t.slice(1)}"`];
+  if (ang.kind === "untalked") return [...H.untalked.map(h => fill(h, t)), `5 things nobody tells you about ${t.replace(/[.!]+$/, "")}`, ...H.list, ...H.open];
+  if (ang.kind === "working") return [...H.working, ...H.open];
+  if (ang.kind === "story") return [
+    H.story[0].replace("[age]", A.iam.replace(/^(i'?m|i am)\s+/i, "")),
+    H.story[1].replace("[PROBLEM]", ang.old).replace("[PAYOFF]", ang.now),
+    fill(H.relate[0], ang.old), `Old me: ${ang.old} → Me now: ${ang.now}`, `${ang.old} vs ${ang.now}`, H.story[2], H.relate[1]];
+  return [...H.working, ...H.open];
+}
+
+function swapHook(p) {
+  const kind = p.point.startsWith("I totally believe") ? "believe" : p.point.startsWith("I disagree") ? "disagree"
+    : p.point.startsWith("I don't see") ? "untalked" : p.point.startsWith("Old me") ? "story" : "working";
+  const text = p.point.replace(/^I totally believe that |^I disagree with people who think |^I don't see a lot of people talking about |^What I'm working on right now: /, "");
+  let ang = { kind, text, topic: p.topic };
+  if (kind === "story") { const [old, now] = text.replace(/^Old me: /, "").split(" → Me now: "); ang = { kind, old, now, topic: p.topic }; }
+  const pool = [...interleave(basePool(ang), bankFor(ang, 1)), ...(kind === "story" ? [`[YEAR]: ${ang.old}`] : []), ...H.part2];
+  const i = pool.indexOf(p.hook);
+  return pool[(i + 1) % pool.length];
+}
+
+/* ---------- export ---------- */
+function rows() {
+  return BOOK.posts.slice().sort((a, b) => a.date.localeCompare(b.date)).map(p => ({
+    Date: p.date, Day: DAYS[dowIdx(parse(p.date))], Content: TYPES[p.type].label, Format: F[p.fmt].name, Topic: p.topic,
+    Purpose: PURPOSES[p.purpose].label, Hook: p.hook, "Main point": p.point,
+    "Build it": F[p.fmt].slots.map(l => `${l}: ${p.slots[l] || ""}`).join("\n"),
+    CTA: p.purpose === "virality" ? "(none, virality post)" : p.cta, "Film on": p.film, "Edit on": p.edit,
+    "Post to": Object.keys(p.where || {}).join(", "),
+    "Posted on": Object.entries(p.where || {}).filter(([, v]) => v === "done").map(([k]) => k).join(", "),
+    Status: p.status, Notes: p.notes
+  }));
+}
+// time blocks as their own rows, so the sheet works as a schedule too
+function blockRows() {
+  const out = [];
+  Object.entries(window.__blocks || {}).forEach(([ds, list]) => list.forEach(b => out.push({
+    Date: ds, Day: DAYS[dowIdx(parse(ds))], Content: "Time block", Format: b.label.replace(/^\S+\s/, ""),
+    "Main point": b.posts.map(p => `${fmtDate(p.date)}: ${p.hook}`).join("\n"),
+    "Build it": BLOCK_TIPS[b.kind].join("\n")
+  })));
+  return out;
+}
+function exportCsv() {
+  const posts = rows(); const cols = Object.keys(posts[0] || {});
+  const r = [...posts, ...blockRows()].sort((a, b) => a.Date.localeCompare(b.Date));
+  const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const csv = [cols.map(q).join(","), ...r.map(x => cols.map(c => q(x[c])).join(","))].join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" }));
+  a.download = "my-batchbook.csv"; a.click();
+  setTimeout(() => alert("Downloaded my-batchbook.csv ✅\n\nTo open it in Google Sheets:\n1. Go to sheets.new\n2. File → Import → Upload\n3. Pick my-batchbook.csv → Import data"), 300);
+}
+function printBook() {
+  $("print").innerHTML = `<h1>${A.name ? esc(A.name) + "'s" : "Your"} Batchbook</h1><div class="p-meta">${fmtDate(A.start)} → ${fmtDate(A.end)} · ${BOOK.posts.length} posts</div>` +
+    rows().map(r => `<div class="p-post"><div class="p-meta">${esc(r.Day)} ${esc(r.Date)} · ${esc(r.Content)} · ${esc(r.Format)} · ${esc(r.Topic)}${r["Film on"] ? ` · Film ${esc(r["Film on"])}` : ""} · Edit ${esc(r["Edit on"])}</div>
+      <h2>${esc(r.Hook)}</h2><p><b>Main point:</b> ${esc(r["Main point"])}</p><p><b>Build it:</b>\n${esc(r["Build it"])}</p><p><b>CTA:</b> ${esc(r.CTA)}</p>${r.Notes ? `<p><b>Notes:</b> ${esc(r.Notes)}</p>` : ""}</div>`).join("");
+  window.print();
+}
+
+/* ---------- start ---------- */
+render();
+</script>
+</body>
+</html>
