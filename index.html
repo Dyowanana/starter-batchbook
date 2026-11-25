@@ -1761,9 +1761,10 @@ function showBook() {
         <div class="sub">${fmtDate(A.start)} → ${fmtDate(A.end)} · ${posts.length} posts</div></div>
       <div class="actions">
         <button class="btn" id="xDeck">← My first posts</button>
-        <button class="btn primary" id="xSheets">Export to Google Sheets</button>
+        <button class="btn primary" id="xExcel">Download Excel / Sheets</button>
         <button class="btn" id="xNotion">Export to Notion</button>
         <button class="btn" id="xPdf">Save as PDF</button>
+        <button class="btn" id="xSheets">CSV</button>
         <button class="btn" id="xRedo">Start over</button>
       </div>
     </div>
@@ -1775,6 +1776,7 @@ function showBook() {
     const blk = e.target.closest("[data-block]")?.dataset.block; if (blk) return openBlock(blk);
     if (e.target.id === "xSheets") exportCsv();
     if (e.target.id === "xNotion") exportNotion();
+    if (e.target.id === "xExcel") exportExcel(e.target);
     if (e.target.id === "xDeck") { deckI = 0; showDeck(); }
     if (e.target.id === "xPdf") printBook();
     if (e.target.id === "xRedo") { if (confirm("Start over? This clears your batchbook from this browser.")) { store.clear(); location.reload(); } }
@@ -2018,7 +2020,139 @@ function exportNotion() {
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([md], { type: "text/markdown;charset=utf-8" }));
   a.download = "my-batchbook.md"; a.click();
-  setTimeout(() => alert("Downloaded my-batchbook.md ✅\n\nTo open it in Notion:\n1. In Notion, click Import (bottom of the sidebar, or ••• → Import)\n2. Pick Markdown & CSV → choose my-batchbook.md\n\nWant it as a Notion database instead? Use Export to Google Sheets, then import that .csv file in Notion the same way."), 300);
+  setTimeout(() => alert("Downloaded my-batchbook.md ✅\n\nTo open it in Notion:\n1. In Notion, click Import (bottom of the sidebar, or ••• → Import)\n2. Pick Markdown & CSV → choose my-batchbook.md\n\nWant it as a Notion database instead? Tap CSV, then import that .csv file in Notion the same way."), 300);
+}
+/* ---------- Excel export, laid out like a monthly content calendar ---------- */
+const XL = {
+  font: "Ubuntu", line: "FFE8DCF4", head: "FFE8DCF4", ink: "FF3A3550", muted: "FF8A8396",
+  type: { carousel: "FFDCE5EF", lowEffort: "FFF9ECCF", talking: "FFF2D6D6", story: "FFE8DCF4" }, block: "FFECECEC"
+};
+function loadExcelJS() {
+  if (window.ExcelJS) return Promise.resolve();
+  return new Promise((res, rej) => { const sc = document.createElement("script");
+    sc.src = "https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"; sc.onload = res; sc.onerror = rej; document.head.appendChild(sc); });
+}
+function monthSheet(wb, y, m, posts, blocks) {
+  const first = new Date(y, m, 1), days = new Date(y, m + 1, 0).getDate(), off = first.getDay();
+  const title = first.toLocaleDateString("en-US", { month: "long", year: "numeric" }).toUpperCase();
+  const ws = wb.addWorksheet(first.toLocaleDateString("en-US", { month: "short", year: "numeric" }), {
+    views: [{ showGridLines: false }],
+    pageSetup: { orientation: "landscape", fitToPage: true, fitToWidth: 1, fitToHeight: 1, margins: { left: .3, right: .3, top: .3, bottom: .3, header: 0, footer: 0 } }
+  });
+  ws.columns = [3.9, ...Array(7).fill([0.8, 3.2, 0.8, 18.9]).flat(), 3.9].map(w => ({ width: w }));
+  const F = (sz, bold, color = XL.ink) => ({ name: XL.font, size: sz, bold, color: { argb: color } });
+  const fill = argb => ({ type: "pattern", pattern: "solid", fgColor: { argb } });
+  [22.5, 56.25, 22.5, 22.5, 11.25].forEach((h, i) => ws.getRow(i + 1).height = h);
+  ws.mergeCells("C2:U2");
+  Object.assign(ws.getCell("C2"), { value: A.name ? `${A.name.toUpperCase()}'S CONTENT CALENDAR` : "MONTHLY CONTENT CALENDAR", font: F(30, true), alignment: { vertical: "middle" } });
+  ws.mergeCells("Y2:AC2");
+  Object.assign(ws.getCell("Y2"), { value: title, font: F(16, true), alignment: { horizontal: "center", vertical: "middle" } });
+  ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].forEach((d, i) => {
+    const c0 = 2 + i * 4; ws.mergeCells(4, c0, 4, c0 + 3);
+    Object.assign(ws.getCell(4, c0), { value: d, font: F(14, true), fill: fill(XL.head), alignment: { horizontal: "center", vertical: "middle" } });
+  });
+  const weeks = Math.ceil((off + days) / 7);
+  const border = { style: "thin", color: { argb: XL.line } };
+  for (let w = 0; w < weeks; w++) {
+    const top = 6 + w * 9;
+    [6, 18.75, 6, 18.75, 6, 18.75, 6, 18.75, 6].forEach((h, i) => ws.getRow(top + i).height = h);
+    for (let i = 0; i < 7; i++) {
+      const c0 = 2 + i * 4, dayN = w * 7 + i - off + 1;
+      for (let r = top; r < top + 9; r++) for (let c = c0; c < c0 + 4; c++) {
+        const b = {};
+        if (r === top) b.top = border;
+        if (w === weeks - 1 && r === top + 8) b.bottom = border;
+        if (c === c0) b.left = border;
+        if (c === c0 + 3) b.right = border;
+        if (Object.keys(b).length) ws.getCell(r, c).border = b;
+      }
+      if (dayN < 1 || dayN > days) continue;
+      const ds = iso(new Date(y, m, dayN));
+      const inRange = ds >= A.start && ds <= A.end;
+      Object.assign(ws.getCell(top + 1, c0 + 1), { value: dayN, font: F(14, false, inRange ? XL.ink : XL.muted), alignment: { horizontal: "center" } });
+      const items = [
+        ...posts.filter(p => p.date === ds).map(p => ({ color: XL.type[p.type], text: p.hook, note: `${TYPES[p.type].label} · ${PURPOSES[p.purpose].label}\n${p.hook}${p.purpose === "virality" ? "" : `\nCTA: ${p.cta}`}` })),
+        ...(blocks[ds] || []).map(b => ({ color: XL.block, text: b.label.replace(/^\S+\s/, ""), note: b.posts.map(p => p.hook).join("\n") }))
+      ];
+      const shown = items.length > 3 ? [...items.slice(0, 2), { color: XL.block, text: `+${items.length - 2} more (see Posts tab)` }] : items;
+      shown.forEach((it, k) => {
+        const r = top + 3 + k * 2;
+        ws.getCell(r, c0 + 1).fill = fill(it.color);
+        const cell = ws.getCell(r, c0 + 3);
+        cell.value = it.text.length > 42 ? it.text.slice(0, 40) + "…" : it.text;
+        cell.font = F(10, false);
+        cell.alignment = { vertical: "middle", indent: 0 };
+        if (it.note) cell.note = it.note;
+      });
+    }
+  }
+  // legend + notes, like the template footer
+  const lr = 6 + weeks * 9 + 1;
+  [["CAROUSEL", XL.type.carousel], ["LOW-EFFORT", XL.type.lowEffort], ["TALKING", XL.type.talking], ["STORY", XL.type.story], ["TIME BLOCK", XL.block]].forEach(([t, col], i) => {
+    const r = lr + (i % 3) * 2, c = i < 3 ? 2 : 7;
+    ws.getRow(r).height = 22;
+    ws.mergeCells(r, c, r, c + (i < 3 ? 3 : 2));
+    Object.assign(ws.getCell(r, c), { value: t, font: F(13, false), fill: fill(col), alignment: { horizontal: "center", vertical: "middle" } });
+  });
+  ws.mergeCells(lr, 12, lr + 4, 29);
+  Object.assign(ws.getCell(lr, 12), {
+    value: `Hover a post (or tap it in Google Sheets) to see the full hook and CTA.\nEvery post is planned out in the Posts tab: main point, how to build it, film/edit days and where to post. Time blocks are in the Schedule tab.`,
+    font: F(11, false, XL.muted), alignment: { wrapText: true, vertical: "top", horizontal: "left" }
+  });
+}
+async function exportExcel(btn) {
+  const label = btn?.textContent;
+  try {
+    if (btn) { btn.disabled = true; btn.textContent = "Making your file…"; }
+    await loadExcelJS();
+    const wb = new ExcelJS.Workbook();
+    wb.creator = "Starter Batchbook";
+    const posts = BOOK.posts.slice().sort((a, b) => a.date.localeCompare(b.date));
+    const blocks = window.__blocks || {};
+    // one calendar tab per month the plan touches
+    const months = [...new Set([...posts.map(p => p.date), ...Object.keys(blocks), A.start, A.end].map(d => d.slice(0, 7)))].sort();
+    months.forEach(ym => monthSheet(wb, +ym.slice(0, 4), +ym.slice(5, 7) - 1, posts, blocks));
+    const fill = argb => ({ type: "pattern", pattern: "solid", fgColor: { argb } });
+    const head = (ws, widths) => {
+      ws.columns = widths.map(([h, w]) => ({ header: h, width: w }));
+      const r = ws.getRow(1); r.height = 24;
+      r.eachCell(c => { c.font = { name: XL.font, bold: true, size: 11, color: { argb: XL.ink } }; c.fill = fill(XL.head); c.alignment = { vertical: "middle" }; });
+      ws.views = [{ state: "frozen", ySplit: 1, showGridLines: false }];
+    };
+    // Posts tab
+    const ps = wb.addWorksheet("Posts");
+    head(ps, [["Date", 12], ["Day", 6], ["Content", 15], ["Format", 22], ["Purpose", 16], ["Topic", 18], ["Hook", 42], ["Main point", 36], ["Build it", 48], ["CTA", 26], ["Film on", 12], ["Edit on", 12], ["Post to", 20], ["Posted on", 16], ["Status", 11], ["Notes", 30]]);
+    rows().forEach((r, i) => {
+      const p = posts[i];
+      const row = ps.addRow([r.Date, r.Day, r.Content, r.Format, r.Purpose, r.Topic, r.Hook, r["Main point"], r["Build it"], r.CTA, r["Film on"], r["Edit on"], r["Post to"], r["Posted on"], r.Status, r.Notes]);
+      row.eachCell({ includeEmpty: true }, c => { c.alignment = { wrapText: true, vertical: "top" }; c.font = { name: XL.font, size: 10, color: { argb: XL.ink } };
+        c.border = { bottom: { style: "thin", color: { argb: XL.line } } }; });
+      row.getCell(3).fill = fill(XL.type[p.type]);
+      row.getCell(7).font = { name: XL.font, size: 10, bold: true, color: { argb: XL.ink } };
+      row.getCell(15).dataValidation = { type: "list", allowBlank: true, formulae: ['"Idea,Filmed,Edited,Posted"'] };
+    });
+    ps.autoFilter = { from: "A1", to: "P1" };
+    // Schedule tab
+    const ss = wb.addWorksheet("Schedule");
+    head(ss, [["Date", 12], ["Day", 6], ["Time block", 22], ["Hours", 8], ["Posts", 60], ["Checklist", 60], ["Done", 8]]);
+    Object.entries(blocks).sort().forEach(([ds, list]) => list.forEach(b => {
+      const row = ss.addRow([ds, DAYS[dowIdx(parse(ds))], b.label.replace(/^\S+\s/, "").replace(/ · .*$/, ""), A.time[b.kind].h,
+        b.posts.map(p => `${fmtDate(p.date)}: ${p.hook}`).join("\n"), BLOCK_TIPS[b.kind].map(t => "• " + t).join("\n"), ""]);
+      row.eachCell({ includeEmpty: true }, c => { c.alignment = { wrapText: true, vertical: "top" }; c.font = { name: XL.font, size: 10, color: { argb: XL.ink } };
+        c.border = { bottom: { style: "thin", color: { argb: XL.line } } }; });
+      row.getCell(3).fill = fill(XL.block);
+      row.getCell(7).dataValidation = { type: "list", allowBlank: true, formulae: ['"✓"'] };
+    }));
+    const buf = await wb.xlsx.writeBuffer();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([buf], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }));
+    a.download = "my-content-calendar.xlsx"; a.click();
+    setTimeout(() => alert("Downloaded my-content-calendar.xlsx ✅\n\nOpen it in Excel, or in Google Sheets: go to sheets.new → File → Import → Upload."), 300);
+  } catch (err) {
+    alert("Couldn't make the Excel file (check your internet connection and try again). You can use CSV instead.");
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = label; }
+  }
 }
 function printBook() {
   $("print").innerHTML = `<h1>${A.name ? esc(A.name) + "'s" : "Your"} Batchbook</h1><div class="p-meta">${fmtDate(A.start)} → ${fmtDate(A.end)} · ${BOOK.posts.length} posts</div>` +
