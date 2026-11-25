@@ -1120,7 +1120,7 @@ let takeTopic = 0;
 /* ---------- quiz steps ---------- */
 const PARTS = [
   { name: "Establish you", ico: "🙋", tab: "#FFC6EA", desc: "who you're posting as" },
-  { name: "What you create", ico: "🎨", tab: "#D9CCF7", desc: "topics + subtopics" },
+  { name: "Your content pillars", ico: "🎨", tab: "#D9CCF7", desc: "what you post about + subtopics" },
   { name: "Your voice", ico: "🗣️", tab: "#BFE3CB", desc: "your takes + your story" },
   { name: "Your schedule", ico: "🗓️", tab: "#FDE7A6", desc: "when you can create" },
   { name: "Your cadence", ico: "🔁", tab: "#B9D6F2", desc: "how often + what they do next" }
@@ -1244,15 +1244,15 @@ const VIEWS = {
     ${nav()}`;
   },
   topics: () => `
-    <h2>What do you want to post about?</h2>
-    <p class="lede">Your main topics, up to 5. Subtopics are optional, but they stop your posts from all sounding the same.</p>
+    <h2>What are your content pillars?</h2>
+    <p class="lede">The 1–5 main things you post about. Add subtopics under each one (optional) so your posts don't all sound the same.</p>
     <div id="topicList" class="topic-list">${A.topics.map((t, i) => `
       <div class="topic-card">
-        <div class="topic-row"><input class="in ex" data-i="${i}" placeholder="${["fashion", "gym", "planning my week", "skincare", "saving money"][i] || "another topic"}" value="${esc(t)}">${A.topics.length > 1 ? `<button class="x" data-del="${i}" aria-label="Remove topic">×</button>` : ""}</div>
+        <div class="topic-row"><input class="in ex" data-i="${i}" placeholder="${["fashion", "gym", "planning my week", "skincare", "saving money"][i] || "another topic"}" value="${esc(t)}">${A.topics.length > 1 ? `<button class="x" data-del="${i}" aria-label="Remove pillar">×</button>` : ""}</div>
         <div class="subs">${(A.subs[i] || []).map((s, j) => `<span class="subchip">${esc(s)}<button data-subdel="${i}|${j}" aria-label="Remove">×</button></span>`).join("")}
           <input class="subin" data-sub="${i}" placeholder="${(A.subs[i] || []).length ? "+ another" : `+ subtopic, e.g. ${i === 0 ? "ootd" : "tips"}`}" enterkeyhint="done"></div>
       </div>`).join("")}
-      ${A.topics.length < 5 ? `<button class="add" id="addTopic">+ Add another topic</button>` : ""}
+      ${A.topics.length < 5 ? `<button class="add" id="addTopic">+ Add another pillar</button>` : ""}
     </div>
     <p class="hint">Type a subtopic and press Enter to add it.</p>
     ${nav()}`,
@@ -1267,7 +1267,7 @@ const VIEWS = {
     <div class="fill"><span>I disagree with people who think</span><input class="in ex" data-k="disagree" placeholder="you need a perfect routine to be productive" value="${esc(k.disagree)}"></div>
     <div class="fill"><span>I don't see a lot of people talking about</span><input class="in ex" data-k="untalked" placeholder="how lonely working from home gets" value="${esc(k.untalked)}"></div>
     ${TABHINT}
-    ${topics.length > 1 ? `<p class="hint">Topic ${takeTopic + 1} of ${topics.length}</p>` : ""}
+    ${topics.length > 1 ? `<p class="hint">Pillar ${takeTopic + 1} of ${topics.length}</p>` : ""}
     ${nav()}`;
   },
   story: () => `
@@ -1416,7 +1416,7 @@ function validate(s) {
     if (A.forWhat === "business" && !A.biz.trim()) return "Tell me what your business is.";
     if (A.forWhat === "faceless" && !A.page.trim()) return "Tell me what your page is about.";
   }
-  if (s === "topics" && !A.topics.some(t => t.trim())) return "Add at least one topic.";
+  if (s === "topics" && !A.topics.some(t => t.trim())) return "Add at least one pillar.";
   if (s === "takes") { const t = A.topics.filter(Boolean)[takeTopic]; const k = A.takes[t] || {};
     if (!["believe", "disagree", "untalked"].some(x => (k[x] || "").trim())) return "Fill in at least one."; }
   if (s === "time" && (!A.time.film.days.length || !A.time.edit.days.length)) return "Pick at least one day to film and one day to edit.";
