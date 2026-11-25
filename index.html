@@ -181,10 +181,10 @@ body.quizmode { background: var(--page, #FFF4E6); transition: background .4s eas
 .deck-wrap h2 { font-size: clamp(28px, 7vw, 36px); line-height: 1.08; }
 .pcard { background: #fff; border-radius: 24px; padding: 22px; display: grid; gap: 12px; box-shadow: 0 18px 40px -20px rgba(30,27,46,.35); }
 .pc-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
-.ppill { border-radius: 99px; padding: 7px 12px; font-weight: 700; font-size: 14px; }
+.ppill { display: inline-flex; gap: 6px; align-items: center; border-radius: 99px; padding: 7px 12px; font-weight: 700; font-size: 14px; }
 .p-educational { background: #E6F0FA; color: #1F4F7A; } .p-virality { background: #FFE9DD; color: #C2410C; }
 .p-community { background: #FFE8F5; color: #9D2D6A; } .p-bts { background: #EFE9FC; color: #5B3FC4; }
-.pdate { color: #6B6577; font-size: 14px; }
+.pdate { color: #6B6577; font-size: 14px; display: inline-flex; gap: 6px; }
 .pc-title { font-size: 22px; font-weight: 800; line-height: 1.25; outline: 0; border-radius: 8px; overflow-wrap: anywhere; }
 .pc-desc { color: #6B6577; font-size: 16px; line-height: 1.5; outline: 0; border-radius: 8px; }
 .pc-title:focus, .pc-desc:focus { box-shadow: 0 0 0 2px #E8E1D6; }
@@ -1505,7 +1505,7 @@ function showDeck(open = false) {
         <div class="pc-desc" contenteditable="true" data-f="point">${esc(p.point)}</div>
         <div class="pc-tags"><span># ${esc(TYPES[p.type].label)}</span><span># ${esc(f.name)}</span><span># ${esc(p.topic)}</span></div>
         <div class="pc-steps" ${open || pct ? "" : "hidden"} id="pcSteps">
-          ${TODAY_STEPS.map((t, i) => `<div class="tstep ${p.today[i] ? "done" : ""}"><label><input type="checkbox" data-t="${i}" ${p.today[i] ? "checked" : ""}><b>${i + 1}. ${t}</b></label><div class="tbody">${stepBody[i]}</div></div>`).join("")}
+          ${(p.type === "carousel" ? ["Say the hook out loud 3×", "Design the slides", "Check every slide", "Post it"] : TODAY_STEPS).map((t, i) => `<div class="tstep ${p.today[i] ? "done" : ""}"><label><input type="checkbox" data-t="${i}" ${p.today[i] ? "checked" : ""}><b>${i + 1}. ${t}</b></label><div class="tbody">${stepBody[i]}</div></div>`).join("")}
         </div>
         <div class="pc-foot"><span class="pc-who">${A.name ? esc(A.name) : "You"} · ${p.film && p.type !== "carousel" ? `film ${fmtDate(p.film)}` : "no filming"}</span><span class="pc-pct">${ring(pct)} ${pct}%</span></div>
       </div>
