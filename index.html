@@ -137,6 +137,29 @@ body.quizmode { background: var(--page, #FFF4E6); transition: background .4s eas
 .optin { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; cursor: pointer; }
 .optin input { width: 20px; height: 20px; margin-top: 1px; accent-color: #FDE047; flex: none; }
 .saved-link { background: none; border: 0; color: var(--ink); text-decoration: underline; font-weight: 600; padding: 8px 0; justify-self: center; }
+/* card extras: platform marks, swaps, slide editing, checklists */
+.pi { display: inline-block; width: 20px; height: 20px; vertical-align: middle; }
+.pi svg { width: 100%; height: 100%; display: block; }
+.pi.plan { opacity: .35; filter: grayscale(.4); }
+.pc-plats { display: inline-flex; gap: 6px; }
+.swaps { display: flex; gap: 8px; flex-wrap: wrap; }
+.sbtn { border: 1.5px solid #E8E1D6; background: #fff; border-radius: 99px; padding: 8px 14px; font-weight: 700; font-size: 13.5px; color: #3B3646; }
+.sbtn:hover { border-color: #1E1B2E; }
+.slide .grip { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); color: #A9A2B3; font-size: 14px; letter-spacing: -2px; cursor: grab; padding: 4px 10px; touch-action: none; }
+.slide .sdel { position: absolute; top: 6px; left: 8px; border: 0; background: rgba(255,255,255,.7); width: 24px; height: 24px; border-radius: 50%; color: #6B6577; font-size: 15px; line-height: 1; }
+.slide .sl-label { display: none; }
+.slide.end { background: #E3F4E6; }
+.slide.add { border: 2px dashed #CFC6DA; background: transparent; color: #6B6577; font-weight: 700; font-size: 15px; justify-content: center; align-items: center; cursor: pointer; flex-basis: 40%; }
+.slide.add:hover { border-color: #1E1B2E; color: #1E1B2E; }
+.sortable-ghost { opacity: .4; }
+.tst { display: block; margin-bottom: 6px; }
+.ti { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; padding: 3px 0; cursor: pointer; }
+.ti input { width: 18px; height: 18px; margin-top: 1px; accent-color: #2F8A5B; flex: none; }
+.ti input:checked + span { text-decoration: line-through; color: #8A8396; }
+.tstep .tbody { margin: 0; }
+.tstep.done .tbody { display: grid; }
+.wchip { display: inline-flex; align-items: center; gap: 6px; }
+.wchip .pi { width: 16px; height: 16px; }
 /* post previews on the first-post card */
 .pv { display: grid; gap: 8px; }
 .pv-label { font: 600 11.5px/1 ui-monospace, monospace; letter-spacing: .08em; text-transform: uppercase; color: #8A8396; }
@@ -175,6 +198,16 @@ body.quizmode { background: var(--page, #FFF4E6); transition: background .4s eas
 .sc-line { display: grid; gap: 2px; }
 .sc-l { font-size: 11.5px; font-weight: 700; color: #8A8396; text-transform: uppercase; letter-spacing: .04em; }
 @media (max-width: 520px) { .sc-part { grid-template-columns: 64px 1fr; } .slide { flex-basis: 80%; } }
+.partpill { display: inline-block; background: var(--tint, #F5F1EA); color: var(--accent2, #1E1B2E); font-weight: 800; font-size: 14px; padding: 8px 14px; border-radius: 999px; }
+.card.rays .partpill { background: rgba(255,255,255,.2); color: #FFFDF8; }
+.wt { margin: 0; font-size: 14px; color: #3B3646; } .wt b { color: #1E1B2E; }
+.wtab { grid-template-columns: auto 1fr !important; }
+.tiles.two { grid-template-columns: 1fr 1fr !important; }
+.sublabel { font-size: 12.5px; font-weight: 700; color: #5E5869; } .sublabel span { font-weight: 500; color: #8A8396; }
+.subin { border: 2px dashed #CFC6DA !important; border-radius: 99px !important; background: rgba(255,255,255,.6) !important; padding: 7px 12px !important; }
+.subin:focus { border-style: solid !important; border-color: #1E1B2E !important; background: #fff !important; }
+.datein { cursor: pointer; }
+.tim { height: 34px; border: 2px solid var(--line2); border-radius: 10px; background: var(--paper); color: var(--ink); font-weight: 700; padding: 0 6px; }
 /* stop anything from pushing the card wider than the phone */
 .card, .step, .step > *, .fill, .tiles, .timerow, .promise { min-width: 0; }
 .fill .in, .topic-row .in { min-width: 0; }
@@ -317,6 +350,63 @@ body.quizmode { background: var(--page, #FFF4E6); transition: background .4s eas
 .dow { font-size: 12px; color: var(--muted); padding: 0 6px 4px; }
 .dows { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
 
+/* batchbook, calendar-app style */
+.bk-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; padding-bottom: 12px; }
+.bk-title h1 { font-size: 28px; margin-top: 6px; }
+.bk-title .sub { color: var(--muted); font-size: 14px; }
+.seg { display: inline-flex; background: var(--side); border-radius: 999px; padding: 4px; gap: 2px; }
+.seg button { border: 0; background: transparent; border-radius: 999px; padding: 7px 16px; font-weight: 600; color: var(--muted); }
+.seg button[aria-selected="true"] { background: var(--bg); color: var(--fg); box-shadow: var(--shadow); }
+.bk-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.bk-actions .btn { padding: 8px 12px; font-size: 14px; box-shadow: inset 0 0 0 1px var(--line); border-radius: 999px; }
+.bk-actions .btn.primary { box-shadow: none; flex: none; background: var(--fg); color: var(--bg); }
+.exp { position: relative; } .exp summary { list-style: none; cursor: pointer; } .exp summary::-webkit-details-marker { display: none; }
+.exp-menu { position: absolute; right: 0; top: calc(100% + 6px); background: var(--bg); border-radius: 12px; box-shadow: var(--shadow), 0 12px 30px rgba(0,0,0,.12); padding: 6px; display: grid; gap: 2px; z-index: 5; min-width: 200px; }
+.exp-menu .btn { box-shadow: none !important; text-align: left; border-radius: 8px; }
+.btn.danger { color: var(--today); }
+.bk-body { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 18px; align-items: start; }
+.bk-list { background: var(--side); border-radius: 18px; padding: 12px; max-height: calc(100vh - 200px); overflow-y: auto; position: sticky; top: 12px; }
+.lday h4 { margin: 10px 4px 6px; font-size: 14px; color: var(--today); }
+.lday:not(.today) h4 { color: var(--fg); }
+.ev { width: 100%; border: 0; text-align: left; display: grid; grid-template-columns: 4px 1fr auto; gap: 10px; align-items: start; background: var(--bg); border-radius: 10px; padding: 9px 10px 9px 0; margin-bottom: 6px; box-shadow: var(--shadow); color: var(--fg); overflow: hidden; }
+.ev .bar { align-self: stretch; background: var(--c-dot, #9b9a97); border-radius: 0 4px 4px 0; }
+.ev.blk .bar { background: #9b9a97; }
+.ev-main { min-width: 0; display: grid; gap: 3px; }
+.ev-main b { font-size: 13.5px; line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.ev-meta { display: flex; gap: 4px; align-items: center; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+.ev-meta .pi { width: 15px; height: 15px; }
+.ev-time { font-size: 12px; color: var(--muted); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ev.posted b { text-decoration: line-through; opacity: .6; }
+.wk-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
+.wk-title { font-size: 30px; font-weight: 400; } .wk-title b { font-weight: 800; }
+.wk-nav { display: flex; gap: 4px; } .wk-nav .btn { box-shadow: inset 0 0 0 1px var(--line); border-radius: 999px; padding: 6px 12px; }
+.wk { border: 1px solid var(--line); border-radius: 16px; overflow: auto; max-height: calc(100vh - 230px); background: var(--bg); }
+.wk-head { display: grid; grid-template-columns: 52px repeat(7, minmax(110px, 1fr)); position: sticky; top: 0; background: var(--bg); z-index: 3; border-bottom: 1px solid var(--line); }
+.wk-head span { padding: 10px 6px; text-align: center; font-size: 14px; color: var(--muted); }
+.wk-head span b { color: var(--fg); }
+.wk-head span.today b { background: var(--today); color: #fff; border-radius: 99px; padding: 2px 7px; }
+.wk-head span.out { opacity: .5; }
+.wk-body { display: grid; grid-template-columns: 52px repeat(7, minmax(110px, 1fr)); }
+.wk-hours span { display: block; height: var(--h); font-size: 11px; color: var(--muted); text-align: right; padding-right: 6px; transform: translateY(-7px); }
+.wk-col { position: relative; border-left: 1px solid var(--line); }
+.wk-col.out { background: var(--side); }
+.wk-col i { display: block; height: var(--h); border-top: 1px solid var(--line); }
+.ev.abs { position: absolute; left: 3px; right: 3px; margin: 0; padding: 5px 6px 5px 0; grid-template-columns: 3px 1fr; gap: 6px; background: var(--c-bg, #eee); color: var(--c-fg, var(--fg)); box-shadow: none; z-index: 1; }
+.ev.abs.blk { background: var(--c-task-bg); color: var(--c-task-fg); }
+.ev.abs .ev-time { display: none; }
+.ev.abs .ev-main b { font-size: 12px; -webkit-line-clamp: 3; }
+.ev.abs .ev-meta span:not(.pi) { display: none; }
+.item .k .pi { width: 14px; height: 14px; }
+.dpost { gap: 16px !important; }
+.dpost .pc-desc { font-size: 17px; color: var(--fg); font-weight: 600; }
+@media (max-width: 760px) {
+  .bk-body { grid-template-columns: 1fr; }
+  .bk-body.view-list .bk-main { display: none; }
+  .bk-body:not(.view-list) .bk-list { display: none; }
+  .bk-list { max-height: none; position: static; background: transparent; padding: 0; }
+  .wk { max-height: 70vh; }
+  .bk-actions { width: 100%; }
+}
 /* drawer */
 .scrim { position: fixed; inset: 0; background: rgba(15,15,15,.35); z-index: 20; }
 .drawer { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(780px, calc(100% - 48px)); height: min(880px, calc(100% - 56px)); background: var(--bg); border-radius: 10px; box-shadow: 0 0 0 1px var(--line), 0 24px 64px rgba(15,15,15,.25); z-index: 21; display: flex; flex-direction: column; overflow: hidden; }
@@ -938,7 +1028,8 @@ Example (Career):
 /* ================= EDIT THESE ================= */
 const CONFIG = {
   creator: "@yourhandle",                 // shown on the intro + batchbook
-  emailEndpoint: ""                        // POST JSON endpoint for emails (e.g. Formspree). "" = emails aren't saved yet
+  emailEndpoint: "",                       // POST JSON endpoint for emails (e.g. Formspree). "" = emails aren't saved yet
+  notionTemplate: "https://app.notion.com/p/423030843b3f817db5d6df54b62bb867"  // your public Notion template (Share → Publish it first)
 };
 /* ============================================== */
 
@@ -1023,6 +1114,16 @@ const TYPES = {
   story:     { label: "Story video", short: "Story videos", sub: "Silent film or voiceover", film: 20, edit: 45 }
 };
 
+const PH = {
+  singleBroll: ["A 7–10s clip: walking into frame, setting up your camera, or a slow zoom", "Short and punchy, readable in 2–3 seconds", "5–8 honest lines. Write to one person."],
+  problemStatement: ["The thing people say, in quotes", "Your answer, shown after the beat drop", "Any clip of you doing the thing", "Go deeper on why you think this"],
+  beforeAfter: ["You doing the old thing", "You doing the new thing", "What you used to believe or do", "What changed it", "What you do now"],
+  splitScreen: ["Old way + a time, e.g. 9:00 PM", "New way + the same time", "One line on what changed"],
+  silentFilm: ["2–3 short lines: where you were", "1–2 lines: the turning point. Start with 'Until I…'", "2–3 lines: where you are now", "Go deeper on one part of the story"],
+  voiceover: ["Where you were, or what you wanted", "What you did about it", "Where it got you", "Clips that match each part"],
+  valueTalking: ["The moment you realized this, in 1–2 sentences", "Say it plainly", "What you'd tell a friend to do next"],
+  numberedTalking: ["What you used to assume", "Point 1, one sentence", "Point 2", "Point 3", "Point 4", "The one that changes how you see the other four", "What you'd do differently"]
+};
 const F = {
   singleBroll: { name: "Single B-Roll + Text", fire: "🔥",
     how: ["Visual: 7–10 second B-roll clip that acts as visual hook (genuine emotional reaction, setting up camera, 0.5 selfie w/ movement, subtle zoom, walking into frame, moving background). Text stays on screen full duration.",
@@ -1107,7 +1208,7 @@ const CHECK = [
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const CTAS = [
   { id: "follow", label: "Follow me", ico: "➕", t: "#EFE9FC" }, { id: "comment", label: "Comment", ico: "💬", t: "#FFE8F5" },
-  { id: "save", label: "Save the post", ico: "🔖", t: "#FFF4D6" }, { id: "dm", label: "DM me a word", ico: "📩", t: "#E6F4EA" },
+  { id: "save", label: "Save the post", ico: "🔖", t: "#FFF4D6" }, 
   { id: "link", label: "Click my link in bio", ico: "🔗", t: "#E6F0FA" }
 ];
 
@@ -1129,9 +1230,9 @@ const tomorrow = addDays(new Date(), 1);
 let A = {
   forWhat: "", iam: "", biz: "", bizHelp: "", page: "", pageFor: "",
   platforms: [], topics: [""], subs: [[]], takes: {}, oldMe: "", newMe: "", working: "",
-  time: { ideas: { h: 1, days: [6] }, plan: { h: 1, days: [6] }, film: { h: 2, days: [5] }, edit: { h: 2, days: [5, 6] } },
+  time: { ideas: { h: 1, days: [6], at: "10:00" }, plan: { h: 1, days: [6], at: "11:00" }, film: { h: 2, days: [5], at: "09:00" }, edit: { h: 2, days: [5, 6], at: "14:00" } },
   promise: { carousel: 1, lowEffort: 2, talking: 1, story: 1 },
-  start: iso(tomorrow), end: iso(addDays(tomorrow, 6)),
+  start: iso(tomorrow), end: iso(addDays(tomorrow, 6)), postAt: "19:00",
   ctas: ["follow"], dmWord: "", linkFor: "", name: "", email: "", updates: false
 };
 const PLATFORMS = ["TikTok", "Instagram", "YouTube Shorts", "Facebook"];
@@ -1144,6 +1245,9 @@ const PURPOSES = {
 // older saves used a single cta
 function migrate(a) {
   if (!a.ctas) a.ctas = a.cta ? [a.cta] : ["follow"];
+  a.ctas = a.ctas.filter(c => c !== "dm"); if (!a.ctas.length) a.ctas = ["follow"];
+  a.postAt = a.postAt || "19:00";
+  for (const k in a.time) a.time[k].at = a.time[k].at || { ideas: "10:00", plan: "11:00", film: "09:00", edit: "14:00" }[k];
   if (a.ctaText && a.cta === "dm" && !a.dmWord) a.dmWord = a.ctaText;
   if (a.ctaText && a.cta === "link" && !a.linkFor) a.linkFor = a.ctaText;
   a.dmWord = a.dmWord || ""; a.linkFor = a.linkFor || ""; a.updates = !!a.updates;
@@ -1157,11 +1261,11 @@ let takeTopic = 0;
 
 /* ---------- quiz steps ---------- */
 const PARTS = [
-  { name: "Establish you", ico: "🙋", tab: "#FFC6EA", desc: "who you're posting as" },
-  { name: "Your content pillars", ico: "🎨", tab: "#D9CCF7", desc: "what you post about + subtopics" },
-  { name: "Your voice", ico: "🗣️", tab: "#BFE3CB", desc: "your takes + your story" },
-  { name: "Your schedule", ico: "🗓️", tab: "#FDE7A6", desc: "when you can create" },
-  { name: "Your cadence", ico: "🔁", tab: "#B9D6F2", desc: "how often + what they do next" }
+  { name: "Establish you", tab: "#FFC6EA", desc: "who you're posting as and where" },
+  { name: "Content pillars", tab: "#D9CCF7", desc: "what you post about, plus subtopics" },
+  { name: "Your voice", tab: "#BFE3CB", desc: "your takes and your story" },
+  { name: "Schedule", tab: "#FDE7A6", desc: "when you can plan, film and edit" },
+  { name: "Cadence", tab: "#B9D6F2", desc: "how often you post and what viewers do next" }
 ];
 const STEPS = ["intro", "for", "about", "topics", "takes", "story", "time", "promise", "dates", "cta", "email"];
 const PART_OF = { for: 1, about: 1, topics: 2, takes: 3, story: 3, time: 4, promise: 5, dates: 5, cta: 5, email: 6 };
@@ -1221,7 +1325,7 @@ function render(opts = {}) {
   const part = PART_OF[s];
   const head = s === "intro" ? "" : `
     <div class="parts">${PARTS.map((p, i) => `<i class="${i + 1 < part ? "on" : i + 1 === part ? "now" : ""}"></i>`).join("")}</div>
-    <div class="top-row"><span class="qlabel">${part > 5 ? "Last step" : `Part ${part} of 5 · ${PARTS[part - 1].name}`}</span>${mascot(th.m, th.shape)}</div>`;
+    <div class="top-row"><span class="partpill">${part > 5 ? "Last step" : PARTS[part - 1].name}</span>${mascot(th.m, th.shape)}</div>`;
   box.innerHTML = `<div class="stack ${opts.quiet ? "quiet" : ""}"><div class="card ${s === "email" ? "rays" : ""} ${s === "intro" ? "hero-card" : ""} ${s === "time" ? "centered" : ""}">${head}<div class="step">${VIEWS[s]()}</div></div></div>`;
   box.querySelectorAll("h1, h2").forEach(h => h.classList.add("display"));
   if (WIRE[s]) WIRE[s]();
@@ -1249,8 +1353,8 @@ const VIEWS = {
     <div class="intro-top">${mascot("#F26B4F", "flower")}<span class="kick">free · ~5 min</span></div>
     <h1>Plan your first posts in 5 minutes</h1>
     <p class="lede">I read so many tips on how to start posting. This is the one that actually gets you making something. 5 quick parts:</p>
-    <div class="wallet">${PARTS.map((p, i) => `<div class="wtab" style="--t:${p.tab};z-index:${i + 1}"><span class="wn">${i + 1}</span><b>${p.ico} ${p.name}</b><small>${p.desc}</small></div>`).join("")}
-      <div class="wpocket"><b>✨ Then: your first post, ready to make today</b><small>Plus your full calendar with every post planned and when to film, edit and post.</small></div>
+    <div class="wallet">${PARTS.map((p, i) => `<div class="wtab" style="--t:${p.tab};z-index:${i + 1}"><span class="wn">${i + 1}</span><p class="wt"><b>${p.name}:</b> ${p.desc}</p></div>`).join("")}
+      <div class="wpocket"><b>Then: your first post, ready to make today</b><small>Plus your full calendar with every post planned and when to film, edit and post.</small></div>
     </div>
     <div class="nav"><button class="btn primary" data-go="next">Let's get started</button></div>
     ${saved?.book ? `<button class="saved-link" id="openSaved">Open my saved batchbook →</button>` : ""}`;
@@ -1278,7 +1382,7 @@ const VIEWS = {
       <p class="hint">What you do + something about you. It goes into your hooks.</p>`;
     return `${body}${TABHINT}
     <div class="field"><span class="lbl">Where will you post?</span>
-      <div class="tiles" id="plat">${[["TikTok", "🎵", "#FFE8F5"], ["Instagram", "📸", "#FFF4D6"], ["YouTube Shorts", "▶️", "#E6F0FA"], ["Facebook", "👍", "#E6F4EA"]].map(([p, ico, t]) => `<button class="tile" style="--t:${t}" aria-pressed="${A.platforms.includes(p)}" data-v="${p}"><span class="ico">${ico}</span>${p}</button>`).join("")}</div></div>
+      <div class="tiles two" id="plat">${[["TikTok", "🎵", "#FFE8F5"], ["Instagram", "📸", "#FFF4D6"], ["YouTube Shorts", "▶️", "#E6F0FA"], ["Facebook", "👍", "#E6F4EA"]].map(([p, ico, t]) => `<button class="tile" style="--t:${t}" aria-pressed="${A.platforms.includes(p)}" data-v="${p}"><span class="ico">${ico}</span>${p}</button>`).join("")}</div></div>
     ${nav()}`;
   },
   topics: () => `
@@ -1287,12 +1391,13 @@ const VIEWS = {
     <div id="topicList" class="topic-list">${A.topics.map((t, i) => `
       <div class="topic-card">
         <div class="topic-row"><input class="in ex" data-i="${i}" placeholder="${["fashion", "gym", "planning my week", "skincare", "saving money"][i] || "another topic"}" value="${esc(t)}">${A.topics.length > 1 ? `<button class="x" data-del="${i}" aria-label="Remove pillar">×</button>` : ""}</div>
+        <div class="sublabel">Subtopics <span>(optional)</span></div>
         <div class="subs">${(A.subs[i] || []).map((s, j) => `<span class="subchip">${esc(s)}<button data-subdel="${i}|${j}" aria-label="Remove">×</button></span>`).join("")}
-          <input class="subin" data-sub="${i}" placeholder="${(A.subs[i] || []).length ? "+ another" : `+ subtopic, e.g. ${i === 0 ? "ootd" : "tips"}`}" enterkeyhint="done"></div>
+          <input class="subin" data-sub="${i}" placeholder="${(A.subs[i] || []).length ? "Add another" : `e.g. ${i === 0 ? "ootd, fashion hacks" : "tips, mistakes"}`}" enterkeyhint="done"></div>
       </div>`).join("")}
       ${A.topics.length < 5 ? `<button class="add" id="addTopic">+ Add another pillar</button>` : ""}
     </div>
-    <p class="hint">Type a subtopic and press Enter to add it.</p>
+    <p class="hint">Type a subtopic in the box and press Enter (or comma) to add it. Tap × to remove one.</p>
     ${nav()}`,
   takes: () => {
     const topics = A.topics.filter(Boolean);
@@ -1318,10 +1423,10 @@ const VIEWS = {
     ${nav()}`,
   time: () => `
     <h2>When can you create?</h2>
-    <p class="lede">Be honest. These become time blocks in your calendar.</p>
+    <p class="lede">Be honest. These become time blocks you can add to your phone's calendar.</p>
     ${[["ideas", "💡", "find ideas"], ["plan", "🗓️", "plan"], ["film", "🎬", "film"], ["edit", "✂️", "edit"]].map(([k, ico, l]) => `
       <div class="timerow" data-t="${k}">
-        <div class="top">${ico} <span>I have</span><input class="hrs" type="number" inputmode="decimal" min="0" max="12" step="0.5" value="${A.time[k].h}" data-h="${k}" aria-label="hours to ${l}"><span>hrs to <b>${l}</b> every</span></div>
+        <div class="top"><span>I have</span><input class="hrs" type="number" inputmode="decimal" min="0" max="12" step="0.5" value="${A.time[k].h}" data-h="${k}" aria-label="hours to ${l}"><span>hrs to <b>${l}</b>, starting at</span><input class="tim" type="time" value="${A.time[k].at}" data-at="${k}" aria-label="start time to ${l}"><span>every</span></div>
         <div class="chips">${DAYS.map((d, i) => `<button class="chip day" aria-pressed="${A.time[k].days.includes(i)}" data-d="${i}" aria-label="${d}">${d.slice(0, 2)}</button>`).join("")}</div>
       </div>`).join("")}
     ${nav()}`,
@@ -1339,16 +1444,16 @@ const VIEWS = {
   dates: () => `
     <h2>When are you starting?</h2>
     <div class="dates">
-      <div class="field"><label for="start">Start posting on</label><input class="in" type="date" id="start" value="${A.start}"></div>
-      <div class="field"><label for="end">Until</label><input class="in" type="date" id="end" value="${A.end}"></div>
+      <div class="field"><label for="start">Start posting on</label><input class="in datein" type="date" id="start" value="${A.start}"></div>
+      <div class="field"><label for="end">Until</label><input class="in datein" type="date" id="end" value="${A.end}"></div>
     </div>
-    <p class="hint">Up to 31 days. Start with 1–2 weeks if you're new.</p>
+    <div class="field"><label for="postAt">Post at</label><input class="in datein" type="time" id="postAt" value="${A.postAt}"></div>
+    <p class="hint">Tap a date to open the calendar. Up to 31 days. Start with 1–2 weeks if you're new.</p>
     ${nav()}`,
   cta: () => `
     <h2>What should viewers do next?</h2>
     <p class="lede">Pick as many as you want. Viral and low-effort posts go out with no CTA so they don't feel like an ad.</p>
-    <div class="tiles" id="ctaChips">${CTAS.map(c => `<button class="tile" style="--t:${c.t}" aria-pressed="${A.ctas.includes(c.id)}" data-v="${c.id}"><span class="ico">${c.ico}</span>${c.label}</button>`).join("")}</div>
-    <div class="field" id="dmField" ${A.ctas.includes("dm") ? "" : "hidden"}><label for="dmWord">What word should they DM you?</label><input class="in ex" id="dmWord" placeholder="START" value="${esc(A.dmWord)}"></div>
+    <div class="tiles two" id="ctaChips">${CTAS.map(c => `<button class="tile" style="--t:${c.t}" aria-pressed="${A.ctas.includes(c.id)}" data-v="${c.id}"><span class="ico">${c.ico}</span>${c.label}</button>`).join("")}</div>
     <div class="field" id="linkField" ${A.ctas.includes("link") ? "" : "hidden"}><label for="linkFor">What's the link in your bio for?</label><input class="in ex" id="linkFor" placeholder="my free planner" value="${esc(A.linkFor)}"></div>
     ${nav()}`,
   email: () => `
@@ -1378,7 +1483,8 @@ const WIRE = {
     const addTopic = () => { if (A.topics.length >= 5) return; A.topics.push(""); A.subs.push([]); render({ quiet: true, focus: `[data-i="${A.topics.length - 1}"]` }); };
     const addSub = inp => {
       const i = +inp.dataset.sub, v = inp.value.trim().replace(/,$/, "");
-      if (!v) return;
+      inp.value = "";
+      if (!v || (A.subs[i] || []).some(x => x.toLowerCase() === v.toLowerCase())) return;
       A.subs[i] = [...(A.subs[i] || []), v];
       render({ quiet: true, focus: `[data-sub="${i}"]` });
     };
@@ -1394,7 +1500,7 @@ const WIRE = {
       else if (e.target.dataset.i != null && e.key === "Enter") { e.preventDefault(); list.querySelector(`[data-sub="${e.target.dataset.i}"]`)?.focus(); }
     };
     // a subtopic typed but not "entered" still counts when they leave the box
-    list.addEventListener("focusout", e => { if (e.target.dataset?.sub != null && e.target.value.trim()) { const i = +e.target.dataset.sub; A.subs[i] = [...(A.subs[i] || []), e.target.value.trim()]; e.target.value = ""; setTimeout(() => render({ quiet: true }), 0); } });
+    list.addEventListener("focusout", e => { if (e.target.dataset?.sub != null && e.target.isConnected && e.target.value.trim()) { const inp = e.target; setTimeout(() => addSub(inp), 0); } });
   },
   takes: () => {
     const t = A.topics.filter(Boolean)[takeTopic];
@@ -1403,6 +1509,7 @@ const WIRE = {
   story: () => { ["oldMe", "newMe", "working"].forEach(id => $(id).oninput = e => A[id] = e.target.value); },
   time: () => {
     document.querySelectorAll("[data-h]").forEach(inp => inp.oninput = e => A.time[e.target.dataset.h].h = Math.max(0, +e.target.value || 0));
+    document.querySelectorAll("[data-at]").forEach(inp => inp.oninput = e => A.time[e.target.dataset.at].at = e.target.value || "09:00");
     document.querySelectorAll(".timerow").forEach(row => row.onclick = e => {
       const d = e.target.dataset?.d; if (d == null) return;
       const k = row.dataset.t, days = A.time[k].days, n = +d;
@@ -1428,17 +1535,18 @@ const WIRE = {
     });
     note();
   },
-  dates: () => { $("start").oninput = e => A.start = e.target.value; $("end").oninput = e => A.end = e.target.value; },
+  dates: () => {
+    $("postAt").oninput = e => A.postAt = e.target.value || "19:00";
+    ["start", "end", "postAt"].forEach(id => { const el = $(id); if (id !== "postAt") el.oninput = e => A[id] = e.target.value; el.onclick = () => { try { el.showPicker(); } catch (e) {} }; });
+  },
   cta: () => {
     $("ctaChips").onclick = e => {
       const b = e.target.closest("[data-v]"); if (!b) return; const v = b.dataset.v;
       A.ctas = A.ctas.includes(v) ? A.ctas.filter(x => x !== v) : [...A.ctas, v];
       b.setAttribute("aria-pressed", A.ctas.includes(v));
-      $("dmField").hidden = !A.ctas.includes("dm"); $("linkField").hidden = !A.ctas.includes("link");
-      if (v === "dm" && A.ctas.includes("dm")) $("dmWord").focus();
+      $("linkField").hidden = !A.ctas.includes("link");
       if (v === "link" && A.ctas.includes("link")) $("linkFor").focus();
     };
-    $("dmWord").oninput = e => A.dmWord = e.target.value;
     $("linkFor").oninput = e => A.linkFor = e.target.value;
   },
   email: () => {
@@ -1467,7 +1575,6 @@ function validate(s) {
   }
   if (s === "cta") {
     if (!A.ctas.length) return "Pick at least one.";
-    if (A.ctas.includes("dm") && !A.dmWord.trim()) return "Add the word they should DM you.";
     if (A.ctas.includes("link") && !A.linkFor.trim()) return "Add what the link is for.";
   }
   if (s === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(A.email.trim())) return "Pop in a valid email.";
@@ -1511,16 +1618,13 @@ const ed = (attr, val, ph, cls = "") => `<div class="${cls}" contenteditable="tr
 function postPreview(p) {
   const f = F[p.fmt], sl = f.slots;
   if (p.type === "carousel") {
-    const slides = sl.map((label, i) => {
-      const isCover = i === 0, isLast = i === sl.length - 1 && /CTA|payoff|resolve/i.test(label);
-      const val = p.slots[label] || (isCover ? p.hook : isLast && p.purpose !== "virality" ? p.cta : "");
-      if (isCover && !p.slots[label]) p.slots[label] = p.hook;
-      const ph = isCover ? "Your hook" : isLast ? (p.purpose === "virality" ? "End on your strongest point" : "Your CTA") : `Point ${i}: write it in one short line`;
-      return `<div class="slide ${isCover ? "cover" : ""} ${isLast ? "last" : ""}"><span class="sn">${i + 1}/${sl.length}</span>
-        <span class="sl-label">${esc(label.replace(/^Slide \d+:?\s*/i, "").replace(/^\((.*)\)$/, "$1") || (isCover ? "cover" : ""))}</span>
-        ${ed(`data-slot="${esc(label)}"`, val, ph, "sl-text")}</div>`;
-    }).join("");
-    return `<div class="pv"><div class="pv-label">📱 Your carousel · swipe →</div><div class="slides">${slides}</div></div>`;
+    if (!p.slides) p.slides = sl.map((l, i) => ({ role: i === 0 ? "cover" : i === sl.length - 1 && /CTA|payoff|resolve/i.test(l) ? "end" : "point", t: p.slots[l] || (i === 0 ? p.hook : "") })).filter((x, i) => i === 0 || x.t);
+    const n = p.slides.length;
+    const slides = p.slides.map((x, i) => `<div class="slide ${x.role}">
+        <span class="grip" title="Drag to move">⋮⋮</span><span class="sn">${i + 1}/${n}</span>
+        ${n > 1 ? `<button class="sdel" data-sdel="${i}" aria-label="Delete slide">×</button>` : ""}
+        ${ed(`data-sl="${i}"`, x.t, x.role === "cover" ? "Your hook" : x.role === "end" ? "Your CTA" : "One point, one short line", "sl-text")}</div>`).join("");
+    return `<div class="pv"><div class="pv-label">Your carousel · swipe, drag ⋮⋮ to reorder</div><div class="slides">${slides}<button class="slide add" data-sadd>+ Add slide</button></div></div>`;
   }
   if (p.type === "lowEffort") {
     const split = p.fmt === "splitScreen" || p.fmt === "beforeAfter";
@@ -1529,7 +1633,7 @@ function postPreview(p) {
       ? `<div class="half top">${ed(`data-slot="${esc(sl[0])}"`, p.slots[sl[0]], p.fmt === "beforeAfter" ? "Before" : "Old way", "ost")}<span class="tag">${p.fmt === "beforeAfter" ? "BEFORE" : "TOP"}</span></div>
          <div class="half bot">${ed(`data-slot="${esc(sl[1])}"`, p.slots[sl[1]], p.fmt === "beforeAfter" ? "After (on the beat drop)" : "New way", "ost")}<span class="tag">${p.fmt === "beforeAfter" ? "AFTER · beat drop" : "BOTTOM"}</span></div>`
       : `${ed(`data-f="hook"`, p.hook, "Text on screen", "ost")}`;
-    return `<div class="pv"><div class="pv-label">🎬 Your video · 9:16</div>
+    return `<div class="pv"><div class="pv-label">Your video · 9:16</div>
       <div class="frame ${split ? "split" : ""}">${inner}
         <div class="play" aria-hidden="true">▶</div>
         <div class="side" aria-hidden="true"><span>♥</span><span>💬</span><span>↗</span></div>
@@ -1540,11 +1644,11 @@ function postPreview(p) {
   const body = sl.filter(l => !/B-roll to film|^Caption$/i.test(l));
   const broll = sl.find(l => /B-roll to film/i.test(l));
   const isSilent = p.fmt === "silentFilm";
-  return `<div class="pv"><div class="pv-label">${isSilent ? "🎞️ Your on-screen text, line by line" : "🎙️ Your script"}</div>
+  return `<div class="pv"><div class="pv-label">${isSilent ? "Your on-screen text, line by line" : "Your script"}</div>
     <div class="script">
       <div class="sc-part hook"><div class="sc-tag">HOOK<small>0–3s</small></div><div class="sc-body">${ed(`data-f="hook"`, p.hook, "Your hook")}</div></div>
       <div class="sc-part content"><div class="sc-tag">CONTENT<small>${p.type === "talking" ? "3–45s" : "the story"}</small></div><div class="sc-body">
-        ${body.map(l => `<div class="sc-line"><span class="sc-l">${esc(l)}</span>${ed(`data-slot="${esc(l)}"`, p.slots[l], "Write this part…")}</div>`).join("")}
+        ${body.map(l => `<div class="sc-line"><span class="sc-l">${esc(l)}</span>${ed(`data-slot="${esc(l)}"`, p.slots[l], (PH[p.fmt] || [])[sl.indexOf(l)] || "Write this part…")}</div>`).join("")}
         ${broll ? `<div class="sc-line"><span class="sc-l">B-roll to film</span>${ed(`data-slot="${esc(broll)}"`, p.slots[broll], "Clips to cut to")}</div>` : ""}
       </div></div>
       <div class="sc-part cta"><div class="sc-tag">CTA<small>last 3s</small></div><div class="sc-body">${p.purpose === "virality"
@@ -1554,48 +1658,161 @@ function postPreview(p) {
 }
 /* ---------- first-post cards ("make it now") ---------- */
 let deckI = 0;
-const TODAY_STEPS = ["Say the hook out loud 3×", "Film it", "Edit it", "Post it"];
 function deckPosts() { return BOOK.posts.slice().sort((a, b) => a.date.localeCompare(b.date)).slice(0, 7); }
 function ring(pct) {
   const c = 2 * Math.PI * 9;
   return `<svg class="ring" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="#E8E1D6" stroke-width="3"/><circle cx="12" cy="12" r="9" fill="none" stroke="#2F8A5B" stroke-width="3" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c * (1 - pct / 100)}" transform="rotate(-90 12 12)"/></svg>`;
 }
-function showDeck(open = false) {
+
+/* small platform marks (where a post goes; faded until it's posted there) */
+function platIcon(pl, state = "plan") {
+  const svg = {
+    "TikTok": `<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#111"/><path d="M13.5 5h2.2c.2 1.7 1.3 2.9 3 3.1v2.3c-1.1 0-2.1-.3-3-.9v5.1a4.3 4.3 0 1 1-4.3-4.3h.4v2.3a2 2 0 1 0 1.7 2V5z" fill="#fff"/></svg>`,
+    "Instagram": `<svg viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F9A23A"/><stop offset=".5" stop-color="#E1306C"/><stop offset="1" stop-color="#833AB4"/></linearGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig)"/><rect x="6" y="6" width="12" height="12" rx="3.6" fill="none" stroke="#fff" stroke-width="1.8"/><circle cx="12" cy="12" r="2.8" fill="none" stroke="#fff" stroke-width="1.8"/><circle cx="15.6" cy="8.4" r=".9" fill="#fff"/></svg>`,
+    "YouTube Shorts": `<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#FF0033"/><path d="M10 8.5v7l6-3.5z" fill="#fff"/></svg>`,
+    "Facebook": `<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="12" fill="#1877F2"/><path d="M13.2 19v-6h2l.3-2.4h-2.3V9.2c0-.7.2-1.1 1.2-1.1h1.2V6c-.2 0-.9-.1-1.8-.1-1.8 0-3 1.1-3 3.1v1.6H9V13h1.8v6z" fill="#fff"/></svg>`
+  }[pl] || "";
+  return `<span class="pi ${state}" title="${esc(pl)}${state === "done" ? " · posted" : ""}">${svg}</span>`;
+}
+const platRow = p => Object.keys(p.where || {}).map(pl => platIcon(pl, p.where[pl])).join("");
+
+/* what to do today, as short checklists that fit the kind of post */
+function stepsFor(p) {
+  const post = { t: "Post it", items: ["Caption: start with the hook again", "Post it", "Crosspost to your other platforms"] };
+  if (p.type === "carousel") return [
+    { t: "Find inspo", items: ["Save 2–3 carousels you like in your niche", "Pick one look to copy (fonts, colors, layout)"] },
+    { t: "Create the slides", items: ["Cover: the hook, in big text", "One point per slide, few words", "Last slide: your CTA or your strongest point"], tip: "Use one Canva template so every slide matches." },
+    { t: "Check it", items: ["Every slide reads in 3 seconds", "No typos", "The cover makes you want to swipe"] }, post];
+  if (p.type === "lowEffort") return [
+    { t: "Find inspo", items: ["Find one video in this format you like", "Save a trending sound for it"] },
+    { t: "Film it", items: ["Film a 7–10 second clip: walk into frame, set up your camera, or a slow zoom", "Do 2–3 takes"] },
+    { t: "Edit it", items: ["Text on screen for the whole video", "Readable in 2–3 seconds", "Add the sound"] }, post];
+  if (p.type === "talking") return [
+    { t: "Practice the hook", items: ["Say the hook out loud 3 times", "Tweak it until it sounds like you"] },
+    { t: "Film it", items: ["Face a window for light", "Film the hook 2–3 times", "Say each part of the script in one go"] },
+    { t: "Edit it", items: ["Captions on", "Cut every 2–3 seconds", "Hook as text on the first frame"] }, post];
+  return [
+    { t: "Gather clips", items: ["Find old photos or clips for the 'before'", "Film new clips for the 'now'"] },
+    { t: "Build it", items: ["One line of text (or voiceover line) per clip", "Pictures for the past, video for now"] },
+    { t: "Edit it", items: ["Cut on the beat", "The payoff lands when the music drops", "Read each line out loud and shorten long ones"] }, post];
+}
+function progress(p) {
+  const st = stepsFor(p), total = st.reduce((n, s) => n + s.items.length, 0);
+  const done = Object.values(p.todo || {}).filter(Boolean).length;
+  return Math.round(Math.min(done, total) / total * 100);
+}
+function stepsHTML(p) {
+  p.todo = p.todo || {};
+  return stepsFor(p).map((s, i) => {
+    const all = s.items.every((_, j) => p.todo[`${i}-${j}`]);
+    return `<div class="tstep ${all ? "done" : ""}"><b class="tst">${i + 1}. ${esc(s.t)}${all ? " ✓" : ""}</b>
+      <div class="tbody">${s.items.map((it, j) => `<label class="ti"><input type="checkbox" data-todo="${i}-${j}" ${p.todo[`${i}-${j}`] ? "checked" : ""}><span>${esc(it)}</span></label>`).join("")}
+      ${s.tip ? `<p class="hint">${esc(s.tip)}</p>` : ""}
+      ${i === 3 ? `<p class="hint">${p.purpose === "virality" ? "No CTA on this one. Let it spread." : `End with: <b>${esc(p.cta)}</b>`}</p>
+        <div class="where wh">${Object.keys(p.where).map(pl => `<button class="wchip ${p.where[pl]}" data-pl="${esc(pl)}">${platIcon(pl, p.where[pl])} ${esc(pl)}${p.where[pl] === "done" ? " ✓" : ""}</button>`).join("")}</div>
+        <p class="hint">Tap each place you posted it.</p>` : ""}</div></div>`;
+  }).join("");
+}
+
+/* re-do one post from a different take / story ("try another angle") */
+function reshape(p, ang) {
+  let fmtKey = PICK[p.type][ang.kind]; if (Array.isArray(fmtKey)) fmtKey = fmtKey[0];
+  const f = F[fmtKey], slots2 = {};
+  const hook = basePool(ang)[0];
+  const point = mainPoint(ang);
+  f.slots.forEach(l => slots2[l] = "");
+  prefillSlots(slots2, fmtKey, ang, hook, point);
+  const purpose = purposeFor(p.type, ang.kind);
+  Object.assign(p, { fmt: fmtKey, hook, point, slots: slots2, purpose, cta: ctaFor(purpose, ang.topic), ang,
+    topic: ang.sub ? `${ang.topic} · ${ang.sub}` : ang.topic, slides: p.type === "carousel" ? makeSlides(hook, point, purpose, ctaFor(purpose, ang.topic)) : null });
+}
+function anotherAngle(p) {
+  const { angles, story } = buildAngles();
+  const all = [...angles, ...story];
+  if (all.length < 2) return false;
+  const cur = angleOf(p), key = a => a.kind + "|" + (a.text || a.old);
+  const i = all.findIndex(a => key(a) === key(cur));
+  const nextAng = all[(i + 1) % all.length];
+  const ti = A.topics.indexOf(nextAng.topic), subs = ti >= 0 ? (A.subs[ti] || []) : [];
+  reshape(p, subs.length ? { ...nextAng, sub: subs[Math.floor(Math.random() * subs.length)] } : nextAng);
+  return true;
+}
+
+/* wire up a post's editable preview, hook/angle buttons, slides and checklist inside `root`; `again` redraws */
+let sortLoaded = null;
+function loadSortable() {
+  if (window.Sortable) return Promise.resolve();
+  return sortLoaded = sortLoaded || new Promise((res, rej) => { const sc = document.createElement("script");
+    sc.src = "https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"; sc.onload = res; sc.onerror = rej; document.head.appendChild(sc); });
+}
+function wirePost(root, p, again) {
+  root.addEventListener("input", e => {
+    const t = e.target; if (!t.isContentEditable && !t.dataset?.f) return;
+    const v = t.isContentEditable ? t.innerText.trim() : t.value;
+    if (t.dataset?.sl != null) p.slides[+t.dataset.sl].t = v;
+    else if (t.dataset?.slot) p.slots[t.dataset.slot] = v;
+    else if (t.dataset?.f && t.isContentEditable) {
+      p[t.dataset.f] = v;
+      if (t.dataset.f === "hook" && p.fmt === "singleBroll") p.slots[F[p.fmt].slots[1]] = v;
+      if (t.dataset.f === "hook" && p.fmt === "problemStatement") p.slots[F[p.fmt].slots[0]] = v;
+      if (t.dataset.f === "hook" && p.slides?.[0]?.role === "cover") p.slides[0].t = v;
+    }
+    save();
+  });
+  root.addEventListener("change", e => {
+    const k = e.target.dataset?.todo; if (!k) return;
+    p.todo = p.todo || {}; p.todo[k] = e.target.checked;
+    if (progress(p) === 100) p.status = "Posted";
+    save(); again(true);
+  });
+  root.addEventListener("click", e => {
+    const t = e.target.closest("button"); if (!t) return;
+    if (t.dataset.pl) { const pl = t.dataset.pl; p.where[pl] = p.where[pl] === "done" ? "plan" : "done";
+      if (Object.values(p.where).every(v => v === "done")) p.status = "Posted";
+      save(); again(true); }
+    if (t.dataset.sdel != null) { p.slides.splice(+t.dataset.sdel, 1); save(); again(true); }
+    if (t.dataset.sadd != null) { const at = p.slides[p.slides.length - 1]?.role === "end" ? p.slides.length - 1 : p.slides.length;
+      p.slides.splice(at, 0, { role: "point", t: "" }); save(); again(true, `[data-sl="${at}"]`); }
+    if (t.dataset.act === "hook") { p.hook = swapHook(p); if (p.slides?.[0]?.role === "cover") p.slides[0].t = p.hook;
+      if (p.fmt === "singleBroll") p.slots[F[p.fmt].slots[1]] = p.hook; if (p.fmt === "problemStatement") p.slots[F[p.fmt].slots[0]] = p.hook;
+      save(); again(true); }
+    if (t.dataset.act === "angle") { if (anotherAngle(p)) { save(); again(true); } else alert("Add another take or your story in the quiz to get more angles."); }
+  });
+  const row = root.querySelector(".slides");
+  if (row && p.slides) loadSortable().then(() => {
+    Sortable.create(row, { handle: ".grip", draggable: ".slide:not(.add)", animation: 150, onEnd: ev => {
+      if (ev.oldIndex === ev.newIndex) return;
+      const [m] = p.slides.splice(ev.oldIndex, 1); p.slides.splice(ev.newIndex, 0, m); save(); again(true);
+    } });
+  }).catch(() => {});
+}
+const swapButtons = `<div class="swaps"><button class="sbtn" data-act="hook">Try another hook</button><button class="sbtn" data-act="angle">Try another angle</button></div>`;
+
+function showDeck(open = false, focusSel) {
   const list = deckPosts();
   if (!list.length) return showBook();
   deckI = Math.max(0, Math.min(deckI, list.length - 1));
   const p = list[deckI];
-  if (!p.today) p.today = [false, false, false, false];
-  const pct = p.today.filter(Boolean).length * 25;
+  const pct = progress(p);
   const f = F[p.fmt], pur = PURPOSES[p.purpose];
   setTheme(deckI === 0 ? "takes" : ["about", "topics", "time", "promise", "takes", "about", "topics"][deckI % 7]);
   $("quiz").hidden = true; $("book").hidden = true; $("deck").hidden = false;
-  const stepBody = [
-    `<p>${esc(p.hook)}</p><p class="hint">Tweak the words until it sounds like you, right on the card above.</p>`,
-    `<p><b>${esc(f.name)}</b> ${f.fire}</p><ol class="howto">${f.how.slice(0, 2).map(h => `<li>${esc(h)}</li>`).join("")}</ol>
-     <details><summary>All the steps</summary><ol class="howto">${f.how.slice(2).map(h => `<li>${esc(h)}</li>`).join("")}</ol></details>`,
-    `<ol class="howto">${BLOCK_TIPS.edit.map(t => `<li>${esc(t)}</li>`).join("")}</ol>`,
-    `<p>${p.purpose === "virality" ? "No CTA on this one, let it spread." : `End with: <b>${esc(p.cta)}</b>`}</p>
-     <div class="where" id="deckWhere">${Object.keys(p.where).map(pl => `<button class="wchip ${p.where[pl]}" data-pl="${esc(pl)}">${p.where[pl] === "done" ? "✓ " : ""}${esc(pl)}</button>`).join("")}</div>
-     <p class="hint">Tap where you posted it.</p>`
-  ];
+  const started = open || pct > 0;
   $("deck").innerHTML = `
     <div class="deck-wrap">
       <div class="deck-top"><span class="qlabel">${deckI === 0 ? "Start here" : "Up next"}</span><span class="qlabel">${deckI + 1} / ${list.length}</span></div>
       <h2 class="display">${deckI === 0 ? "Your first post. Make it today." : `Post ${deckI + 1}`}</h2>
       <div class="pcard" id="pcard">
-        <div class="pc-head"><span class="ppill p-${p.purpose}">${pur.ico} ${pur.label}</span><span class="pdate">📅 ${fmtDate(p.date)}</span></div>
+        <div class="pc-head"><span class="ppill p-${p.purpose}">${pur.label}</span><span class="pdate">${fmtDate(p.date)}</span></div>
         <div class="pc-desc" contenteditable="true" data-f="point">${esc(p.point)}</div>
         ${postPreview(p)}
-        <p class="hint pv-hint">Tap any text to edit it. It saves as you type.</p>
-        <div class="pc-tags"><span># ${esc(TYPES[p.type].label)}</span><span># ${esc(f.name)}</span><span># ${esc(p.topic)}</span></div>
-        <div class="pc-steps" ${open || pct ? "" : "hidden"} id="pcSteps">
-          ${(p.type === "carousel" ? ["Say the hook out loud 3×", "Design the slides", "Check every slide", "Post it"] : TODAY_STEPS).map((t, i) => `<div class="tstep ${p.today[i] ? "done" : ""}"><label><input type="checkbox" data-t="${i}" ${p.today[i] ? "checked" : ""}><b>${i + 1}. ${t}</b></label><div class="tbody">${stepBody[i]}</div></div>`).join("")}
-        </div>
-        <div class="pc-foot"><span class="pc-who">${A.name ? esc(A.name) : "You"} · ${p.film && p.type !== "carousel" ? `film ${fmtDate(p.film)}` : "no filming"}</span><span class="pc-pct">${ring(pct)} ${pct}%</span></div>
+        ${swapButtons}
+        <div class="pc-tags"><span>${esc(TYPES[p.type].label)}</span><span>${esc(f.name)}</span><span>${esc(p.topic)}</span></div>
+        <div class="pc-steps" ${started ? "" : "hidden"}>${stepsHTML(p)}</div>
+        <div class="pc-foot"><span class="pc-plats">${platRow(p)}</span><span class="pc-pct">${ring(pct)} ${pct}%</span></div>
       </div>
-      ${pct === 100 ? `<div class="note ok center">Posted! 🎉 That's the hardest one done.</div>` : ""}
-      <div class="nav">${open || pct ? "" : `<button class="btn primary" id="makeNow">Make it now →</button>`}</div>
+      ${pct === 100 ? `<div class="note ok center">Posted! That's the hardest one done.</div>` : ""}
+      <div class="nav">${started ? "" : `<button class="btn primary" id="makeNow">Make it now →</button>`}</div>
       <div class="deck-nav">
         <button class="btn" id="dPrev" ${deckI === 0 ? "disabled" : ""} aria-label="Previous post">←</button>
         <div class="dots">${list.map((_, i) => `<i class="${i === deckI ? "on" : ""}"></i>`).join("")}</div>
@@ -1604,49 +1821,48 @@ function showDeck(open = false) {
       <button class="saved-link" id="toBook">See my full calendar →</button>
     </div>`;
   const card = $("pcard");
-  card.oninput = e => {
-    const t = e.target, v = t.innerText.trim();
-    if (t.dataset?.f) {
-      p[t.dataset.f] = v;
-      // the on-screen text of a low-effort video is its hook
-      if (t.dataset.f === "hook" && p.fmt === "singleBroll") p.slots[F[p.fmt].slots[1]] = v;
-      if (t.dataset.f === "hook" && p.fmt === "problemStatement") p.slots[F[p.fmt].slots[0]] = v;
-    }
-    if (t.dataset?.slot) p.slots[t.dataset.slot] = v;
-    save();
-  };
-  card.onchange = e => { const i = e.target.dataset?.t; if (i == null) return; p.today[+i] = e.target.checked; save(); showDeck(true); };
-  const wh = $("deckWhere");
-  if (wh) wh.onclick = e => { const b = e.target.closest("[data-pl]"); if (!b) return; const pl = b.dataset.pl;
-    p.where[pl] = p.where[pl] === "done" ? "plan" : "done";
-    if (Object.values(p.where).some(v => v === "done")) p.today[3] = true;
-    if (Object.values(p.where).every(v => v === "done")) p.status = "Posted";
-    save(); showDeck(true); };
+  wirePost(card, p, (o, fs) => { const y = window.scrollY; showDeck(o, fs); window.scrollTo(0, y); });
+  if (focusSel) card.querySelector(focusSel)?.focus();
   const mk = $("makeNow"); if (mk) mk.onclick = () => showDeck(true);
-  $("dPrev").onclick = () => { deckI--; showDeck(); };
-  $("dNext").onclick = () => { deckI++; showDeck(); };
+  $("dPrev").onclick = () => { deckI--; showDeck(); window.scrollTo(0, 0); };
+  $("dNext").onclick = () => { deckI++; showDeck(); window.scrollTo(0, 0); };
   $("toBook").onclick = () => showBook();
-  // swipe between cards on phones
+  // swipe between cards on phones (not while swiping the slides)
   let x0 = null;
-  card.ontouchstart = e => { x0 = e.touches[0].clientX; };
+  card.ontouchstart = e => { x0 = e.target.closest(".slides") ? null : e.touches[0].clientX; };
   card.ontouchend = e => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null;
     if (Math.abs(dx) > 60 && !e.target.isContentEditable) { if (dx < 0 && deckI < list.length - 1) { deckI++; showDeck(); } else if (dx > 0 && deckI > 0) { deckI--; showDeck(); } } };
-  window.scrollTo(0, 0);
 }
 
 /* ---------- generator ---------- */
+/* ---------- making answers read naturally ---------- */
+const clean = t => String(t || "").trim().replace(/[.!?]+$/, "").replace(/^(that|to)\s+/i, "");
+const lowFirst = t => /^(I\b|I'|[A-Z]{2,})/.test(t) ? t : t.charAt(0).toLowerCase() + t.slice(1);
+const cap = t => t ? t.charAt(0).toUpperCase() + t.slice(1) : t;
+const endP = t => /[.!?…:"”]$/.test(t) ? t : t + ".";
+const phrase = t => lowFirst(clean(t));
+const topicOf = ang => ang.sub || (["My story", "Building in public"].includes(ang.topic) ? (A.topics[0] || "") : ang.topic);
 function fill(hook, text) {
-  const t = text.trim().replace(/[.!]+$/, "");
-  if (/_{3,}/.test(hook)) return hook.replace(/_{3,}/, t);
-  if (/(\.\.\.|…)$/.test(hook)) return hook.replace(/(\.\.\.|…)$/, `... ${t}`);
-  return hook;
+  const t = phrase(text);
+  let out = hook;
+  if (/_{3,}/.test(hook)) out = endP(hook.replace(/\s*_{3,}\s*$/, " " + t).replace(/_{3,}/, t));
+  else if (/(\.\.\.|…)$/.test(hook)) out = endP(hook.replace(/\s*(\.\.\.|…)$/, " " + t));
+  return cap(out.replace(/\s+/g, " ").replace(/ ,/g, ","));
+}
+// the main point, said like a person would say it
+function mainPoint(ang) {
+  if (ang.kind === "believe") return endP(cap(phrase(ang.text)));
+  if (ang.kind === "disagree") return `Most people think ${phrase(ang.text)}. Here's why I don't.`;
+  if (ang.kind === "untalked") return `Nobody talks about ${phrase(ang.text)}, so let's.`;
+  if (ang.kind === "story") return `I went from ${phrase(ang.old)} to ${phrase(ang.now)}.`;
+  return `I'm ${phrase(ang.text)}. Here's where I'm at.`;
 }
 
 // "gym" → "Follow for more gym tips", "planning my week" → "Follow for more on planning my week"
 function followLine(topic) {
   const t = (topic || A.topics[0] || "").trim().replace(/[.!]+$/, "");
   if (!t || ["My story", "Building in public"].includes(t)) return "Follow to see where this goes";
-  const phrase = /\b(my|your|our|how|why|what)\b|\w+ing\b/i.test(t) || t.split(/\s+/).length > 3;
+  const phrase = /\b(my|your|our|how|why|what)\b/i.test(t) || t.split(/\s+/).length > 3;
   return phrase ? `Follow for more on ${t}` : `Follow for more ${t} tips`;
 }
 function ctaText(id, topic) {
@@ -1714,6 +1930,22 @@ function taskDay(dateStr, dayIdxs, notAfter) {
   return null;
 }
 
+function prefillSlots(sl2, fmtKey, ang, hook, point) {
+  const s = F[fmtKey].slots, o = ang.old ? phrase(ang.old) : "", n = ang.now ? phrase(ang.now) : "";
+  if (fmtKey === "singleBroll") sl2[s[1]] = hook;
+  if (fmtKey === "problemStatement") sl2[s[0]] = hook;
+  if (fmtKey === "beforeAfter") { sl2[s[0]] = cap(o); sl2[s[1]] = cap(n); sl2[s[2]] = `I used to be ${o}.`; sl2[s[4]] = `Now I'm ${n}.`; }
+  if (fmtKey === "splitScreen") { sl2[s[0]] = cap(o); sl2[s[1]] = cap(n); }
+  if (fmtKey === "silentFilm") { sl2[s[0]] = `Last year: ${o}.`; sl2[s[2]] = `Now: ${n}.`; }
+  if (fmtKey === "voiceover") { sl2[s[0]] = o ? `I used to be ${o}.` : point; if (n) sl2[s[2]] = `Now I'm ${n}.`; }
+  if (fmtKey === "valueTalking" || fmtKey === "numberedTalking") sl2[s[1]] = point;
+}
+// carousels start with only the slides that have something in them; people add more
+function makeSlides(hook, point, purpose, cta) {
+  const out = [{ role: "cover", t: hook }, { role: "point", t: point }];
+  if (purpose !== "virality" && cta) out.push({ role: "end", t: cta });
+  return out;
+}
 function generate() {
   const { angles, story } = buildAngles();
   const slots = postSlots();
@@ -1741,10 +1973,10 @@ function generate() {
     }
     const fmt = F[fmtKey];
     const fixed = {
-      problemStatement: () => `"${ang.text.charAt(0).toUpperCase() + ang.text.slice(1)}"`,
-      beforeAfter: () => `Old me: ${ang.old} → Me now: ${ang.now}`,
-      splitScreen: () => `${ang.old} vs ${ang.now}`,
-      silentFilm: () => `[YEAR]: ${ang.old}`
+      problemStatement: () => `"${cap(phrase(ang.text))}."`,
+      beforeAfter: () => `Old me: ${phrase(ang.old)}. Me now: ${phrase(ang.now)}.`,
+      splitScreen: () => `${cap(phrase(ang.old))} vs ${phrase(ang.now)}`,
+      silentFilm: () => `Last year: ${phrase(ang.old)}.`
     };
 
     let hook, point, slots2 = {};
@@ -1752,26 +1984,12 @@ function generate() {
     if (fixed[fmtKey] && repeat === 1) hook = fixed[fmtKey]();
     else hook = next(hookPool(ang), "hook-" + angleId);
     if (repeat === 2 && (slot.type === "talking" || slot.type === "story")) hook = next(H.part2, "p2");
-    point = ang.kind === "believe" ? `I totally believe that ${ang.text}`
-      : ang.kind === "disagree" ? `I disagree with people who think ${ang.text}`
-      : ang.kind === "untalked" ? `I don't see a lot of people talking about ${ang.text}`
-      : ang.kind === "story" ? `Old me: ${ang.old} → Me now: ${ang.now}`
-      : `What I'm working on right now: ${ang.text}`;
-
-    // prefill structure slots
+    point = mainPoint(ang);
     s.forEach(label => slots2[label] = "");
-    if (fmtKey === "singleBroll") { slots2[s[1]] = hook; }
-    if (fmtKey === "problemStatement") { slots2[s[0]] = hook; }
-    if (fmtKey === "beforeAfter") { slots2[s[0]] = ang.old; slots2[s[1]] = ang.now; slots2[s[2]] = ang.old; slots2[s[4]] = ang.now; }
-    if (fmtKey === "splitScreen") { slots2[s[0]] = `${ang.old} (time: ___)`; slots2[s[1]] = `${ang.now} (same time: ___)`; }
-    if (fmtKey === "silentFilm") { slots2[s[0]] = `[YEAR]: ${ang.old}`; slots2[s[2]] = ang.now; }
-    if (fmtKey === "voiceover") { slots2[s[0]] = ang.old || ang.text; if (ang.now) slots2[s[2]] = ang.now; }
-    if (fmtKey === "valueTalking") { slots2[s[1]] = ang.text || `${ang.old} → ${ang.now}`; slots2[s[2]] = ""; }
+    prefillSlots(slots2, fmtKey, ang, hook, point);
     const purpose = purposeFor(slot.type, ang.kind);
     const cta = ctaFor(purpose, ang.topic);
-    if (fmtKey === "numberedCarousel") { slots2[s[0]] = hook; slots2[s[6]] = cta; }
-    if (fmtKey === "assumptionCarousel") { slots2[s[0]] = `"${ang.text}" / the reality: ___`; }
-    if (fmtKey === "actionCarousel") { slots2[s[5]] = ang.now ? `Now: ${ang.now}` : ""; }
+    const slides = slot.type === "carousel" ? makeSlides(hook, point, purpose, cta) : null;
 
     // film/edit on your chosen days before the post, never in the past; if there's no chosen day in time, do it on the post day
     const today0 = parse(iso(new Date()));
@@ -1780,10 +1998,10 @@ function generate() {
     return {
       id: Math.random().toString(36).slice(2, 9),
       date: slot.date, type: slot.type, fmt: fmtKey, topic: ang.sub ? `${ang.topic} · ${ang.sub}` : ang.topic, hook, point,
-      slots: slots2, purpose, cta,
+      slots: slots2, slides, purpose, cta, ang,
       film: filmD ? iso(filmD) : "", edit: editD ? iso(editD) : "",
       // where it goes: "plan" = going to post there, "done" = posted
-      where: Object.fromEntries((A.platforms.length ? A.platforms : ["TikTok", "Instagram"]).map(pl => [pl, "plan"])),
+      where: Object.fromEntries((A.platforms.length ? A.platforms : PLATFORMS).map(pl => [pl, "plan"])),
       status: "Idea", notes: "", checks: []
     };
   });
@@ -1819,127 +2037,197 @@ function timeBlocks(posts, from, start, end) {
 const fmtDate = s => s ? parse(s).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }) : "—";
 function save() { store.set({ answers: A, book: BOOK }); }
 
-function showBook() {
-  upgradeBook();
-  $("quiz").hidden = true; $("book").hidden = false;
-  document.body.classList.remove("quizmode");
-  document.title = `${A.name ? A.name + "'s" : "Your"} Batchbook`;
-  const posts = BOOK.posts;
-  const counts = {}; posts.forEach(p => counts[p.type] = (counts[p.type] || 0) + 1);
-  const start = parse(A.start), end = parse(A.end);
-  // show the week(s) before the start too if the first posts need filming/editing before day 1
-  const firstWork = posts.flatMap(p => [p.film, p.edit]).filter(Boolean).sort()[0];
-  const from = firstWork && parse(firstWork) < start ? parse(firstWork) : start;
-  const gStart = addDays(from, -dowIdx(from)), gEnd = addDays(end, 6 - dowIdx(end));
+/* ---------- batchbook: list on the side + week / month calendar (calendar-app style) ---------- */
+let VIEW = window.innerWidth <= 760 ? "list" : "week";
+let weekAt = null;
+const H_PX = 46, H_FROM = 6, H_TO = 24;
+const toMin = t => { const [h, m] = String(t || "19:00").split(":").map(Number); return h * 60 + (m || 0); };
+const fmtTime = m => { const h = Math.floor(m / 60) % 24, mm = m % 60; return `${(h % 12) || 12}:${String(mm).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`; };
+const BLOCK_NAME = { ideas: "Find ideas", plan: "Plan", film: "Film", edit: "Edit" };
+function blockTitle(b) { return b.kind === "film" || b.kind === "edit" ? `${BLOCK_NAME[b.kind]} ${b.posts.length} post${b.posts.length === 1 ? "" : "s"}` : BLOCK_NAME[b.kind]; }
+// everything on a day, with times
+function dayEvents(ds) {
+  const ev = [];
+  (window.__blocks[ds] || []).forEach((b, ti) => { const s = toMin(A.time[b.kind].at); ev.push({ kind: "block", b, ti, start: s, end: s + Math.max(30, A.time[b.kind].h * 60) }); });
+  BOOK.posts.filter(p => p.date === ds).forEach(p => { const s = toMin(p.at || A.postAt); ev.push({ kind: "post", p, start: s, end: s + 30 }); });
+  return ev.sort((a, b) => a.start - b.start);
+}
+function evButton(e, cls = "") {
+  if (e.kind === "post") { const p = e.p;
+    return `<button class="ev c-${p.type} ${p.status === "Posted" ? "posted" : ""} ${cls}" data-open="${p.id}"><i class="bar"></i><span class="ev-main"><b>${esc(p.hook)}</b><span class="ev-meta">${platRow(p)}<span>${TYPES[p.type].label}</span></span></span><span class="ev-time">${fmtTime(e.start)}</span></button>`; }
+  return `<button class="ev blk ${cls}" data-block="${e.b && Object.keys(window.__blocks).find(k => window.__blocks[k].includes(e.b))}|${e.ti}"><i class="bar"></i><span class="ev-main"><b>${blockTitle(e.b)}</b><span class="ev-meta"><span>${A.time[e.b.kind].h}h block</span></span></span><span class="ev-time">${fmtTime(e.start)}<br>${fmtTime(e.end)}</span></button>`;
+}
+function listView(from, end) {
   const todayS = iso(new Date());
-  const tasks = timeBlocks(posts, from, start, end);
-  window.__blocks = tasks;
-  let weeks = "";
+  let out = "";
+  for (let d = new Date(from); d <= end; d = addDays(d, 1)) {
+    const ds = iso(d), ev = dayEvents(ds);
+    if (!ev.length) continue;
+    out += `<div class="lday ${ds === todayS ? "today" : ""}"><h4>${d.toLocaleDateString(undefined, { weekday: "long" })} – ${d.toLocaleDateString(undefined, { day: "numeric", month: "short" })}</h4>${ev.map(e => evButton(e)).join("")}</div>`;
+  }
+  return out || `<p class="hint">Nothing planned yet.</p>`;
+}
+function weekView() {
+  const days = Array.from({ length: 7 }, (_, i) => addDays(weekAt, i));
+  const todayS = iso(new Date());
+  const hours = Array.from({ length: H_TO - H_FROM }, (_, i) => H_FROM + i);
+  const lbl = `${days[0].toLocaleDateString(undefined, { month: "long" })} ${days[0].getFullYear()}`;
+  return `<div class="wk-top"><h2 class="wk-title"><b>${lbl.split(" ")[0]}</b> ${lbl.split(" ")[1]}</h2>
+      <div class="wk-nav"><button class="btn" data-wk="-1" aria-label="Previous week">‹</button><button class="btn" data-wk="0">Today</button><button class="btn" data-wk="1" aria-label="Next week">›</button></div></div>
+    <div class="wk"><div class="wk-head"><span></span>${days.map(d => { const ds = iso(d);
+      return `<span class="${ds === todayS ? "today" : ""} ${ds < A.start || ds > A.end ? "out" : ""}">${d.toLocaleDateString(undefined, { weekday: "short" })} <b>${d.getDate()}</b></span>`; }).join("")}</div>
+      <div class="wk-body" style="--h:${H_PX}px"><div class="wk-hours">${hours.map(h => `<span>${fmtTime(h * 60).replace(":00", "")}</span>`).join("")}</div>
+      ${days.map(d => { const ds = iso(d);
+        return `<div class="wk-col ${ds < A.start || ds > A.end ? "out" : ""}">${hours.map(() => "<i></i>").join("")}${dayEvents(ds).map(e => {
+          const top = (Math.max(e.start, H_FROM * 60) - H_FROM * 60) / 60 * H_PX, ht = Math.max(26, (e.end - e.start) / 60 * H_PX - 3);
+          return evButton(e, "abs").replace('class="ev', `style="top:${top}px;height:${ht}px" class="ev`); }).join("")}</div>`; }).join("")}
+      </div></div>`;
+}
+function monthView(from, start, end) {
+  const posts = BOOK.posts, tasks = window.__blocks, todayS = iso(new Date());
+  const gStart = addDays(from, -dowIdx(from)), gEnd = addDays(end, 6 - dowIdx(end));
+  let weeks = `<div class="dows">${DAYS.map(d => `<div class="dow">${d}</div>`).join("")}</div>`;
   for (let w = new Date(gStart); w <= gEnd; w = addDays(w, 7)) {
-    weeks += `<div class="week-h">Week of ${w.toLocaleDateString(undefined, { month: "short", day: "numeric" })}</div><div class="dows">${DAYS.map(d => `<div class="dow">${d}</div>`).join("")}</div><div class="grid">`;
+    weeks += `<div class="grid">`;
     for (let i = 0; i < 7; i++) {
       const d = addDays(w, i), ds = iso(d);
-      const inRange = d >= start && d <= end;      const dayPosts = posts.filter(p => p.date === ds);
-      const dayTasks = tasks[ds] || [];
+      const inRange = d >= start && d <= end, dayPosts = posts.filter(p => p.date === ds), dayTasks = tasks[ds] || [];
       weeks += `<div class="cell ${inRange ? "" : "out"} ${ds === todayS ? "today" : ""} ${dayPosts.length || dayTasks.length ? "" : "empty-day"}">
-        <div class="dnum"><span>${d.toLocaleDateString(undefined, { weekday: window.innerWidth <= 760 ? "long" : undefined, month: d.getDate() === 1 || i === 0 ? "short" : undefined, day: "numeric" })}</span><b>${ds === todayS ? "today" : ""}</b></div>
-        ${dayTasks.map((t, ti) => `<button class="task" data-block="${ds}|${ti}">${esc(t.label)}</button>`).join("")}
-        ${dayPosts.map(p => `<button class="item c-${p.type} ${p.status === "Posted" ? "posted" : ""}" data-open="${p.id}"><span class="k">${TYPES[p.type].label} · ${PURPOSES[p.purpose].ico} ${PURPOSES[p.purpose].label}</span><span class="t">${esc(p.hook)}</span>${whereSummary(p) ? `<span class="w">${whereSummary(p)}</span>` : ""}</button>`).join("")}
+        <div class="dnum"><span>${d.toLocaleDateString(undefined, { month: d.getDate() === 1 || i === 0 ? "short" : undefined, day: "numeric" })}</span><b>${ds === todayS ? "today" : ""}</b></div>
+        ${dayTasks.map((t, ti) => `<button class="task" data-block="${ds}|${ti}">${fmtTime(toMin(A.time[t.kind].at))} ${blockTitle(t)}</button>`).join("")}
+        ${dayPosts.map(p => `<button class="item c-${p.type} ${p.status === "Posted" ? "posted" : ""}" data-open="${p.id}"><span class="k">${platRow(p)}</span><span class="t">${esc(p.hook)}</span></button>`).join("")}
       </div>`;
     }
     weeks += `</div>`;
   }
-  $("book").innerHTML = `
-    <div class="book-head">
-      <div><div class="ws"><span class="ws-mark">B</span>${esc(CONFIG.creator)}</div>
-        <h1 style="margin-top:8px">${A.name ? esc(A.name) + "'s" : "Your"} Batchbook</h1>
-        <div class="sub">${fmtDate(A.start)} → ${fmtDate(A.end)} · ${posts.length} posts</div></div>
-      <div class="actions">
-        <button class="btn" id="xDeck">← My first posts</button>
-        <button class="btn primary" id="xExcel">Download Excel / Sheets</button>
-        <button class="btn" id="xNotion">Export to Notion</button>
-        <button class="btn" id="xPdf">Save as PDF</button>
-        <button class="btn" id="xSheets">CSV</button>
-        <button class="btn" id="xRedo">Start over</button>
-      </div>
-    </div>
-    <div class="banner">⚠️ <b>This isn't saved to an account.</b> It only stays in this browser, and clearing your browser data erases it. Export it to Google Sheets or save it as a PDF so you don't lose it.</div>
-    <div class="legend">${Object.entries(TYPES).filter(([k]) => counts[k]).map(([k, t]) => `<span class="c-${k}"><i style="background:var(--c-dot)"></i>${counts[k]} ${(counts[k] === 1 ? t.label : t.short).toLowerCase()}</span>`).join("")}<span>Tap any post to open it</span></div>
-    ${weeks}`;
-  $("book").onclick = e => {
-    const id = e.target.closest("[data-open]")?.dataset.open; if (id) return openPost(id);
-    const blk = e.target.closest("[data-block]")?.dataset.block; if (blk) return openBlock(blk);
-    if (e.target.id === "xSheets") exportCsv();
-    if (e.target.id === "xNotion") exportNotion();
-    if (e.target.id === "xExcel") exportExcel(e.target);
-    if (e.target.id === "xDeck") { deckI = 0; showDeck(); }
-    if (e.target.id === "xPdf") printBook();
-    if (e.target.id === "xRedo") { if (confirm("Start over? This clears your batchbook from this browser.")) { store.clear(); location.reload(); } }
-  };
-  window.scrollTo(0, 0);
+  return weeks;
 }
+function showBook(keepScroll) {
+  upgradeBook();
+  const y = window.scrollY;
+  $("quiz").hidden = true; $("book").hidden = false; $("deck").hidden = true;
+  document.body.classList.remove("quizmode");
+  document.title = `${A.name ? A.name + "'s" : "Your"} Batchbook`;
+  const posts = BOOK.posts;
+  const start = parse(A.start), end = parse(A.end);
+  const firstWork = posts.flatMap(p => [p.film, p.edit]).filter(Boolean).sort()[0];
+  const from = firstWork && parse(firstWork) < start ? parse(firstWork) : start;
+  window.__blocks = timeBlocks(posts, from, start, end);
+  if (!weekAt) { const t = new Date(); const base = t >= start && t <= end ? t : from; weekAt = addDays(base, -dowIdx(base)); }
+  const views = window.innerWidth <= 760 ? ["list", "week", "month"] : ["week", "month"];
+  if (!views.includes(VIEW)) VIEW = views[0];
+  $("book").innerHTML = `
+    <header class="bk-top">
+      <div class="bk-title"><div class="ws"><span class="ws-mark">B</span>${esc(CONFIG.creator)}</div>
+        <h1>${A.name ? esc(A.name) + "'s" : "Your"} Batchbook</h1>
+        <div class="sub">${fmtDate(A.start)} → ${fmtDate(A.end)} · ${posts.length} posts</div></div>
+      <div class="seg" role="tablist">${views.map(v => `<button role="tab" aria-selected="${VIEW === v}" data-view="${v}">${{ list: "List", week: "Week", month: "Month" }[v]}</button>`).join("")}</div>
+      <div class="bk-actions">
+        <button class="btn" id="xDeck">My first posts</button>
+        <button class="btn primary" id="xIcs">Add schedule to my calendar</button>
+        <details class="exp"><summary class="btn">Export ▾</summary><div class="exp-menu">
+          <button class="btn" id="xExcel">Excel / Google Sheets</button><button class="btn" id="xNotion">Notion</button>
+          <button class="btn" id="xPdf">PDF</button><button class="btn" id="xSheets">CSV</button><button class="btn danger" id="xRedo">Start over</button></div></details>
+      </div>
+    </header>
+    <div class="banner"><b>This isn't saved to an account.</b> It only stays in this browser. Export it so you don't lose it.</div>
+    <div class="bk-body view-${VIEW}">
+      <aside class="bk-list">${listView(from, end)}</aside>
+      <main class="bk-main">${VIEW === "month" ? monthView(from, start, end) : VIEW === "week" ? weekView() : ""}</main>
+    </div>`;
+  const wb = $("book").querySelector(".wk-body");
+  if (wb && !keepScroll) { const first = Math.min(...Object.values(A.time).map(t => toMin(t.at)), toMin(A.postAt)); wb.parentElement.scrollTop = Math.max(0, (first / 60 - H_FROM - .5) * H_PX); }
+  $("book").onclick = e => {
+    const t = e.target.closest("button, summary"); if (!t) return;
+    const id = t.dataset.open; if (id) return openPost(id);
+    const blk = t.dataset.block; if (blk) return openBlock(blk);
+    if (t.dataset.view) { VIEW = t.dataset.view; return showBook(); }
+    if (t.dataset.wk != null) { const n = +t.dataset.wk; if (n === 0) { const d = new Date(); weekAt = addDays(d, -dowIdx(d)); } else weekAt = addDays(weekAt, 7 * n); return showBook(true); }
+    if (t.id === "xSheets") exportCsv();
+    if (t.id === "xNotion") exportNotion();
+    if (t.id === "xExcel") exportExcel(t);
+    if (t.id === "xIcs") exportIcs();
+    if (t.id === "xDeck") { deckI = 0; showDeck(); window.scrollTo(0, 0); }
+    if (t.id === "xPdf") printBook();
+    if (t.id === "xRedo") { if (confirm("Start over? This clears your batchbook from this browser.")) { store.clear(); location.reload(); } }
+  };
+  window.scrollTo(0, keepScroll ? y : 0);
+}
+
+/* ---------- add the schedule to a phone / Google / Apple calendar (.ics) ---------- */
+function icsText(events) {
+  const pad = n => String(n).padStart(2, "0");
+  const stamp = (ds, m) => `${ds.replace(/-/g, "")}T${pad(Math.floor(m / 60) % 24)}${pad(m % 60)}00`;
+  const escI = t => String(t || "").replace(/\\/g, "\\\\").replace(/;/g, "\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+  const now = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
+  return ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Starter Batchbook//EN", "CALSCALE:GREGORIAN",
+    ...events.flatMap(e => ["BEGIN:VEVENT", `UID:${Math.random().toString(36).slice(2)}@batchbook`, `DTSTAMP:${now}`,
+      `DTSTART:${stamp(e.ds, e.start)}`, `DTEND:${stamp(e.ds, Math.min(e.end, 24 * 60 - 1))}`, `SUMMARY:${escI(e.title)}`, `DESCRIPTION:${escI(e.desc)}`,
+      "BEGIN:VALARM", "TRIGGER:-PT15M", "ACTION:DISPLAY", `DESCRIPTION:${escI(e.title)}`, "END:VALARM", "END:VEVENT"]),
+    "END:VCALENDAR"].join("\r\n");
+}
+function downloadIcs(events, name) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([icsText(events)], { type: "text/calendar;charset=utf-8" }));
+  a.download = name; a.click();
+  setTimeout(() => alert(`Downloaded ${name} ✅\n\niPhone / Mac: open the file and tap Add All.\nGoogle Calendar: calendar.google.com → Settings → Import & export → Import → pick the file.`), 300);
+}
+function exportIcs() {
+  const ev = [];
+  Object.entries(window.__blocks || {}).forEach(([ds, list]) => list.forEach(b => { const s = toMin(A.time[b.kind].at);
+    ev.push({ ds, start: s, end: s + A.time[b.kind].h * 60, title: `${blockTitle(b)} (content)`, desc: [...b.posts.map(p => "• " + p.hook), "", ...BLOCK_TIPS[b.kind].map(t => "- " + t)].join("\n") }); }));
+  BOOK.posts.forEach(p => { const s = toMin(p.at || A.postAt);
+    ev.push({ ds: p.date, start: s, end: s + 30, title: `Post: ${p.hook}`, desc: `${TYPES[p.type].label} · ${F[p.fmt].name}\nPost to: ${Object.keys(p.where).join(", ")}${p.purpose === "virality" ? "" : `\nCTA: ${p.cta}`}` }); });
+  downloadIcs(ev, "my-content-schedule.ics");
+}
+
 
 function openPost(id) {
   const p = BOOK.posts.find(x => x.id === id); if (!p) return;
-  const f = F[p.fmt];
+  const f = F[p.fmt], pur = PURPOSES[p.purpose];
   $("drawer").innerHTML = `
-    <div class="drawer-bar"><span>${fmtDate(p.date)} · ${esc(p.topic)}</span><span><button class="btn" id="dClose">Close ✕</button></span></div>
-    <div class="drawer-body c-${p.type}">
-      <textarea class="d-hook" data-f="hook" rows="1">${esc(p.hook)}</textarea>
+    <div class="drawer-bar"><span>${fmtDate(p.date)} · ${fmtTime(toMin(p.at || A.postAt))} · ${esc(p.topic)}</span><span><button class="btn" id="dClose">Close ✕</button></span></div>
+    <div class="drawer-body dpost">
+      <div class="pc-head"><span class="ppill p-${p.purpose}">${pur.label}</span><span class="pc-plats">${platRow(p)}</span></div>
+      <div class="pc-desc" contenteditable="true" data-f="point">${esc(p.point)}</div>
+      ${postPreview(p)}
+      ${swapButtons}
       <div class="props">
-        <label>Post on</label><input class="prop" type="date" data-f="date" value="${p.date}">
-        <label>Content</label><div class="v"><span class="pill">${TYPES[p.type].label}</span></div>
-        <label>Format</label><div class="v">${esc(f.name)} ${f.fire}</div>
-        <label>Topic</label><input class="prop" data-f="topic" value="${esc(p.topic)}">
-        <label>Film on</label><input class="prop" type="date" data-f="film" value="${p.film}">
-        <label>Edit on</label><input class="prop" type="date" data-f="edit" value="${p.edit}">
-        <label>Purpose</label><select class="prop" data-f="purpose">${Object.entries(PURPOSES).map(([k, v]) => `<option value="${k}" ${p.purpose === k ? "selected" : ""}>${v.ico} ${v.label}</option>`).join("")}</select>
-        <label>Status</label><select class="prop" data-f="status">${["Idea", "Filmed", "Edited", "Posted"].map(s => `<option ${p.status === s ? "selected" : ""}>${s}</option>`).join("")}</select>
+        <label>Post on</label><input class="prop" type="date" data-p="date" value="${p.date}">
+        <label>Post at</label><input class="prop" type="time" data-p="at" value="${p.at || A.postAt}">
+        <label>Content</label><div class="v">${TYPES[p.type].label} · ${esc(f.name)}</div>
+        ${p.type === "carousel" ? "" : `<label>Film on</label><input class="prop" type="date" data-p="film" value="${p.film}">`}
+        <label>Edit on</label><input class="prop" type="date" data-p="edit" value="${p.edit}">
+        <label>Purpose</label><select class="prop" data-p="purpose">${Object.entries(PURPOSES).map(([k, v]) => `<option value="${k}" ${p.purpose === k ? "selected" : ""}>${v.label}</option>`).join("")}</select>
+        <label>Status</label><select class="prop" data-p="status">${["Idea", "Filmed", "Edited", "Posted"].map(x => `<option ${p.status === x ? "selected" : ""}>${x}</option>`).join("")}</select>
         <label>Post to</label><div class="v where" id="where">${PLATFORMS.map(pl => { const st = p.where[pl] || "off";
-          return `<button class="wchip ${st}" data-pl="${esc(pl)}" title="Tap to switch: not posting → posting → posted">${st === "done" ? "✓ " : ""}${esc(pl)}</button>`; }).join("")}
-          <span class="hint" style="display:block;margin-top:4px">Tap: not posting → posting → posted ✓. Crossposting? Turn on more than one.</span></div>
+          return `<button class="wchip ${st}" data-cyc="${esc(pl)}">${platIcon(pl, st === "done" ? "done" : "plan")} ${esc(pl)}${st === "done" ? " ✓" : ""}</button>`; }).join("")}</div>
       </div>
-      <div class="sec"><h3>Hook <button class="btn" id="swapHook">🔀 Try another hook</button></h3>
-        <p class="hint" style="margin:0">Stack it: say it (verbal), show it (visual), and put it on screen (text).</p></div>
-      <div class="sec"><h3>Main point</h3><textarea class="box" data-f="point">${esc(p.point)}</textarea></div>
-      <div class="sec"><h3>Build it</h3>
-        ${f.slots.map(l => `<div class="slot"><label>${esc(l)}</label><textarea class="box" data-slot="${esc(l)}">${esc(p.slots[l] || "")}</textarea></div>`).join("")}</div>
-      <div class="sec"><h3>CTA</h3>${p.purpose === "virality"
-        ? `<p class="hint" style="margin:0">No CTA on this one. Viral posts spread better when they don't ask for anything. Change the purpose above if you want one.</p>`
-        : `<textarea class="box" data-f="cta">${esc(p.cta)}</textarea>`}</div>
-      <div class="sec"><h3>How to make it: ${esc(f.name)}</h3><ol class="howto">${[...f.how, ...(p.type === "talking" || p.fmt === "voiceover" ? [REHOOK] : [])].map(h => `<li>${esc(h)}</li>`).join("")}</ol></div>
-      <div class="sec"><h3>Before you post</h3><div class="check">${CHECK.map((c, i) => `<label><input type="checkbox" data-c="${i}" ${p.checks.includes(i) ? "checked" : ""}>${esc(c)}</label>`).join("")}</div></div>
-      <div class="sec"><h3>Notes</h3><textarea class="box" data-f="notes" placeholder="Links, audio, B-roll ideas…">${esc(p.notes)}</textarea></div>
+      <p class="hint" style="margin:-8px 0 0">Tap a platform: not posting → posting → posted ✓</p>
+      <div class="sec"><h3>Make it</h3>${stepsHTML(p)}</div>
+      <div class="sec"><h3>Notes</h3><textarea class="box" data-p="notes" placeholder="Links, audio, B-roll ideas…">${esc(p.notes)}</textarea></div>
     </div>`;
   $("drawer").hidden = false; $("scrim").hidden = false;
-  const d = $("drawer");
-  const grow = el => { el.style.height = "auto"; el.style.height = el.scrollHeight + 2 + "px"; };
-  d.querySelectorAll("textarea").forEach(grow);
-  d.oninput = e => {
-    const t = e.target;
-    if (t.tagName === "TEXTAREA") grow(t);
-    if (t.dataset.f) p[t.dataset.f] = t.value;
-    if (t.dataset.slot) p.slots[t.dataset.slot] = t.value;
-    save();
-  };
-  d.onchange = e => {
-    const t = e.target;
-    if (t.dataset.c != null) { const i = +t.dataset.c; p.checks = t.checked ? [...p.checks, i] : p.checks.filter(x => x !== i); save(); }
-    if (t.dataset.f === "purpose") { p.cta = ctaFor(p.purpose, p.topic); save(); showBook(); openPost(p.id); return; }
-    if (t.dataset.f === "date" || t.dataset.f === "status") { save(); showBook(); openPost(p.id); }
-  };
+  const d = $("drawer"), body = d.querySelector(".drawer-body");
+  const again = () => { const y = body.scrollTop; showBook(true); openPost(p.id); $("drawer").querySelector(".drawer-body").scrollTop = y; };
+  wirePost(body, p, again);
+  body.querySelectorAll("[data-p]").forEach(el => {
+    el.oninput = () => { if (el.tagName === "TEXTAREA") { p[el.dataset.p] = el.value; save(); } };
+    el.onchange = () => {
+      const k = el.dataset.p; p[k] = el.value;
+      if (k === "purpose") p.cta = ctaFor(p.purpose, p.topic);
+      save(); again();
+    };
+  });
   $("where").onclick = e => {
-    const b = e.target.closest("[data-pl]"); if (!b) return;
-    const pl = b.dataset.pl, st = p.where[pl] || "off";
-    const nextSt = { off: "plan", plan: "done", done: "off" }[st];
-    if (nextSt === "off") delete p.where[pl]; else p.where[pl] = nextSt;
+    const b = e.target.closest("[data-cyc]"); if (!b) return;
+    const pl = b.dataset.cyc, st = p.where[pl] || "off", nx = { off: "plan", plan: "done", done: "off" }[st];
+    if (nx === "off") delete p.where[pl]; else p.where[pl] = nx;
     const v = Object.values(p.where);
-    if (v.length && v.every(x => x === "done")) p.status = "Posted";
-    else if (p.status === "Posted") p.status = "Edited";
-    save(); showBook(); openPost(p.id);
+    if (v.length && v.every(x => x === "done")) p.status = "Posted"; else if (p.status === "Posted") p.status = "Edited";
+    save(); again();
   };
   $("dClose").onclick = closePost;
-  $("swapHook").onclick = () => { p.hook = swapHook(p); save(); const h = d.querySelector(".d-hook"); h.value = p.hook; grow(h); showBook(); };
   d.focus();
 }
 const BLOCK_TIPS = {
@@ -1956,7 +2244,9 @@ function openBlock(key) {
   $("drawer").innerHTML = `
     <div class="drawer-bar"><span>${fmtDate(ds)} · time block</span><span><button class="btn" id="dClose">Close ✕</button></span></div>
     <div class="drawer-body">
-      <h2 style="font-size:24px">${esc(b.label)}</h2>
+      <h2 style="font-size:24px">${blockTitle(b)}</h2>
+      <p class="hint" style="margin:0">${fmtDate(ds)} · ${fmtTime(toMin(A.time[b.kind].at))} – ${fmtTime(toMin(A.time[b.kind].at) + A.time[b.kind].h * 60)}</p>
+      <div><button class="btn primary" id="blkIcs" style="flex:none">Add to my calendar</button></div>
       ${b.need ? `<p class="hint" style="margin:0">These take about ${Math.round(b.need / 60 * 10) / 10}h. You blocked ${hrs}h${b.need / 60 > hrs ? ", so you might need to move one to another day." : " ✨"}</p>` : ""}
       ${b.posts.length ? `<div class="sec"><h3>${b.kind === "plan" ? "Posts coming up this week" : "Posts to " + (b.kind === "film" ? "film" : "edit")}</h3>
         ${b.posts.map(p => `<button class="item c-${p.type}" data-open="${p.id}"><span class="k">${fmtDate(p.date)} · ${TYPES[p.type].label}</span><span class="t">${esc(p.hook)}</span></button>`).join("")}</div>` : ""}
@@ -1964,6 +2254,8 @@ function openBlock(key) {
     </div>`;
   $("drawer").hidden = false; $("scrim").hidden = false;
   $("dClose").onclick = closePost;
+  $("blkIcs").onclick = () => { const st = toMin(A.time[b.kind].at);
+    downloadIcs([{ ds, start: st, end: st + A.time[b.kind].h * 60, title: `${blockTitle(b)} (content)`, desc: [...b.posts.map(p => "• " + p.hook), "", ...BLOCK_TIPS[b.kind].map(t => "- " + t)].join("\n") }], `${b.kind}-${ds}.ics`); };
   $("drawer").onclick = e => { const id = e.target.closest("[data-open]")?.dataset.open; if (id) openPost(id); };
   $("drawer").oninput = null; $("drawer").onchange = null;
 }
@@ -2003,14 +2295,14 @@ function fillBank(h, ang) {
   // hooks that argue AGAINST the blank ("I can't stand people who say ___") take the thing they disagree with
   const against = /can[’']t stand|sick of seeing|closed-minded|is lying|That’s a lie|myth/i.test(h);
   const nobodyHook = /nobody|no one|wrong about|truth about|understand about/i.test(h);
-  const mythVal = ang.kind === "disagree" ? ang.text : ang.kind === "story" ? ang.old : "";
+  const mythVal = phrase(ang.kind === "disagree" ? ang.text : ang.kind === "story" ? ang.old : "");
   const val = {
-    topic: ang.kind === "untalked" && nobodyHook ? ang.text : baseTopic,
+    topic: ang.kind === "untalked" && nobodyHook ? phrase(ang.text) : baseTopic,
     who,
-    take: against ? mythVal : ang.kind === "believe" ? ang.text : "",
+    take: against ? mythVal : ang.kind === "believe" ? phrase(ang.text) : "",
     myth: mythVal,
-    now: ang.now || "", before: ang.old || "",
-    goal: ang.kind === "working" ? ang.text : ""
+    now: phrase(ang.now || ""), before: phrase(ang.old || ""),
+    goal: ang.kind === "working" ? phrase(ang.text) : ""
   };
   let changed = false;
   const outH = h.replace(/\[([^\]]+)\]|\{([^}]+)\}|\(([^)]+)\)/g, (m, a, b, c) => {
@@ -2018,13 +2310,17 @@ function fillBank(h, ang) {
     for (const k in SLOT) if (SLOT[k].test(key) && val[k]) { changed = true; return val[k].replace(/[.!]+$/, ""); }
     return m;
   });
-  return { hook: outH, changed };
+  return { hook: cap(outH.replace(/\s+/g, " ")), changed };
 }
 // bank hooks that got at least one blank filled for this angle
 const blanksLeft = h => (h.match(/\[[^\]]*\]|\{[^}]*\}|\([^)]*\)/g) || []).length;
 function bankFor(ang, maxLeft = 0) {
   // only use bank hooks where every blank got filled (or at most maxLeft are left for them to fill)
-  const list = BANK.map(h => fillBank(h, ang)).filter(r => r.changed && blanksLeft(r.hook) <= maxLeft).map(r => r.hook);
+  // leave out the ones that only fit one creator's voice (swearing, dated years, gendered, "homie" etc.)
+  const off = /f\*?u?ck|shit|ebola|20(23|24|25)|homie|\bbro\b|papi|\bmen\b|women|\bguy\b|girl|president|brains|kidney|unethical|mf’s|splish|shi\b|yall|family disappointment|sister/i;
+  // only bank hooks that read well for any topic once filled in
+  const fits = /everyone gets wrong about|nobody tells you about|nobody seems to understand about|obsessed with|TRUTH about|harder than it needs|biggest myth about|I used to think|What if I told you|your reminder that|wish someone had told me|Can we all agree|Growing up is understanding|answer might surprise you|struggling with|sign you've been waiting|not alone if|Raise your hand if/i;
+  const list = BANK.filter(h => !off.test(h) && fits.test(h)).map(h => fillBank(h, ang)).filter(r => r.changed && blanksLeft(r.hook) <= maxLeft).map(r => r.hook);
   // start each answer at a different spot in the bank so posts don't all open the same way
   const seed = [...(ang.text || ang.old || "") + ang.kind].reduce((s, c) => (s * 31 + c.charCodeAt(0)) >>> 0, 7);
   const k = list.length ? seed % list.length : 0;
@@ -2032,39 +2328,54 @@ function bankFor(ang, maxLeft = 0) {
 }
 const interleave = (a, b) => { const o = []; for (let i = 0; i < Math.max(a.length, b.length); i++) { if (a[i]) o.push(a[i]); if (b[i]) o.push(b[i]); } return o; };
 
-function hookPool(ang) {
-  return interleave(basePool(ang), bankFor(ang));
-}
+function hookPool(ang) { return basePool(ang); }
 function basePool(ang) {
-  const t = ang.text;
-  if (ang.kind === "believe") return [...H.believe.map(h => fill(h, t)), ...H.truth];
-  if (ang.kind === "disagree") return [...H.disagree.map(h => fill(h, t)), `"${t.charAt(0).toUpperCase() + t.slice(1)}"`];
-  if (ang.kind === "untalked") return [...H.untalked.map(h => fill(h, t)), `5 things nobody tells you about ${t.replace(/[.!]+$/, "")}`, ...H.list, ...H.open];
-  if (ang.kind === "working") return [...H.working, ...H.open];
-  if (ang.kind === "story") return [
-    ...(whoAmI() ? [H.story[0].replace("[age]", whoAmI())] : []),
-    H.story[1].replace("[PROBLEM]", ang.old).replace("[PAYOFF]", ang.now),
-    fill(H.relate[0], ang.old), `Old me: ${ang.old} → Me now: ${ang.now}`, `${ang.old} vs ${ang.now}`, H.story[2], H.relate[1]];
-  return [...H.working, ...H.open];
+  const topic = topicOf(ang), who = whoAmI();
+  if (ang.kind === "believe") { const t = phrase(ang.text); return [
+    `Unpopular opinion: ${t}.`, fill(H.believe[0], t), `Nobody wants to hear this, but ${t}.`, fill(H.believe[1], t),
+    `Hot take: ${t}.`, fill(H.believe[5], t), fill(H.believe[4], t), `I'll say it: ${t}.`, fill(H.believe[6], t), fill(H.believe[7], t)]; }
+  if (ang.kind === "disagree") { const x = phrase(ang.text); return [
+    `Stop believing ${x}.`, fill(H.disagree[0], x), `The biggest myth about ${topic} is that ${x}.`, fill(H.disagree[1], x),
+    `The biggest lie we've normalized is that ${x}.`, `"${cap(x)}." Let's talk about that.`, `Not enough people are questioning the idea that ${x}.`]; }
+  if (ang.kind === "untalked") { const y = phrase(ang.text); return [
+    `Nobody talks about ${y}.`, `Why is no one talking about ${y}?`, `Here's the part nobody tells you about ${topic}.`,
+    `Can we talk about ${y}?`, `I have no business telling you this much, but let's talk about ${y}.`, ...H.open]; }
+  if (ang.kind === "story") { const o = phrase(ang.old), n = phrase(ang.now); return [
+    `Old me: ${o}. Me now: ${n}.`, ...(who ? [`I'm ${who} and I'm a bit embarrassed to admit I spent years ${o}.`] : []),
+    `POV: you went from ${o} to ${n}.`, `This was me a year ago: ${o}.`, H.story[2], `Let's be best friends if you can relate to ${o}.`]; }
+  const w = phrase(ang.text); return [
+    `Day 1 of ${w}.`, `I'm ${w}, and I'm taking you with me.`, `Update on ${w}:`, `Here's the part of ${w} nobody films.`, ...H.open];
 }
 
-function swapHook(p) {
-  const kind = p.point.startsWith("I totally believe") ? "believe" : p.point.startsWith("I disagree") ? "disagree"
-    : p.point.startsWith("I don't see") ? "untalked" : p.point.startsWith("Old me") ? "story" : "working";
+function angleOf(p) {
+  if (p.ang) return p.ang;
+  // older saves: rebuild the angle from the main point
+  const kind = /^I totally believe/.test(p.point) ? "believe" : /^I disagree/.test(p.point) ? "disagree"
+    : /^I don't see/.test(p.point) ? "untalked" : /^Old me/.test(p.point) ? "story" : "working";
   const text = p.point.replace(/^I totally believe that |^I disagree with people who think |^I don't see a lot of people talking about |^What I'm working on right now: /, "");
-  let ang = { kind, text, topic: p.topic };
-  if (kind === "story") { const [old, now] = text.replace(/^Old me: /, "").split(" → Me now: "); ang = { kind, old, now, topic: p.topic }; }
-  const pool = [...interleave(basePool(ang), bankFor(ang, 1)), ...(kind === "story" ? [`[YEAR]: ${ang.old}`] : []), ...H.part2];
+  if (kind === "story") { const [old, now] = text.replace(/^Old me: /, "").split(" → Me now: "); return { kind, old, now, topic: p.topic }; }
+  return { kind, text, topic: p.topic };
+}
+function hookChoices(p) {
+  const ang = { ...angleOf(p), topic: p.topic.split(" · ")[0], sub: p.topic.split(" · ")[1] };
+  return [...new Set([...interleave(basePool(ang), bankFor(ang, 0)), ...H.part2])];
+}
+function swapHook(p) {
+  const pool = hookChoices(p);
   const i = pool.indexOf(p.hook);
   return pool[(i + 1) % pool.length];
 }
 
 /* ---------- export ---------- */
+function buildText(p) {
+  if (p.slides) return p.slides.map((x, i) => `Slide ${i + 1}: ${x.t || ""}`).join("\n");
+  return F[p.fmt].slots.filter(l => p.slots[l]).map(l => `${l}: ${p.slots[l]}`).join("\n");
+}
 function rows() {
   return BOOK.posts.slice().sort((a, b) => a.date.localeCompare(b.date)).map(p => ({
     Date: p.date, Day: DAYS[dowIdx(parse(p.date))], Content: TYPES[p.type].label, Format: F[p.fmt].name, Topic: p.topic,
     Purpose: PURPOSES[p.purpose].label, Hook: p.hook, "Main point": p.point,
-    "Build it": F[p.fmt].slots.map(l => `${l}: ${p.slots[l] || ""}`).join("\n"),
+    "Build it": buildText(p),
     CTA: p.purpose === "virality" ? "(none, virality post)" : p.cta, "Film on": p.film, "Edit on": p.edit,
     "Post to": Object.keys(p.where || {}).join(", "),
     "Posted on": Object.entries(p.where || {}).filter(([, v]) => v === "done").map(([k]) => k).join(", "),
@@ -2092,30 +2403,37 @@ function exportCsv() {
   setTimeout(() => alert("Downloaded my-batchbook.csv ✅\n\nTo open it in Google Sheets:\n1. Go to sheets.new\n2. File → Import → Upload\n3. Pick my-batchbook.csv → Import data"), 300);
 }
 // Notion: a Markdown page (Import → Markdown) with every post as a toggle-style section + the time blocks
+// Notion: two CSVs whose columns match the Notion template, for "Merge with CSV" (keeps the calendar + board views)
+function notionDate(ds, m) {
+  const d = parse(ds), base = d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  return m == null ? base : `${base} ${fmtTime(m)}`;
+}
+function csvText(cols, list) {
+  const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  return "\ufeff" + [cols.map(q).join(","), ...list.map(r => cols.map(c => q(r[c])).join(","))].join("\n");
+}
+function dl(name, text, type = "text/csv;charset=utf-8") {
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name; a.click();
+}
 function exportNotion() {
   const posts = BOOK.posts.slice().sort((a, b) => a.date.localeCompare(b.date));
-  const line = s => String(s || "").replace(/\n+/g, " ").trim();
-  let md = `# ${A.name ? A.name + "'s" : "My"} Batchbook\n\n${fmtDate(A.start)} → ${fmtDate(A.end)} · ${posts.length} posts\n\n`;
-  md += `> Made with the Starter Batchbook. Tick things off as you go.\n\n## 📅 Posts\n\n`;
-  posts.forEach(p => {
-    const f = F[p.fmt];
-    md += `### ${fmtDate(p.date)} · ${line(p.hook)}\n\n`;
-    md += `- [ ] Posted\n- **Content:** ${TYPES[p.type].label} · ${f.name}\n- **Purpose:** ${PURPOSES[p.purpose].label}\n- **Topic:** ${line(p.topic)}\n`;
-    if (p.film) md += `- **Film on:** ${fmtDate(p.film)}\n`;
-    md += `- **Edit on:** ${fmtDate(p.edit)}\n- **Post to:** ${Object.keys(p.where || {}).join(", ")}\n\n`;
-    md += `**Main point:** ${line(p.point)}\n\n**Build it**\n\n${f.slots.map(l => `- ${l}: ${line(p.slots[l])}`).join("\n")}\n\n`;
-    md += `**CTA:** ${p.purpose === "virality" ? "None, let it spread" : line(p.cta)}\n\n**How to make it**\n\n${f.how.map((h, i) => `${i + 1}. ${line(h)}`).join("\n")}\n\n`;
-    if (p.notes) md += `**Notes:** ${line(p.notes)}\n\n`;
-    md += `---\n\n`;
-  });
-  md += `## ⏱️ Time blocks\n\n`;
-  Object.entries(window.__blocks || {}).sort().forEach(([ds, list]) => list.forEach(b => {
-    md += `- [ ] **${fmtDate(ds)}** · ${b.label}${b.posts.length ? `: ${b.posts.map(p => line(p.hook)).join(" / ")}` : ""}\n`;
+  const plan = posts.map(p => ({
+    Post: p.hook, Date: notionDate(p.date, toMin(p.at || A.postAt)), Status: p.status, Content: TYPES[p.type].label,
+    Purpose: PURPOSES[p.purpose].label, Pillar: p.topic.split(" · ")[0], Platforms: Object.keys(p.where || {}).join(", "),
+    "Posted on": Object.entries(p.where || {}).filter(([, v]) => v === "done").map(([k]) => k).join(", "),
+    Format: F[p.fmt].name, "Main point": p.point, "Script or slides": buildText(p),
+    CTA: p.purpose === "virality" ? "" : p.cta, "Film on": p.film ? notionDate(p.film) : "", "Edit on": p.edit ? notionDate(p.edit) : "", Notes: p.notes
   }));
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([md], { type: "text/markdown;charset=utf-8" }));
-  a.download = "my-batchbook.md"; a.click();
-  setTimeout(() => alert("Downloaded my-batchbook.md ✅\n\nTo open it in Notion:\n1. In Notion, click Import (bottom of the sidebar, or ••• → Import)\n2. Pick Markdown & CSV → choose my-batchbook.md\n\nWant it as a Notion database instead? Tap CSV, then import that .csv file in Notion the same way."), 300);
+  const sched = [];
+  Object.entries(window.__blocks || {}).sort().forEach(([ds, list]) => list.forEach(b => { const st = toMin(A.time[b.kind].at);
+    sched.push({ Block: blockTitle(b), When: `${notionDate(ds, st)} → ${fmtTime(st + A.time[b.kind].h * 60)}`, Type: BLOCK_NAME[b.kind], Hours: A.time[b.kind].h,
+      Posts: b.posts.map(p => p.hook).join(" / "), Checklist: BLOCK_TIPS[b.kind].join(" / "), Done: "No" }); }));
+  dl("content-plan.csv", csvText(["Post", "Date", "Status", "Content", "Purpose", "Pillar", "Platforms", "Posted on", "Format", "Main point", "Script or slides", "CTA", "Film on", "Edit on", "Notes"], plan));
+  setTimeout(() => dl("schedule.csv", csvText(["Block", "When", "Type", "Hours", "Posts", "Checklist", "Done"], sched)), 400);
+  setTimeout(() => {
+    const go = confirm("Downloaded content-plan.csv and schedule.csv ✅\n\nTo get your Notion batchbook (calendar, board and table views):\n1. Open my Notion template and click Duplicate\n2. In Content plan: ••• → Merge with CSV → content-plan.csv\n3. In Schedule: ••• → Merge with CSV → schedule.csv\n\nOpen the template now?");
+    if (go && CONFIG.notionTemplate) window.open(CONFIG.notionTemplate, "_blank", "noopener");
+  }, 900);
 }
 /* ---------- Excel export, laid out like a monthly content calendar ---------- */
 const XL = {
