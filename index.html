@@ -1309,8 +1309,15 @@ function fill(hook, text) {
   return hook;
 }
 
+// "gym" → "Follow for more gym tips", "planning my week" → "Follow for more on planning my week"
+function followLine(topic) {
+  const t = (topic || A.topics[0] || "").trim().replace(/[.!]+$/, "");
+  if (!t || ["My story", "Building in public"].includes(t)) return "Follow to see where this goes";
+  const phrase = /\b(my|your|our|how|why|what)\b|\w+ing\b/i.test(t) || t.split(/\s+/).length > 3;
+  return phrase ? `Follow for more on ${t}` : `Follow for more ${t} tips`;
+}
 function ctaText(id, topic) {
-  return { follow: `Follow for more ${topic || A.topics[0] || "of this"}`, comment: "Comment your take below 👇", save: "Save this for later",
+  return { follow: followLine(topic), comment: "Comment your take below 👇", save: "Save this for later",
     dm: `DM me "${A.dmWord.trim()}"`, link: `Link in my bio for ${A.linkFor.trim()}` }[id] || "";
 }
 // purpose decides whether a post gets a CTA, and which of their picked CTAs fits best
